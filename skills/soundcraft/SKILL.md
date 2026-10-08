@@ -1,6 +1,6 @@
 ---
-name: recraft-soundcraft
-description: "Use SoundCraft for multitrack audio editing, mixing, routing, automation, MIDI, sessions, and WAV/AIFF/FLAC bounce or stems. Trigger on SoundCraft or reCraft audio-production tasks; validate meters, playback, and exported duration."
+name: soundcraft
+description: "Use SoundCraft for multitrack audio editing, mixing, routing, automation, MIDI, sessions, and WAV/AIFF/FLAC bounce or stems. Trigger on SoundCraft audio-production tasks; validate meters, playback, and exported duration."
 ---
 
 # SoundCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Test a short bounce and inspect meters/true peak/LUFS before a full mix or stem export.
 4. Use GUI for detailed editing, MIDI/score work, routing, or listening. Recording/microphone permissions and new plug-ins require appropriate task authorization.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

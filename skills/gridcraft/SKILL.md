@@ -1,6 +1,6 @@
 ---
-name: recraft-gridcraft
-description: "Use GridCraft to create or inspect spreadsheets, XLSX/CSV/TSV data, formulas, tables, charts, PivotTables, formatting, and print output. Trigger on GridCraft or reCraft workbook tasks; preserve formulas and validate recalculated values."
+name: gridcraft
+description: "Use GridCraft to create or inspect spreadsheets, XLSX/CSV/TSV data, formulas, tables, charts, PivotTables, formatting, and print output. Trigger on GridCraft workbook tasks; preserve formulas and validate recalculated values."
 ---
 
 # GridCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Calculate and check representative formulas, totals, dates, currencies, dynamic-array spill ranges, and missing/error values.
 4. Use GUI for chart/layout/print review, then save an editable XLSX copy and any requested exports.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

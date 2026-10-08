@@ -18,7 +18,7 @@ def validate():
     errors = []
     manifest = json.loads((ROOT / "skills.json").read_text(encoding="utf-8"))
     rows = manifest["skills"]
-    expected_names = {"recraft-" + app for app in EXPECTED}
+    expected_names = set(EXPECTED)
     names = [row["skill"] for row in rows]
     if manifest.get("schema_version") != 1:
         errors.append("Unsupported manifest schema version")
@@ -29,7 +29,7 @@ def validate():
         errors.append("Skill folders do not match the expected set")
     for row in rows:
         name = row["skill"]
-        app = name.removeprefix("recraft-")
+        app = name
         if app not in EXPECTED:
             continue
         version = EXPECTED[app]

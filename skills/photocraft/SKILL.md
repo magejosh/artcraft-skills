@@ -1,6 +1,6 @@
 ---
-name: recraft-photocraft
-description: "Use PhotoCraft for layered raster editing, PSD/PSB, masks, adjustments, painting, selections, smart objects, filters, and recorded action batches. Trigger on PhotoCraft or reCraft image-editing tasks; preserve an editable master and verify output fidelity."
+name: photocraft
+description: "Use PhotoCraft for layered raster editing, PSD/PSB, masks, adjustments, painting, selections, smart objects, filters, and recorded action batches. Trigger on PhotoCraft image-editing tasks; preserve an editable master and verify output fidelity."
 ---
 
 # PhotoCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Test action batches on one representative copied file before processing a folder; define collision/overwrite behavior and preserve originals.
 4. Use GUI for selections, brush work, masks, typography, and visual comparisons where command automation is unsuitable.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

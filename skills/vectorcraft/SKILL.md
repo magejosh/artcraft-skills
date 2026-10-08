@@ -1,6 +1,6 @@
 ---
-name: recraft-vectorcraft
-description: "Use VectorCraft for vector illustrations, paths, booleans, gradients, artboards, type, SVG, PDF, and image export. Trigger on VectorCraft or reCraft vector-artwork tasks; preserve editable paths and review fonts and clipping."
+name: vectorcraft
+description: "Use VectorCraft for vector illustrations, paths, booleans, gradients, artboards, type, SVG, PDF, and image export. Trigger on VectorCraft vector-artwork tasks; preserve editable paths and review fonts and clipping."
 ---
 
 # VectorCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Use CLI for supported deterministic conversion/rendering; use GUI for path editing, shape construction, typography, appearance, and alignment.
 4. Export to a new file and compare both visual appearance and editable structure.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

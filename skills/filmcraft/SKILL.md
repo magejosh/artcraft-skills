@@ -1,6 +1,6 @@
 ---
-name: recraft-filmcraft
-description: "Use FilmCraft for video timeline editing, trims, captions, color grading, audio mixing, and supported sequence interchange/export. Trigger on FilmCraft or reCraft editing tasks; use the matching command schemas and validate a short render before a full export."
+name: filmcraft
+description: "Use FilmCraft for video timeline editing, trims, captions, color grading, audio mixing, and supported sequence interchange/export. Trigger on FilmCraft editing tasks; use the matching command schemas and validate a short render before a full export."
 ---
 
 # FilmCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Use copies and a short selected-range render first. Prefer GUI for timeline review and grading/scopes when exact automation is absent.
 4. Use integer timeline ticks accurately: the README documents 254016000000 ticks per second. Do not confuse seconds with sourceIn/duration tick parameters.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

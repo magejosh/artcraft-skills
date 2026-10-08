@@ -1,6 +1,6 @@
 ---
-name: recraft-effectcraft
-description: "Use EffectCraft for motion graphics, layered compositions, keyframes, compositing, masks, effects, and Lottie or video export. Trigger on EffectCraft or reCraft animation tasks; verify the available CLI and render settings before exporting."
+name: effectcraft
+description: "Use EffectCraft for motion graphics, layered compositions, keyframes, compositing, masks, effects, and Lottie or video export. Trigger on EffectCraft animation tasks; verify the available CLI and render settings before exporting."
 ---
 
 # EffectCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Save an editable .ecproj copy before a short preview render. Validate representative first/middle/last and key transition frames before a full export.
 4. Use GUI for timeline/graph editor work, masks, or visual compositing when command coverage is uncertain.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

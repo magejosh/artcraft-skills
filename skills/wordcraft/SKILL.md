@@ -1,6 +1,6 @@
 ---
-name: recraft-wordcraft
-description: "Use WordCraft for document writing, DOCX editing, styles, tables, sections, comments, tracked changes, mail merge, text extraction, and supported conversions. Trigger on WordCraft or reCraft document tasks; preserve structure and inspect rendered pagination."
+name: wordcraft
+description: "Use WordCraft for document writing, DOCX editing, styles, tables, sections, comments, tracked changes, mail merge, text extraction, and supported conversions. Trigger on WordCraft document tasks; preserve structure and inspect rendered pagination."
 ---
 
 # WordCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Use the command catalog for exact selectors/parameters; preserve existing comments, revisions, citations, and fields unless explicitly asked to resolve them.
 4. Use GUI for pagination, layout, and review controls. Treat macros as executable content and CSV mail merge as data processing, not permission to send mail.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

@@ -1,6 +1,6 @@
 ---
-name: recraft-lightcraft
-description: "Use LightCraft for nondestructive RAW/photo development, culling, ratings, albums, masks, presets, XMP sidecars, and batch image exports. Trigger on LightCraft or reCraft photo-library work; distinguish full RAW development from embedded-preview support."
+name: lightcraft
+description: "Use LightCraft for nondestructive RAW/photo development, culling, ratings, albums, masks, presets, XMP sidecars, and batch image exports. Trigger on LightCraft photo-library work; distinguish full RAW development from embedded-preview support."
 ---
 
 # LightCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Inspect develop controls for valid ranges/defaults, then apply a small sample. Keep development nondestructive and compare before/after.
 4. Use GUI for crop, masks, culling, and visual color review; validate a representative export before a batch.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

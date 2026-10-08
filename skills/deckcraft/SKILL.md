@@ -1,6 +1,6 @@
 ---
-name: recraft-deckcraft
-description: "Use DeckCraft to create or edit presentations, PPTX decks, slide masters, notes, shapes, charts, and slide renders. Trigger on DeckCraft or reCraft slide workflows, including PDF, image, or native deck delivery."
+name: deckcraft
+description: "Use DeckCraft to create or edit presentations, PPTX decks, slide masters, notes, shapes, charts, and slide renders. Trigger on DeckCraft slide workflows, including PDF, image, or native deck delivery."
 ---
 
 # DeckCraft
@@ -39,7 +39,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 3. Build or edit a copy, save the editable deck, and render every slide. Use GUI for visual layout, presenter/media checks, or unsupported controls.
 4. Check font availability before layout. Review speaker notes, comments, masters, and media links when they matter.
 5. Before live control, verify that the process, document, and port belong to this task. Use this app's documented protocol, keep it on loopback, and obtain any required approval for persistent access.
-6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another reCraft app's flags.
+6. Inspect each command result and save a new named output without unintended overwrite. Native commands differ in JSON/script syntax: consult the reference, not another app's flags.
 
 ## Verify and deliver
 

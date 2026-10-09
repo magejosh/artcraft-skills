@@ -58,20 +58,20 @@
       "source_commit": "fc3fa1a71b67b3bb2aeccbf0b164bd9543288b9f"
     },
     {
+      "skill": "pdfcraft",
+      "app": "PDFCraft",
+      "app_version": "0.4.0",
+      "upstream_repository": "https://github.com/storytold/pdfcraft",
+      "source_tag": "v0.4.0",
+      "source_commit": "96c58f6f4452f8f8d23c3071ff252a8e3395bac1"
+    },
+    {
       "skill": "photocraft",
       "app": "PhotoCraft",
       "app_version": "0.3.0",
       "upstream_repository": "https://github.com/storytold/photocraft",
       "source_tag": "v0.3.0",
       "source_commit": "60224d3fb7d4006bcfcc97603c1611b9b756aebd"
-    },
-    {
-      "skill": "printcraft",
-      "app": "PrintCraft",
-      "app_version": "0.2.1",
-      "upstream_repository": "https://github.com/storytold/pdfcraft",
-      "source_tag": "v0.2.1",
-      "source_commit": "dcb00238896e418b357e6dd777ee35bad36f0b97"
     },
     {
       "skill": "soundcraft",

@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
     "cadcraft": "0.3.0", "deckcraft": "0.3.0", "designcraft": "0.2.1",
     "effectcraft": "0.4.0", "filmcraft": "0.2.1", "gridcraft": "0.3.0",
-    "lightcraft": "0.2.1", "photocraft": "0.3.0", "printcraft": "0.2.1",
+    "lightcraft": "0.2.1", "pdfcraft": "0.4.0", "photocraft": "0.3.0",
     "soundcraft": "0.3.0", "vectorcraft": "0.4.0", "wordcraft": "0.3.0",
 }
 
@@ -22,8 +22,8 @@ def validate():
     names = [row["skill"] for row in rows]
     if manifest.get("schema_version") != 1:
         errors.append("Unsupported manifest schema version")
-    if len(rows) != 12 or set(names) != expected_names or len(set(names)) != len(names):
-        errors.append("Manifest must contain each of the twelve expected skills exactly once")
+    if len(rows) != len(EXPECTED) or set(names) != expected_names or len(set(names)) != len(names):
+        errors.append("Manifest must contain each of the expected skills exactly once")
     actual = {p.parent.name for p in (ROOT / "skills").glob("*/SKILL.md")}
     if actual != expected_names:
         errors.append("Skill folders do not match the expected set")
@@ -33,8 +33,7 @@ def validate():
         if app not in EXPECTED:
             continue
         version = EXPECTED[app]
-        upstream_name = "pdfcraft" if app == "printcraft" else app
-        repo = "https://github.com/storytold/" + upstream_name
+        repo = "https://github.com/storytold/" + app
         folder = ROOT / "skills" / name
         skill_path = folder / "SKILL.md"
         ref_path = folder / "references" / "cli-and-formats.md"
@@ -97,4 +96,4 @@ if __name__ == "__main__":
     if errors:
         print("\n".join(errors), file=sys.stderr)
         raise SystemExit(1)
-    print("PASS: twelve skills; frontmatter, versions, final notices, references, and source pins")
+    print(f"PASS: {len(EXPECTED)} skills; frontmatter, versions, final notices, references, and source pins")

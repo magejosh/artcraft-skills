@@ -1,92 +1,76 @@
 # ArtCraft Skills
 
-Twelve separate, portable assistant skills for the creative applications listed below. Each skill contains an application workflow, a version-pinned CLI reference, format caveats, and output-verification guidance.
+Give your AI assistant practical instructions for working with creative and productivity apps. These skills help it choose the right commands, preserve editable files, and check the result before handing it back to you.
 
-These are reusable templates. They do not contain a user's installation paths, personal project details, credentials, app binaries, models, or icons. They do not install or launch an application, and they do not change existing skill installations.
+Each app has its own skill folder, with a `SKILL.md` guide and a detailed command reference. You can use one skill or the whole collection.
 
-## Target versions
+## What you can do
 
-| Application | Written for | Skill | Official application repository |
-| --- | --- | --- | --- |
-| CADCraft | 0.3.0 | [cadcraft](skills/cadcraft/SKILL.md) | [storytold/cadcraft](https://github.com/storytold/cadcraft) |
-| DeckCraft | 0.3.0 | [deckcraft](skills/deckcraft/SKILL.md) | [storytold/deckcraft](https://github.com/storytold/deckcraft) |
-| DesignCraft | 0.2.1 | [designcraft](skills/designcraft/SKILL.md) | [storytold/designcraft](https://github.com/storytold/designcraft) |
-| EffectCraft | 0.4.0 | [effectcraft](skills/effectcraft/SKILL.md) | [storytold/effectcraft](https://github.com/storytold/effectcraft) |
-| FilmCraft | 0.2.1 | [filmcraft](skills/filmcraft/SKILL.md) | [storytold/filmcraft](https://github.com/storytold/filmcraft) |
-| GridCraft | 0.3.0 | [gridcraft](skills/gridcraft/SKILL.md) | [storytold/gridcraft](https://github.com/storytold/gridcraft) |
-| LightCraft | 0.2.1 | [lightcraft](skills/lightcraft/SKILL.md) | [storytold/lightcraft](https://github.com/storytold/lightcraft) |
-| PhotoCraft | 0.3.0 | [photocraft](skills/photocraft/SKILL.md) | [storytold/photocraft](https://github.com/storytold/photocraft) |
-| PrintCraft | 0.2.1 | [printcraft](skills/printcraft/SKILL.md) | [storytold/pdfcraft](https://github.com/storytold/pdfcraft) |
-| SoundCraft | 0.3.0 | [soundcraft](skills/soundcraft/SKILL.md) | [storytold/soundcraft](https://github.com/storytold/soundcraft) |
-| VectorCraft | 0.4.0 | [vectorcraft](skills/vectorcraft/SKILL.md) | [storytold/vectorcraft](https://github.com/storytold/vectorcraft) |
-| WordCraft | 0.3.0 | [wordcraft](skills/wordcraft/SKILL.md) | [storytold/wordcraft](https://github.com/storytold/wordcraft) |
+- Edit documents, spreadsheets, and presentations while preserving their structure
+- Work with drawings, photos, vector artwork, and page layouts
+- Inspect and export video, animation, audio, and PDFs
+- Avoid app-specific command mistakes and understand format limitations
 
-PrintCraft's official repository is named `pdfcraft`; the v0.2.1 executable names remain `printcraft` and `printcraft-cli`.
+## Included skills
 
-The machine-readable [skills.json](skills.json) records the target versions and exact upstream source commits used for command research. A target version is not a claim of compatibility with every newer version. The last line of every SKILL.md directs the reader to the individual application's official repository if the installed or globally available app is newer.
+| Skill | Helps with | Written for |
+| --- | --- | --- |
+| [CADCraft](skills/cadcraft/SKILL.md) | 2D drawings, CAD conversion, layers, and dimensions | 0.3.0 |
+| [DeckCraft](skills/deckcraft/SKILL.md) | Presentations, slide layouts, and slide exports | 0.3.0 |
+| [DesignCraft](skills/designcraft/SKILL.md) | Page layouts, publications, and text flow | 0.2.1 |
+| [EffectCraft](skills/effectcraft/SKILL.md) | Motion graphics, compositions, and animation | 0.4.0 |
+| [FilmCraft](skills/filmcraft/SKILL.md) | Video timelines, captions, and exports | 0.2.1 |
+| [GridCraft](skills/gridcraft/SKILL.md) | Spreadsheets, formulas, charts, and print output | 0.3.0 |
+| [LightCraft](skills/lightcraft/SKILL.md) | Photo development, culling, and batch exports | 0.2.1 |
+| [PDFCraft](skills/pdfcraft/SKILL.md) | PDF inspection, page organization, annotations, and forms | 0.4.0 |
+| [PhotoCraft](skills/photocraft/SKILL.md) | Layered image editing, masks, and adjustments | 0.3.0 |
+| [SoundCraft](skills/soundcraft/SKILL.md) | Audio sessions, mixing, and rendering | 0.3.0 |
+| [VectorCraft](skills/vectorcraft/SKILL.md) | Vector artwork, paths, and artboards | 0.4.0 |
+| [WordCraft](skills/wordcraft/SKILL.md) | Documents, styles, tracked changes, and conversion | 0.3.0 |
 
-## Use or install a skill
+PDFCraft was previously named PrintCraft. This collection uses the updated [PDFCraft 0.4.0](https://github.com/storytold/pdfcraft) skill.
 
-1. Review the selected SKILL.md and its linked reference.
-2. Copy that entire `skills/<app>` folder into the skill directory configured by your assistant, or use that assistant's supported local skill-import workflow. Preserve the `references` subfolder. Follow the host's current skill-discovery instructions; importing these files does not install the application.
-3. If a same-named skill already exists, compare and deliberately merge or choose a different destination. Do not overwrite a customized installation by default.
-4. Find an authorized, trusted application build for your platform. Discover its CLI on PATH or set the per-app variable, such as `CADCRAFT_CLI`, to the verified executable path. No common installation root is assumed.
-5. Confirm the actual app version. Read the matching app's help/schema output, use copied inputs and separate outputs, and verify the result before broader use.
+The versions above identify the app releases these guides were written for. If you have a newer release, the skill points your assistant to that app's official documentation before it uses older commands.
 
-Optional copy examples, run from this repository root only after setting `SKILLS_DIR` to the intended destination:
+## How to use them
 
-```sh
-: "${SKILLS_DIR:?Set SKILLS_DIR to the intended assistant skill directory}"
-mkdir -p "$SKILLS_DIR"
-test ! -e "$SKILLS_DIR/cadcraft" || { printf '%s\n' 'Destination exists; compare it first.' >&2; exit 1; }
-cp -R skills/cadcraft "$SKILLS_DIR/"
-```
+You'll need an assistant that supports skills or can read local instruction files, plus the app installed in an environment the assistant can access. This repository contains instructions, not app installers.
 
-```powershell
-if (-not $env:SKILLS_DIR) { throw 'Set SKILLS_DIR to the intended assistant skill directory.' }
-$destination = Join-Path $env:SKILLS_DIR 'cadcraft'
-if (Test-Path $destination) { throw 'Destination exists; compare it first.' }
-New-Item -ItemType Directory -Path $env:SKILLS_DIR -Force | Out-Null
-Copy-Item -Recurse 'skills/cadcraft' $destination
-```
+1. Download or clone this repository.
+2. Choose the app folder under `skills/`, such as `skills/cadcraft`.
+3. Import the entire folder using your assistant's skill-installation workflow, or copy it into that assistant's configured skill directory. Keep the `references` folder with it. If a same-named skill already exists, compare the two before replacing anything.
+4. Ask your assistant to use the skill and give it the files or task you want help with.
 
-To use a skill without installing it, give a capable assistant its SKILL.md path and the task. For example:
+You can also use a skill without installing it: tell your assistant to read its `SKILL.md` file for the task.
 
-- “Use cadcraft to inspect drawing.dxf, preserve its units and layers, and save a separate SVG preview.”
-- “Use gridcraft to inspect formulas in budget.xlsx and verify totals after saving an edited copy.”
-- “Use printcraft to extract pages 1, 3, and 5 into a separate PDF, then verify page order and render the result.”
+For example:
 
-Example filenames are synthetic. Supply actual authorized files; do not assume they are included here. Resolve shell quoting on the host, particularly for JSON arguments in Windows PowerShell. The CLI grammar differs across apps: `--connect`, `--bridge`, `--in`, `--file`, `--save`, `--out`, and page indices are not interchangeable.
+> Use cadcraft to inspect drawing.dxf, preserve its units and layers, and save a separate SVG preview.
 
-## Verification and limitations
+> Use gridcraft to inspect the formulas in budget.xlsx and verify the totals after saving an edited copy.
 
-Command references were checked against the exact upstream versions and commits in skills.json. Bounded Linux x86_64 CLI smoke checks used release archives whose SHA-256 values matched release checksums and GitHub asset digests, on Debian 13 with glibc 2.41. These checks established only the following small-fixture behaviors:
+> Use pdfcraft to extract pages 1, 3, and 5 into a separate PDF and check the page order.
 
-- CADCraft: DXF create/save/reopen/render with geometry, units, and layers preserved
-- DeckCraft: PPTX title save/reopen/render
-- DesignCraft: editable native text-frame save/reopen/render
-- EffectCraft: native project reopen and a small CPU-rendered frame
-- FilmCraft: native project reopen and a small PNG frame render
-- GridCraft: XLSX formula retention and recalculation after saving again
-- LightCraft: exposure/rating persistence and PNG export
-- PhotoCraft: two-layer native/PSD save/reopen/edit
-- PrintCraft: one-page PDF inspect/text/render and title/rotation edit/reopen
-- SoundCraft: session reopen and a byte-identical short WAV bounce
-- VectorCraft: editable native shapes and SVG path/render parity
-- WordCraft: DOCX text retention and rendering
+Replace those example filenames with your own files. The skills use portable command discovery rather than assuming a particular installation folder or operating system.
 
-Those checks do not certify every reference example, GUI behavior, GPU rendering, physical audio devices, large-file performance, complex format fidelity, or cross-platform interoperability. LightCraft timestamp metadata was not established as reliable. Availability of source code does not imply that a packaged binary exists for every platform. Recheck package provenance, prerequisites, app version, CLI schemas, and output fidelity on the actual host.
+## Check for app updates
 
-These files do not grant permission to run an untrusted executable, overwrite originals, record audio, install plugins/models, expose a network listener, add persistent access, or send files. Respect the current task's permissions. Do not expose unauthenticated control ports, reuse another session's port, or publish token-file contents.
-
-## Validate the template package
-
-Run the repository's read-only structural checks with Python 3.9 or newer:
+Run the read-only release checker with Python 3.9 or newer:
 
 ```sh
-python3 tools/validate.py
+python3 tools/update_check.py
 ```
 
-On Windows, `py -3 tools/validate.py` is an equivalent option. The validator checks the twelve expected apps, frontmatter, target versions, final-line notices, reference links, and source pins. It does not execute applications or prove feature correctness.
+On Windows, use `py -3 tools/update_check.py`. It compares the twelve versions in `skills.json` with the latest stable releases in their official GitHub repositories and shows release and portable-download links. It reports failures as unknown rather than claiming you are up to date.
 
-No license has been selected for these templates. Upstream software and documentation retain their own licenses; this repository does not redistribute app binaries, fonts, models, or icons.
+The baseline is the version each skill was written for, not a scan of the apps installed on your computer. The checker does not download packages, install apps, or change skills. When you decide to update an app, keep the new portable version alongside the existing version until you choose to remove the old copy.
+
+## What to expect
+
+The guides include version-specific source references and practical verification steps. CLI smoke-test coverage varies by app and is recorded in [TESTING.md](TESTING.md). It does not guarantee every feature, file format, or platform combination. Keep an original copy of important files and review converted outputs, especially complex documents or media projects.
+
+For contributors, [AGENTS.md](AGENTS.md) explains the repository conventions and [TESTING.md](TESTING.md) covers the optional checks used to maintain the collection. You do not need to run these checks to use a skill.
+
+## Licensing
+
+No license has been selected for these templates. The upstream applications and documentation retain their own licenses. App binaries, fonts, models, and icons are not included here.

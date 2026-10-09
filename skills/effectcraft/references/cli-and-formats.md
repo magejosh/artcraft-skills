@@ -1,49 +1,85 @@
-# EffectCraft 0.4.0: CLI and format reference
+# EffectCraft 0.6.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.4.0, commit `f5ebe5f6c5e887dddda4a2be1fcb47154e959b81`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Commands and capability notes were reviewed against upstream tag v0.6.0, commit `6943872cf65b3da1275f1e0f808b60b2e51d84dc`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
 
-Bare `effectcraft-cli` and `effectcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
+Bare `effectcraft-cli` and `effectcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files. Windows portable packaging includes both executables with a statically linked C runtime; no Visual C++ redistributable is required. Rust 1.95+ is a source-build prerequisite, not a packaged-runtime dependency. No FFmpeg runtime is needed.
 
-For JSON-bearing arguments, confirm native argument passing: Windows PowerShell 5.1 may strip literal quotes. Prefer a documented script-file form where available, or the host's verified argument transport. Validate JSON before invocation and inspect received/resulting values. Never copy Unix paths or quoting blindly.
+For JSON-bearing arguments, confirm native argument passing: Windows PowerShell 5.1 may strip literal quotes. Use verified native argument transport or the documented JavaScript script-file surface where appropriate; `run` takes command/JSON pairs, not a JSONL filename. Validate JSON before invocation and inspect received/resulting values.
 
 ## Supported command examples
 
 ```text
-effectcraft
-effectcraft --control 9877
-effectcraft-cli mcp
-effectcraft-cli mcp --bridge 9877
-effectcraft-cli set Main '#1' transform/position '[100,360]' --time 0 --project main.ecproj --save-as edited.ecproj
-effectcraft-cli exec file.exportLottie '{"comp":"Main","path":"main.json"}' main.ecproj
-effectcraft-cli commands --filter renderQueue --schemas --json
+effectcraft-cli --version
+effectcraft-cli commands --filter render.backend --schemas --json
+effectcraft-cli commands --filter keys.easePreset --schemas --json
+effectcraft-cli exec render.backend --empty --json
 effectcraft-cli info --project main.ecproj --json
 effectcraft-cli props Main '#1' --project main.ecproj --json
+effectcraft-cli set Main '#1' transform/position '[100,360]' --time 0 --project main.ecproj --save-as edited.ecproj
 effectcraft-cli render-frame --project main.ecproj --comp Main --time 0 --out preview.png
-effectcraft-cli render --project main.ecproj --comp Main --out main.mp4
-effectcraft-cli exec COMMAND --params JSON --project main.ecproj --save-as edited.ecproj
+effectcraft-cli render --project main.ecproj --comp Main --start 0 --end 1 --out preview.mp4
+effectcraft-cli exec file.exportLottie '{"comp":"Main","path":"main.json"}' main.ecproj
+effectcraft-cli script build.jsx --save-as main.ecproj
+effectcraft --control 9877
+effectcraft-cli mcp
+effectcraft-cli mcp --gpu
+effectcraft-cli mcp --bridge 9877
 ```
 
-COMMAND, JSON, READ_DIR, WRITE_DIR, and PRIVATE_TOKEN_FILE are grammar placeholders, not ready-to-run values. Discover schemas and fill them deliberately. Demo/sample operations create synthetic content, not a copy of a GUI project.
+GPU and control examples are optional modes, not prerequisites or permission to enable persistent access. A sample/demo operation creates synthetic content, not a copy of a GUI project.
 
-## Exact grammar and traps
+## Exact grammar and defaults
 
-Always pass --project for a real project; without it render uses the demo. exec accepts COMMAND --params JSON or the documented positional COMMAND JSON; run takes COMMAND JSON pairs. --save overwrites the project; prefer --save-as. Time is seconds. Composition refs support IDs/names; layer refs IDs, #n, or names. Full render is headless and rejects --bridge; live rendering uses discovered renderQueue.add/renderQueue.render. CPU is default; --gpu fails if unavailable. Render options include --start/--end, --work-area, --fps, --resolution, --quality, --channels and --audio; inspect exact schema for codecs.
+- `exec COMMAND --params JSON` and positional `exec COMMAND JSON` are supported. `run` takes COMMAND/JSON pairs. Discover accepted keys with `commands --schemas --json`; unknown command parameters are rejected.
+- General CLI commands default to the demo unless `--project`, positional `.ecproj`, or `--empty` is supplied. JavaScript `script` and headless MCP default to an empty project. The GUI now starts empty too, unless `--demo` is requested.
+- Full `render` still opens the demo when no project is supplied, even with `--empty`. Always pass `--project` for a real render. `--save` overwrites; `--save-as` preserves the source. Full render rejects `--bridge`; live rendering uses discovered `renderQueue.add`/`renderQueue.render` commands.
+- Composition refs are IDs/names (`-` for active where supported); layers are IDs, names or `#n`, one-based from the top. Property paths come from `props`/`get_layer`, not guessed indexes. Times are seconds; keyframe times are layer time, which differs from composition time for offset/stretched layers.
+- `render` supports start/end seconds, work area, frame rate, resolution, quality, channels, audio and codec-specific flags. `render-frame` makes one PNG; `--transparent` preserves alpha. Check output-module schemas and settings instead of inferring codec/alpha from an extension.
+- JavaScript scripts use the documented After Effects-style object model. Script file/network access is constrained by the app's scripting preference; do not expand that permission as an incidental workaround.
+
+## GPU diagnostics and 3D routing
+
+`render.backend {}` reports `renderer`, `gpuAcceleration`, `adapter`, `active` (`gpu`/`cpu`) and `why` (a CPU reason or null). The project saying “Mercury GPU Acceleration” is not evidence that a GPU compositor is attached.
+
+- Headless CLI and MCP default to CPU. `--gpu` attaches a headless GPU compositor and fails explicitly if no adapter is usable. A project set to software remains on CPU even with an adapter; changing `{backend:"gpu"}` is a project edit, not a read-only query.
+- `comp.renderer {}` is a different setting: `classic3d` or `advanced3d`. `layer.newModel` and `layer.new3dPrimitive` automatically switch a Classic 3D comp to Advanced 3D in the same edit. Verify model visibility and the rest of the composition after that switch; switching back hides model layers.
+- The release improves older-GPU startup, oversized-composition viewing and failed-window-start fallback to OpenGL. These are upstream fixes, not proof the current host works. Inspect backend diagnostics and a small render before a costly export; do not change OS/GPU settings blindly.
+
+## Ease presets and visual editing changes
+
+`keys.easePreset.list` lists built-in/user curves. `keys.easePreset.apply` accepts a preset name or a curve (`{outInfluence,outSpeed,inInfluence,inSpeed}` or `[x1,y1,x2,y2]`) and applies it to neighbouring selected keyframe pairs of each property in one undo step. Speeds are relative to the segment's average speed. A single selected key is insufficient. `capture` reads the first selected pair; hold/no-change pairs may not have a usable curve.
+
+`save {name,curve?}`, `rename {name,newName}` and `delete {name}` change the user's preset library; saving an existing user name replaces it. Do not treat these as part of a project-only edit. Built-ins cannot be overwritten/renamed/deleted.
+
+The release also improves shape-content drawing/copy/paste/duplication, mask selection and linked feather, layer/scale/work-area snapping, Puppet pin key visibility and audio-reactive previews. Use those GUI routes when helpful, then inspect actual selected contents, keyframe curves and rendered frames rather than inferring success from selection changes.
+
+## Formats and verification
+
+Native `.ecproj` is versioned JSON. Lottie export uses `file.exportLottie`, not a render codec; `.lottie` creates a dotLottie archive. Inspect its `{path,bytes,warnings}` for unsupported effects, cameras/lights, audio or footage, then inspect player playback. AEP/AEPX import and After Effects plug-ins remain unsupported; a mentioned research candidate is not an implemented importer.
+
+Documented media outputs include H.264, HEVC/AV1 MP4, ProRes MOV, WebM, GIF, image sequences including EXR, WAV and AIFF; inspect the exact preset/schema for profile, channels and alpha. Native `.prproj` is not an interchange format: timeline interchange uses FCP7 XML/FCPXML/OTIO/EDL/AAF/OMF and may prerender unsupported layers to adjacent ProRes files. Inspect missing-media and unsupported-feature reports before delivery. ML-assisted tools require optional model downloads; do not fetch them without task authorization.
+
+Save/reopen the editable project. Compare representative frames, eased motion, shape/mask geometry, alpha and audio, then inspect the complete exported playback and actual render backend. Upstream documentation explicitly does not establish broad After Effects fidelity, especially across Windows/Linux GUI behavior.
 
 ## Live control and MCP
 
-MCP starts empty unless --project or --demo is given. Live MCP uses --bridge PORT or supported address; do not mix bridge with --project/--demo. The v0.4.0 loopback JSON-lines control port has no authentication: enable only when needed, never expose remotely. Lottie is exported via commands/UI, not as a render codec.
+MCP starts empty unless `--project` or `--demo` is given. Bridge mode uses `--bridge PORT` or a supported address; do not mix it with `--project`/`--demo`. Verify the target session before mutation.
 
-Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
+The control port is unauthenticated loopback JSON-lines, not HTTP. Enable it only for the task. Invalid/non-request input or lines over 4 MiB close the connection; at most 16 connections are served. Requests normally time out after 60 seconds. Inspect failure state before retrying a mutation; use supported job/queue state for long work. GUI fallback does not authorize disturbing an unrelated session.
 
 ## Source links
 
-- [Target-version release](https://github.com/storytold/effectcraft/releases/tag/v0.4.0)
-- [apps/effectcraft-cli/src/main.rs](https://github.com/storytold/effectcraft/blob/v0.4.0/apps/effectcraft-cli/src/main.rs)
-- [docs/agents.md](https://github.com/storytold/effectcraft/blob/v0.4.0/docs/agents.md)
-- [docs/control-protocol.md](https://github.com/storytold/effectcraft/blob/v0.4.0/docs/control-protocol.md)
-- [README.md](https://github.com/storytold/effectcraft/blob/v0.4.0/README.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/effectcraft/blob/v0.4.0/packaging/windows/package.ps1)
+- [Target-version release and changelog](https://github.com/storytold/effectcraft/releases/tag/v0.6.0)
+- [CLI parser](https://github.com/storytold/effectcraft/blob/v0.6.0/apps/effectcraft-cli/src/main.rs)
+- [Agent workflow and MCP](https://github.com/storytold/effectcraft/blob/v0.6.0/docs/agents.md)
+- [Backend schema and diagnostics](https://github.com/storytold/effectcraft/blob/v0.6.0/crates/engine/src/commands/file.rs)
+- [3D renderer commands](https://github.com/storytold/effectcraft/blob/v0.6.0/crates/engine/src/commands/model3d.rs)
+- [Ease-preset commands](https://github.com/storytold/effectcraft/blob/v0.6.0/crates/engine/src/ease_presets.rs)
+- [Render queue schema](https://github.com/storytold/effectcraft/blob/v0.6.0/crates/engine/src/commands/render_queue.rs)
+- [Control protocol](https://github.com/storytold/effectcraft/blob/v0.6.0/docs/control-protocol.md)
+- [Formats and limitations](https://github.com/storytold/effectcraft/blob/v0.6.0/README.md) and [compatibility assessment](https://github.com/storytold/effectcraft/blob/v0.6.0/docs/gaps.md)
+- [Windows packaging](https://github.com/storytold/effectcraft/blob/v0.6.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

@@ -1,50 +1,76 @@
-# PhotoCraft 0.3.0: CLI and format reference
+# PhotoCraft 0.5.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.3.0, commit `60224d3fb7d4006bcfcc97603c1611b9b756aebd`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Checked against official tag v0.5.0, commit `e5e3e397523b4db6a016dd19526e4c68514fcc72`, including the parser, command documentation, format capabilities and packaging source. These are source/documentation findings, not a claim that these examples or Windows GUI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
 
-Bare `photocraft-cli` and `photocraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
+Bare `photocraft-cli` and `photocraft` names below are grammar shorthand. Resolve each executable as described in SKILL.md; replace synthetic relative filenames with authorized inputs and distinct outputs. No runtime helper scripts, models, or executables are bundled with this skill.
 
-For JSON-bearing arguments, confirm native argument passing: Windows PowerShell 5.1 may strip literal quotes. Prefer a documented script-file form where available, or the host's verified argument transport. Validate JSON before invocation and inspect received/resulting values. Never copy Unix paths or quoting blindly.
+For JSON arguments, confirm native argument passing: Windows PowerShell 5.1 may strip literal quotes. Validate JSON before invocation and inspect received values/results; do not copy Unix quoting blindly. `run` does not have a script-file flag. A batch actions file is a different operation, affecting every recognized image in its input directory.
 
 ## Supported command examples
 
 ```text
-photocraft image.psd
-photocraft --control
-photocraft-cli run wave.psd --cmd filter.sharpen.smartSharpen --params '{"amount":80}' --cmd layer.newAdjustmentLayer.curves --params '{"points":[[0,0],[64,48],[192,212],[255,255]]}' --out wave-final.png
-photocraft-cli batch --help
-photocraft-cli batch --actions grade.json --in ./raw --out ./graded
-photocraft-cli mcp
+photocraft-cli --version
+photocraft-cli --help
+photocraft-cli commands --json --filter actions.
 photocraft-cli info input.psd --compact
-photocraft-cli convert input.psd output.jpg --quality 90
-photocraft-cli commands --json --filter sharpen
+photocraft-cli run input.psd --cmd image.adjustments.invert --out inverted.png
+photocraft-cli convert input.psd flattened.tif
+photocraft-cli convert input.psd layered.tif --tiff-layers
+photocraft-cli convert input.psd preview.webp --quality 90
+photocraft-cli batch --actions grade.json --in input-copies --out graded --format psd
+photocraft input.psd
+```
+
+These server forms are for separately authorized control workflows, not routine installation checks:
+
+```text
 photocraft-cli mcp --automation-read-root READ_DIR --automation-write-root WRITE_DIR
 photocraft --control 7878 --control-token-file PRIVATE_TOKEN_FILE --automation-read-root READ_DIR --automation-write-root WRITE_DIR
 photocraft-cli mcp --bridge 127.0.0.1:7878 --control-token-file PRIVATE_TOKEN_FILE
+photocraft-cli serve --automation-read-root READ_DIR --automation-write-root WRITE_DIR
 ```
 
-COMMAND, JSON, READ_DIR, WRITE_DIR, and PRIVATE_TOKEN_FILE are grammar placeholders, not ready-to-run values. Discover schemas and fill them deliberately. Demo/sample operations create synthetic content, not a copy of a GUI project.
+READ_DIR, WRITE_DIR and PRIVATE_TOKEN_FILE are placeholders, not ready-to-run values. Confirm process ownership, token-file protection, roots and permission before launching a listener or persistent session.
 
-## Exact grammar and traps
+## Exact grammar and changes
 
-`run` takes exactly one file or --new JSON. Each --params belongs immediately after the preceding --cmd; without --out, normal edits are not saved. Batch actions accept [id,params] pairs, {command,params} objects, or IDs (possibly wrapped in actions/steps/droplet). Batch keeps each input extension by default; --format psd requests PSD output. It processes all recognized image files in the input directory, so use a PSD-only staging folder when only PSDs are intended. Separate output is the safe default; same-directory output requires --in-place. Inspect and validate action JSON before use. Ordinary CLI run/convert/batch uses normal OS paths and is not confined by MCP roots.
+- `run` requires exactly one input file or `--new JSON`; each `--params JSON` belongs to the preceding `--cmd ID`. Repeated commands execute in order. Without `--out`, ordinary edits are not saved. An output-only run is accepted.
+- `convert IN OUT`, `run`, and `batch` accept `--format EXT`, `--quality 1..100`, and the new bare `--tiff-layers`. TIFF is flat unless layers are requested. `--quality` controls JPEG/WebP: WebP is lossless without it and lossy with it.
+- `batch --actions FILE --in DIR --out DIR` accepts action steps as `[id, params]`, `{command, params}` (also `id`), or bare command IDs, optionally wrapped in `actions`, `steps`, or a droplet. Input extensions are retained unless `--format` is specified. Stage only the intended files. Same input/output directory requires `--in-place`; a separate directory is safer.
+- `droplet FILE.pcdroplet FILE-OR-DIR... [--out DIR]` executes saved automation. Review its paths and steps before use.
+- `commands [--json] [--filter TEXT]` lists IDs and parameter documentation. Top-level `--version` and subcommand `--help` are supported. Unknown flags are usage errors (exit 2); operation failures return 1. Inspect warnings and each JSON result, not only process status.
+- CLI paths are ordinary OS paths. MCP roots do not confine one-shot CLI `run`, `convert`, `batch` or droplet actions.
 
-## Live control and MCP
+## Actions, type and live control
 
-Headless MCP has only explicit read/write roots: missing root means no corresponding file permission. Bridge inherits desktop roots, takes relative paths, and rejects absolute paths/escapes. Desktop control is token-authenticated; absent token file is created, existing one reused. Keep token values out of chat, logs, args, and skills. Verify appropriate user-only file protection on Windows through authorized means; do not silently alter ACLs. Starting/configuring ongoing roots or credentials needs the appropriate authorization. Prefer one-shot CLI when it suffices.
+Use discovered schemas for new `actions.list/get/record/stop/play/delete` commands. `actions.get {action: name-or-index}` returns `{name, steps:[[id,params],...]}`. `actions.play` accepts optional zero-based `from`; a result can be successful at the outer level but contain `failed:{step,id,error}` after a partial run. Check `ran` and `failed`, preserve partial-output context, and do not blindly replay it. Recorded actions omit query and action-control entries. GUI action state persists; recording is not a read-only probe.
 
-Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
+`type.hitTest`, `type.caret`, and `type.navigate` provide document-coordinate/character-index editing aids; inspect the actual text layer and schema before using them. `layer.removeBackground` is a mask-based cutout, not proof of a generative fill capability. Camera Raw smart-filter settings, smart-object placement, and multi-instance effects need a save/reopen check.
+
+Headless MCP/serve use explicit read/write roots; absent roots grant no corresponding filesystem access. Desktop bridge paths are relative to its launch-time roots and reject absolute paths and escapes. TCP control authenticates before dispatch. Prefer token files; never expose token values in chat, logs, args or skills. A missing token file may be created, an existing one reused. Changes to ongoing access or file protection need the task's appropriate authorization.
+
+Over desktop control, use root-scoped `app.open`/`app.save`, not `file.open/save/saveAs/saveACopy`. Ambient-path commands, path-bearing preset/plugin operations, file-backed preference updates and desktop `image.mode.*` are restricted. Action playback does not bypass these restrictions. Use an authorized one-shot workflow or the GUI when necessary; never route around an access denial.
+
+## Formats, metadata and fidelity
+
+- Native `.pcraft`, PSD/PSB and layered TIFF preserve editable structures only to the extent the importer/exporter supports them. PSDT opens as an untitled template in the GUI. TIFF layers require `--tiff-layers` for CLI convert/run/batch or `tiffLayers:true` on documented save/export surfaces. Lab TIFF stays flat; extra alpha channels are not written. Reopen the TIFF and compare layers, masks and composite, rather than trusting its extension.
+- PNG/JPEG/TIFF/WebP/GIF/BMP/TGA/ICO/PNM/PFM/QOI/OpenEXR/Radiance HDR have codec paths. Official releases include optional read-only HEIC/HEIF; a build without the feature recognizes the format but reports it unsupported. AVIF encoding is optional and AVIF decoding is not implemented. Animated/multipage inputs currently import one frame/page with a warning.
+- Default flat-codec decode limits are 262,144 pixels per dimension, 268,435,456 pixels total and 2 GiB decoded allocation. These are codec limits, not a universal PSB size guarantee. Keep limits enabled; do not relax them for untrusted inputs. Large PSB improvements do not replace memory and layer-depth validation.
+- JPEG and Radiance HDR flatten transparency over white. Formats without ICC support convert RGB to sRGB, or linear sRGB for EXR/HDR; verify profiles and pixel values.
+- Metadata behavior is surface-specific. Exact source sets CLI conversion/save defaults to full document XMP; Export As starts at `metadata=none`. Layered PSD/PSB/.pcraft preserve full XMP. Do not treat CLI conversion as sanitization or invent a `--metadata` flag. A choice about XMP is not evidence that all EXIF/location data is removed. Inspect actual metadata before sharing.
+- Windows portable packaging includes the CLI/GUI and `portable.txt`; the marker redirects state to adjacent PhotoCraftData, with an application-data fallback if unwritable. Preserve that state. The C runtime is statically linked; Rust/SDK/WiX requirements in the packaging script concern building, not portable use.
 
 ## Source links
 
-- [Target-version release](https://github.com/storytold/photocraft/releases/tag/v0.3.0)
-- [apps/photocraft-cli/src/lib.rs](https://github.com/storytold/photocraft/blob/v0.3.0/apps/photocraft-cli/src/lib.rs)
-- [book/src/automation/cli.md](https://github.com/storytold/photocraft/blob/v0.3.0/book/src/automation/cli.md)
-- [book/src/automation/mcp.md](https://github.com/storytold/photocraft/blob/v0.3.0/book/src/automation/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/photocraft/blob/v0.3.0/docs/control-protocol.md)
-- [README.md](https://github.com/storytold/photocraft/blob/v0.3.0/README.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/photocraft/blob/v0.3.0/packaging/windows/package.ps1)
-
-No runtime helper scripts or executables are bundled with this skill.
+- [Target release and changes since 0.3.0](https://github.com/storytold/photocraft/releases/tag/v0.5.0)
+- [Exact CLI parser](https://github.com/storytold/photocraft/blob/v0.5.0/apps/photocraft-cli/src/lib.rs)
+- [CLI guide](https://github.com/storytold/photocraft/blob/v0.5.0/book/src/automation/cli.md)
+- [MCP guide](https://github.com/storytold/photocraft/blob/v0.5.0/book/src/automation/mcp.md)
+- [Control, actions and type methods](https://github.com/storytold/photocraft/blob/v0.5.0/docs/control-protocol.md)
+- [Automation restrictions](https://github.com/storytold/photocraft/blob/v0.5.0/crates/automation/src/workspace.rs)
+- [Raster formats and layered TIFF](https://github.com/storytold/photocraft/blob/v0.5.0/book/src/formats/raster-formats.md)
+- [Export defaults](https://github.com/storytold/photocraft/blob/v0.5.0/crates/io/src/lib.rs)
+- [Export As metadata default](https://github.com/storytold/photocraft/blob/v0.5.0/crates/ui-egui/src/export_dialog.rs)
+- [Windows packaging](https://github.com/storytold/photocraft/blob/v0.5.0/packaging/windows/package.ps1)

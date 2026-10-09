@@ -54,7 +54,9 @@ The tests exercise semantic-version comparisons, stable-release filtering, respo
 
 ### Verification record
 
-On 2026-10-09, all 35 mocked checker tests and the 12-skill structural checks passed. A bounded live metadata run covered all twelve upstream repositories. One initial CADCraft timeout was correctly reported as unknown; a separate targeted retry succeeded. The completed check found six newer stable releases and six matching targets, with no unresolved comparisons. No release assets were downloaded and no apps or skill version pins were changed by the check. Rerun the checker for current release information; this record is not a promise that those statuses remain current.
+Before the six-app target refresh on 2026-10-09, all 35 mocked checker tests and the 12-skill structural checks passed. A bounded live metadata run covered all twelve upstream repositories. One initial CADCraft timeout was correctly reported as unknown; a separate targeted retry succeeded. The completed check found six newer stable releases and six matching targets, with no unresolved comparisons. No release assets were downloaded and no apps or skill version pins were changed by the check. Rerun the checker for current release information; this record is not a promise that those statuses remain current.
+
+After the six target versions were refreshed later on 2026-10-09, a second bounded live check reported all twelve targets matching GitHub’s latest stable releases, with no unknown comparisons. This verified the manifest/release comparison only, not the installed applications. The 35 mocked checker tests also passed after the manifest update.
 
 ### A requested portable app update
 
@@ -64,21 +66,36 @@ On 2026-10-09, all 35 mocked checker tests and the 12-skill structural checks pa
 4. Download and extract the authorized portable release into a separate versioned folder alongside the existing app. Keep the old copy for the user to remove; do not overwrite it or change system-wide defaults incidentally.
 5. Run a bounded version/help/schema check and a small copied-file trial suited to the app. Read the changed official docs before updating the skill's target version/source pins, then rerun structural checks and relevant tests.
 
+## Current six-app Windows checks
+
+On 2026-10-09, bounded Windows x64 CLI trials used the six official portable releases below. Each archive matched both its published checksum file and GitHub asset digest. The CLI and GUI executable files had valid publisher signatures; CLI output and GUI file-version metadata matched the requested versions. GUI applications were not launched by these checks.
+
+| App version | Observed small-fixture behavior |
+| --- | --- |
+| DesignCraft 0.4.0 | Two source records merged into a new two-page document and PDF, with no reported warnings or overset; the source template hash stayed unchanged. |
+| EffectCraft 0.6.0 | CPU backend diagnostic, native project save/reopen, and a 64 × 48 frame render passed. |
+| FilmCraft 0.4.0 | Schema/preset reads, native project save/reopen, and a 64 × 48 blank-frame render passed. |
+| LightCraft 0.4.0 | Exposure adjustment and 16 × 12 to 8 × 6 resizing passed without changing the source image. Segmentation reported available, with the optional model absent. |
+| PhotoCraft 0.5.0 | Explicit layered TIFF retained two layer records; the default TIFF export reopened as one flattened layer. |
+| VectorCraft 0.7.0 | SVG, native, PDF, and PNG outputs reported no warnings; native paths and types were preserved, and the PNG was visually checked. |
+
+These trials do not establish GUI launch or library compatibility, GPU behavior, full-video export, model-dependent features, persistent MCP operation, or broad format fidelity. No segmentation model was downloaded or executed. FilmCraft codec/platform claims in the skill remain source-reviewed unless separately exercised on the intended host. Read each skill's version-pinned reference before using a newly documented feature.
+
 ## Recorded verification background
 
-Command references were checked against the exact upstream versions and commits in skills.json. The eleven app guides listed below have bounded Linux x86_64 CLI smoke coverage using release archives whose SHA-256 values matched release checksums and GitHub asset digests, on Debian 13 with glibc 2.41. These checks established only the following small-fixture behaviors:
+Current command references are pinned to the versions and commits in skills.json. The historical checks below apply only to the explicitly named app versions, not automatically to newer skill targets. Eleven apps received bounded Linux x86_64 CLI smoke checks using release archives whose SHA-256 values matched release checksums and GitHub asset digests, on Debian 13 with glibc 2.41. These checks established only the following small-fixture behaviors:
 
-- CADCraft: DXF create/save/reopen/render with geometry, units, and layers preserved
-- DeckCraft: PPTX title save/reopen/render
-- DesignCraft: editable native text-frame save/reopen/render
-- EffectCraft: native project reopen and a small CPU-rendered frame
-- FilmCraft: native project reopen and a small PNG frame render
-- GridCraft: XLSX formula retention and recalculation after saving again
-- LightCraft: exposure/rating persistence and PNG export
-- PhotoCraft: two-layer native/PSD save/reopen/edit
-- SoundCraft: session reopen and a byte-identical short WAV bounce
-- VectorCraft: editable native shapes and SVG path/render parity
-- WordCraft: DOCX text retention and rendering
+- CADCraft 0.3.0: DXF create/save/reopen/render with geometry, units, and layers preserved
+- DeckCraft 0.3.0: PPTX title save/reopen/render
+- DesignCraft 0.2.1: editable native text-frame save/reopen/render
+- EffectCraft 0.4.0: native project reopen and a small CPU-rendered frame
+- FilmCraft 0.2.1: native project reopen and a small PNG frame render
+- GridCraft 0.3.0: XLSX formula retention and recalculation after saving again
+- LightCraft 0.2.1: exposure/rating persistence and PNG export
+- PhotoCraft 0.3.0: two-layer native/PSD save/reopen/edit
+- SoundCraft 0.3.0: session reopen and a byte-identical short WAV bounce
+- VectorCraft 0.4.0: editable native shapes and SVG path/render parity
+- WordCraft 0.3.0: DOCX text retention and rendering
 
 Those checks do not certify every reference example, GUI behavior, GPU rendering, physical audio devices, large-file performance, complex format fidelity, or cross-platform interoperability. LightCraft timestamp metadata was not established as reliable. Availability of source code does not imply that a packaged binary exists for every platform. Recheck package provenance, prerequisites, app version, CLI schemas, and output fidelity on the actual host.
 

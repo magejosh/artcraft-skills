@@ -28,10 +28,10 @@
     {
       "skill": "effectcraft",
       "app": "EffectCraft",
-      "app_version": "0.7.0",
+      "app_version": "0.8.0",
       "upstream_repository": "https://github.com/storytold/effectcraft",
-      "source_tag": "v0.7.0",
-      "source_commit": "813c7c4650f0d4c805da620c8d5837c9600ad2e3"
+      "source_tag": "v0.8.0",
+      "source_commit": "f953cd2855bf36beffa6a4d608e9bf4b226e9442"
     },
     {
       "skill": "filmcraft",
@@ -68,10 +68,10 @@
     {
       "skill": "photocraft",
       "app": "PhotoCraft",
-      "app_version": "0.6.0",
+      "app_version": "0.7.0",
       "upstream_repository": "https://github.com/storytold/photocraft",
-      "source_tag": "v0.6.0",
-      "source_commit": "0c72d95425dece90ef9a1cceb49e3315c96e22d5"
+      "source_tag": "v0.7.0",
+      "source_commit": "79261615956ab21334e49ca1d384390272e647da"
     },
     {
       "skill": "soundcraft",

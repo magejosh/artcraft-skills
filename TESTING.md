@@ -89,6 +89,16 @@ GUI executable version resources matched all twelve targets, and their publisher
 
 The final bounded official release check completed on 2026-10-11 at 01:41:32 UTC. Eleven targets matched; PDFCraft 0.6.0 had just become available. After its package and guide refresh, all twelve installed package versions and skill targets matched that release snapshot, with no unknown comparisons. All twelve structural checks and all 35 mocked checker tests passed. The BOM fixture now writes explicit UTF-8 so the same test works under Windows legacy text encodings. This timestamp records a release snapshot, not a promise about future releases.
 
+## EffectCraft and PhotoCraft source and package refresh (2026-10-11)
+
+EffectCraft 0.8.0 and PhotoCraft 0.7.0 were reviewed against their matching tagged CLI source, automation implementations, format guides and release notes. Both official Windows x64 portable ZIPs matched GitHub asset SHA-256 and publisher checksums. Every extracted member passed ZIP CRC and matched its archive-member SHA-256; complete existing files were preserved. Earlier portable versions were retained.
+
+GUI FileVersion and ProductVersion matched 0.8.0 and 0.7.0 respectively. All four GUI/CLI executable publisher signatures were valid. These are file/package checks: no app CLI, GUI or GPU workflow was launched, and no settings migration or new runtime smoke test was performed. Historical runtime checks keep their recorded version scope.
+
+EffectCraft guidance now covers explicit keyframe time bases, Essential Graphics template CLI values, VP9 bitrate behavior, unsaved render-queue destinations and optional MCP filesystem confinement. PhotoCraft guidance now covers authorized absolute automation paths, OpenRaster losses, changed decode limits, shared Smart Object contents and recorded save actions. The tagged PhotoCraft control guide contains both old and updated path wording; the workspace implementation and its tests resolve that discrepancy.
+
+The twelve-skill structural check, all 35 offline update-checker tests and scoped whitespace checks passed. Matching installed skill names/routing and historical records were retained and validated; the optional YAML quick-validator could not run because PyYAML was absent, so preserved frontmatter, references, expected versions and fences were checked without adding a dependency. The final bounded metadata check on 2026-10-11 reported all twelve canonical targets matching the official latest stable releases, with zero unknown comparisons. This records a release snapshot, not a promise about future releases.
+
 ## Historical six-app Windows checks
 
 On 2026-10-09, bounded Windows x64 CLI trials used the six official portable releases below. Each archive matched both its published checksum file and GitHub asset digest. The CLI and GUI executable files had valid publisher signatures; CLI output and GUI file-version metadata matched the requested versions. GUI applications were not launched by these checks.

@@ -1,8 +1,8 @@
-# EffectCraft 0.7.0: CLI and format reference
+# EffectCraft 0.8.0: CLI and format reference
 
 ## Evidence and use
 
-Commands and capability notes were reviewed against upstream tag v0.7.0, commit `813c7c4650f0d4c805da620c8d5837c9600ad2e3`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
+Commands and capability notes were reviewed against upstream tag v0.8.0, commit `f953cd2855bf36beffa6a4d608e9bf4b226e9442`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
 
 Bare `effectcraft-cli` and `effectcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files. Windows portable packaging includes both executables with a statically linked C runtime; no Visual C++ redistributable is required. Rust 1.95+ is a source-build prerequisite, not a packaged-runtime dependency. No FFmpeg runtime is needed.
 
@@ -26,6 +26,7 @@ effectcraft --control 9877
 effectcraft-cli mcp
 effectcraft-cli mcp --gpu
 effectcraft-cli mcp --bridge 9877
+effectcraft-cli render-frame --template title.ectemplate --values values.json --time 0 --out title.png
 ```
 
 GPU and control examples are optional modes, not prerequisites or permission to enable persistent access. A sample/demo operation creates synthetic content, not a copy of a GUI project.
@@ -34,12 +35,18 @@ GPU and control examples are optional modes, not prerequisites or permission to 
 
 - `exec COMMAND --params JSON` and positional `exec COMMAND JSON` are supported. `run` takes COMMAND/JSON pairs. Discover accepted keys with `commands --schemas --json`; unknown command parameters are rejected.
 - General CLI commands default to the demo unless `--project`, positional `.ecproj`, or `--empty` is supplied. JavaScript `script` and headless MCP default to an empty project. The GUI now starts empty too, unless `--demo` is requested.
-- Full `render` still opens the demo when no project is supplied, even with `--empty`. Always pass `--project` for a real render. `--save` overwrites; `--save-as` preserves the source. Full render rejects `--bridge`; live rendering uses discovered `renderQueue.add`/`renderQueue.render` commands.
-- Composition refs are IDs/names (`-` for active where supported); layers are IDs, names or `#n`, one-based from the top. Property paths come from `props`/`get_layer`, not guessed indexes. Times are seconds; keyframe times are layer time, which differs from composition time for offset/stretched layers.
+- Full `render` still opens the demo when no project is supplied, even with `--empty`. Pass `--project` for an existing project, or use the separate `--template` mode for an exported template. `--save` overwrites; `--save-as` preserves the source. Full render rejects `--bridge`; live rendering uses discovered `renderQueue.add`/`renderQueue.render` commands.
+- Composition refs are IDs/names (`-` for active where supported); layers are IDs, names or `#n`, one-based from the top. Property paths come from `props`/`get_layer`, not guessed indexes. Times are seconds. Engine `prop.set`, `prop.addKey`, `keys.set` and `keys.select`, and MCP `set_property`/`add_keyframe`, accept `timeBase: "layer" | "comp"`; omitted means layer time. `keys.set` applies it to both time and newTime. Supplied write times snap to the nearest composition frame before conversion to stored layer time; inspect returned layerTime/compTime and outside-range warnings on offset, stretched or reversed layers. `prop.get.time` is composition time. Do not invent a CLI --time-base flag.
 - `render` supports start/end seconds, work area, frame rate, resolution, quality, channels, audio and codec-specific flags. `render-frame` makes one PNG; `--transparent` preserves alpha. Check output-module schemas and settings instead of inferring codec/alpha from an extension.
 - JavaScript scripts use the documented After Effects-style object model. Script file/network access is constrained by the app's scripting preference; do not expand that permission as an incidental workaround.
 
 Render output `--out` paths are relative to the working directory in this version. Use an explicit intended destination. MCP documents progress/cancellation and preserves unsaved bridge work across restart; inspect job/project state before retrying an ambiguous mutation.
+
+## Essential Graphics template renders
+
+`render` and `render-frame` accept `--template FILE.ectemplate` and optional `--values FILE.json`. The values file must be a JSON object mapping control names to values, at most 1 MiB. Unknown controls or invalid values fail before rendering. Overrides affect one imported instance; the source template retains its defaults. Template mode rejects --project, --demo, --bridge, --queue, --comp and positional arguments. Choose a distinct explicit --out; do not overwrite either input.
+
+`renderQueue.add {template: NAME}` selects a Render Settings template, not an Output Module template. Inspect the output-module schema separately. An unsaved project's default queued output goes to Movies or home; explicit CLI --out still resolves against the working directory. VP9 WebM now honors CLI --bitrate.
 
 ## GPU diagnostics and 3D routing
 
@@ -71,21 +78,25 @@ MCP starts empty unless `--project` or `--demo` is given. Bridge mode uses `--br
 
 The control port is unauthenticated loopback JSON-lines, not HTTP. Enable it only for the task. Invalid/non-request input or lines over 4 MiB close the connection; at most 16 connections are served. Requests normally time out after 60 seconds. Inspect failure state before retrying a mutation; use supported job/queue state for long work. GUI fallback does not authorize disturbing an unrelated session.
 
-## Changes and verification for 0.7.0
+MCP `--automation-read-root DIR` / `--automation-write-root DIR` are repeatable. Supplying either enables confinement: reads may use a read or write root; writes require a write root. Command file paths must be absolute and resolve inside the roots, with no parent traversal or symlink escape. Implicit project/queue writes and batch steps are checked too. Scripts, installing scripts, Execute File and Reveal are refused while confined. With neither flag, this optional confinement is not enabled; do not assume PhotoCraft's fail-closed default applies.
 
-Ease Presets moved from core commands into a bundled ScriptUI extension. Scripts, panels and WebAssembly effects have distinct extension surfaces and side effects. Multilayer EXR, above-one floating-point values and OCIO handling improve; inspect channels, color transforms and rendered pixels on the intended project. This review does not include launching the application or executing these new workflows.
+## Changes and verification for 0.8.0
+
+Property/keyframe commands now honor explicit layer or composition time bases. CLI renders accept Essential Graphics templates with a JSON values file; VP9 WebM honors --bitrate. Render-queue defaults for an unsaved project go to the Movies folder or home, while an explicit CLI --out remains relative to the working directory. MCP can confine file access to explicit roots; confined sessions refuse scripts and application-launch commands. Verify timing, output paths and actual render results. This review does not include launching the application or executing these new workflows.
 
 ## Source links
 
-- [Target-version release and changelog](https://github.com/storytold/effectcraft/releases/tag/v0.7.0)
-- [CLI parser](https://github.com/storytold/effectcraft/blob/v0.7.0/apps/effectcraft-cli/src/main.rs)
-- [Agent workflow and MCP](https://github.com/storytold/effectcraft/blob/v0.7.0/docs/agents.md)
-- [Backend schema and diagnostics](https://github.com/storytold/effectcraft/blob/v0.7.0/crates/engine/src/commands/file.rs)
-- [3D renderer commands](https://github.com/storytold/effectcraft/blob/v0.7.0/crates/engine/src/commands/model3d.rs)
-- [Scripts, ScriptUI and effect extensions](https://github.com/storytold/effectcraft/blob/v0.7.0/docs/plugins.md)
-- [Render queue schema](https://github.com/storytold/effectcraft/blob/v0.7.0/crates/engine/src/commands/render_queue.rs)
-- [Control protocol](https://github.com/storytold/effectcraft/blob/v0.7.0/docs/control-protocol.md)
-- [Formats and limitations](https://github.com/storytold/effectcraft/blob/v0.7.0/README.md) and [compatibility assessment](https://github.com/storytold/effectcraft/blob/v0.7.0/docs/gaps.md)
-- [Windows packaging](https://github.com/storytold/effectcraft/blob/v0.7.0/packaging/windows/package.ps1)
+- [Template CLI validation](https://github.com/storytold/effectcraft/blob/v0.8.0/apps/effectcraft-cli/src/template.rs)
+- [MCP filesystem confinement](https://github.com/storytold/effectcraft/blob/v0.8.0/crates/automation/src/confine.rs)
+- [Target-version release and changelog](https://github.com/storytold/effectcraft/releases/tag/v0.8.0)
+- [CLI parser](https://github.com/storytold/effectcraft/blob/v0.8.0/apps/effectcraft-cli/src/main.rs)
+- [Agent workflow and MCP](https://github.com/storytold/effectcraft/blob/v0.8.0/docs/agents.md)
+- [Backend schema and diagnostics](https://github.com/storytold/effectcraft/blob/v0.8.0/crates/engine/src/commands/file.rs)
+- [3D renderer commands](https://github.com/storytold/effectcraft/blob/v0.8.0/crates/engine/src/commands/model3d.rs)
+- [Scripts, ScriptUI and effect extensions](https://github.com/storytold/effectcraft/blob/v0.8.0/docs/plugins.md)
+- [Render queue schema](https://github.com/storytold/effectcraft/blob/v0.8.0/crates/engine/src/commands/render_queue.rs)
+- [Control protocol](https://github.com/storytold/effectcraft/blob/v0.8.0/docs/control-protocol.md)
+- [Formats and limitations](https://github.com/storytold/effectcraft/blob/v0.8.0/README.md) and [compatibility assessment](https://github.com/storytold/effectcraft/blob/v0.8.0/docs/gaps.md)
+- [Windows packaging](https://github.com/storytold/effectcraft/blob/v0.8.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

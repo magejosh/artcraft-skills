@@ -18,12 +18,12 @@ Each app has its own skill folder, with a `SKILL.md` guide and a detailed comman
 | [CADCraft](skills/cadcraft/SKILL.md) | 2D drawings, CAD conversion, layers, and dimensions | 0.5.0 |
 | [DeckCraft](skills/deckcraft/SKILL.md) | Presentations, slide layouts, and slide exports | 0.5.0 |
 | [DesignCraft](skills/designcraft/SKILL.md) | Page layouts, publications, and text flow | 0.6.0 |
-| [EffectCraft](skills/effectcraft/SKILL.md) | Motion graphics, compositions, and animation | 0.7.0 |
+| [EffectCraft](skills/effectcraft/SKILL.md) | Motion graphics, compositions, and animation | 0.8.0 |
 | [FilmCraft](skills/filmcraft/SKILL.md) | Video timelines, captions, and exports | 0.6.0 |
 | [GridCraft](skills/gridcraft/SKILL.md) | Spreadsheets, formulas, charts, and print output | 0.5.0 |
 | [LightCraft](skills/lightcraft/SKILL.md) | Photo development, culling, and batch exports | 0.6.0 |
 | [PDFCraft](skills/pdfcraft/SKILL.md) | PDF inspection, page organization, annotations, and forms | 0.6.0 |
-| [PhotoCraft](skills/photocraft/SKILL.md) | Layered image editing, masks, and adjustments | 0.6.0 |
+| [PhotoCraft](skills/photocraft/SKILL.md) | Layered image editing, masks, and adjustments | 0.7.0 |
 | [SoundCraft](skills/soundcraft/SKILL.md) | Audio sessions, mixing, and rendering | 0.5.0 |
 | [VectorCraft](skills/vectorcraft/SKILL.md) | Vector artwork, paths, and artboards | 0.9.0 |
 | [WordCraft](skills/wordcraft/SKILL.md) | Documents, styles, tracked changes, and conversion | 0.5.0 |

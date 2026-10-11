@@ -9,7 +9,7 @@ Edit layered images and automate approved batches in PhotoCraft.
 
 ## Target version and setup
 
-Written for PhotoCraft 0.6.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/photocraft.
+Written for PhotoCraft 0.7.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/photocraft.
 
 - Discover the CLI from `photocraft-cli` on PATH, or set `PHOTOCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version with `--version` and inspect top-level `--help`; both are supported at this target version. Compare with release/package metadata. Do not assume every subcommand accepts `--help`.
@@ -35,7 +35,7 @@ The command examples in the reference use synthetic relative filenames. Substitu
 ## Workflow
 
 1. Confirm source image, layer/selection scope, dimensions, color mode/depth/profile, edits, and deliverable formats.
-2. Inspect document/layer structure and command parameters before applying filters or adjustments. Work on an editable copy; retain masks and smart objects unless flattening is requested.
+2. Inspect document/layer structure and command parameters before applying filters or adjustments. Work on an editable copy; retain masks and smart objects unless flattening is requested. Duplicated Smart Objects can share contents, so check every instance affected by a contents edit.
 3. Test action batches on one representative copied file before processing a folder; define collision/overwrite behavior and preserve originals.
 4. Use GUI for selections, brush work, masks, typography, and visual comparisons where command automation is unsuitable. Version 0.5.0 exposes Patch, Mixer Brush, Content-Aware Move, Magnetic Lasso, vertical type, smart-object content editing, and improved Camera Raw controls. Verify the chosen tool on a copied layer before relying on it.
 5. For reusable action steps, discover `actions.list/get/record/stop/play`; inspect a playback result for `failed` even if the outer command succeeded. Recording and replay can affect persistent action state. For TIFF masters request layers explicitly; ordinary headless TIFF output is flat.
@@ -50,7 +50,7 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 ## Formats and limits
 
-PSD/PSB, .pcraft, PSDT templates, layered TIFF, and common raster formats; RGB/Gray/CMYK/Lab and 8/16/32-bit modes. Official builds include read-only HEIC/HEIF support. AVIF is optional encoding, not decoding. Animated images and multipage TIFF import only one frame/page with a warning. Consult the reference for decode limits and format-specific losses; do not infer read/write symmetry from an extension.
+PSD/PSB, .pcraft, PSDT templates, layered TIFF, OpenRaster .ora, and common raster formats; RGB/Gray/CMYK/Lab and 8/16/32-bit modes. Official builds include read-only HEIC/HEIF support. AVIF is optional encoding, not decoding. Animated images and multipage TIFF import only one frame/page with a warning. Consult the reference for decode limits and format-specific losses; do not infer read/write symmetry from an extension.
 
 PSD round trips are not byte-identical. Early-alpha typography, plug-in, and generative gaps remain. portable.txt routes settings/presets/autosave/startup state to adjacent PhotoCraftData, with %APPDATA%\Photocraft fallback if unwritable. Do not remove the marker or mutate configuration casually. Source-optional craft-fonts is included in desktop releases. Windows packages statically link the C runtime, so the packaging script does not require the Visual C++ redistributable. Rust, Windows SDK and WiX are source-build tools, not instructions to install them for portable use.
 
@@ -60,8 +60,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Apply sharpening and a curves adjustment to a copied PSD, retain an editable master, and inspect a PNG export.”
 
-## Changes in 0.6.0
+## Changes in 0.7.0
 
-SVG opens as editable shape layers and places as a vector smart object. CLI info, convert and run report missing-font fallbacks. Layered TIFF and metadata handling improve; inspect layer structure, warnings and metadata rather than assuming lossless preservation or sanitization. A bridge edit with a lost reply must not be blindly replayed. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+Automation accepts absolute paths beneath its authorized read/write roots while retaining traversal and escape checks. OpenRaster opens and saves layers/groups, with unsupported content rendered or warned about. Duplicated Smart Objects can share contents; inspect all affected instances. Recorded actions can include Save/Save As, so review output paths and nested failures before replay or batch processing. These changes do not establish lossless format preservation. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
 
-Target app version: PhotoCraft 0.6.0. If the installed or globally available PhotoCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/photocraft before relying on these commands.
+Target app version: PhotoCraft 0.7.0. If the installed or globally available PhotoCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/photocraft before relying on these commands.

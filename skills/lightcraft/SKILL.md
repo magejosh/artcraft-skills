@@ -9,7 +9,7 @@ Develop and organize photographs while preserving originals and library state.
 
 ## Target version and setup
 
-Written for LightCraft 0.4.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/lightcraft.
+Written for LightCraft 0.6.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/lightcraft.
 
 - Discover the CLI from `lightcraft-cli` on PATH, or set `LIGHTCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version with `--version` and inspect top-level `--help`; both are supported at this target version. Compare with release/package metadata. Do not assume every subcommand accepts `--help`.
@@ -50,11 +50,11 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 ## Formats and limits
 
-RAW: DNG, CR2, ARW (including downsized lossless variants), NEF/NRW, uncompressed RAF/ORF, Panasonic RW2/RAW, Leica RWL, PEF; common raster formats and PSD composites/JPEG XL. Export JPEG/PNG/TIFF/WebP/AVIF/DNG/original; XMP sidecars.
+RAW: DNG, CR2, supported CR3/CRX, ARW (including downsized lossless variants), NEF/NRW, supported uncompressed/compressed RAF and uncompressed ORF, Panasonic RW2/RAW, Leica RWL, PEF; common raster formats and PSD composites/JPEG XL. Export JPEG/PNG/TIFF/WebP/AVIF/DNG/original; XMP sidecars.
 
-CR3 and compressed RAF/ORF still use embedded previews only. DNG reads embedded profile looks; ARW/NEF/RW2 can estimate a starting look from their camera JPEG while output remains RAW-derived, with fallback when fitting fails. Per-model profiles can change the result; these are camera-look estimates, not measured calibration. Subject/sky remain heuristic; optional SAM 3 Object/Describe masks are distinct. AI denoise/super-resolution remains missing. Bare launch opens the default Pictures library; folder launch scans/imports. Enumerate preset IDs rather than assuming an old four-preset list.
+Supported CR3/CRX and compressed RAF now decode RAW sensor data; unsupported CR3 variants and compressed ORF can still use embedded previews only. DNG reads embedded profile looks; ARW/NEF/RW2 can estimate a starting look from their camera JPEG while output remains RAW-derived, with fallback when fitting fails. Per-model profiles can change the result; these are camera-look estimates, not measured calibration. Subject/sky remain heuristic; optional SAM 3 Object/Describe masks are distinct. AI RAW denoise is an optional model workflow; do not infer super-resolution support. Bare launch opens the default Pictures library; folder launch scans/imports. Enumerate preset IDs rather than assuming an old four-preset list.
 
-SAM 3 weights are not bundled: approximately 3.4 GB, separate license approval, and no built-in download mirrors at this tag. The desktop enables the feature; a standalone default CLI build omits it, so inspect `segment.model.status` on the actual packaged executable rather than assuming availability. It uses Metal on macOS and CPU elsewhere, including Windows. Stored masks render without the model. Do not install models, configure mirrors/tokens, or accept licenses as a side effect of ordinary photo work. Official Windows packages statically link the C runtime; source-build tooling is not a portable runtime prerequisite.
+SAM 3 weights are not bundled: approximately 3.4 GB, separate license approval, and no built-in download mirrors at this tag. The desktop enables the feature; a standalone default CLI build omits it, so inspect `segment.model.status` on the actual packaged executable rather than assuming availability. Local SAM inference uses Metal on macOS and CPU elsewhere, including Windows; optional remote-worker mode transmits photo data and prompts to the configured worker. Stored masks render without the model. Do not install models, configure mirrors/tokens, or accept licenses as a side effect of ordinary photo work. Official Windows packages statically link the C runtime; source-build tooling is not a portable runtime prerequisite.
 
 Distinguish source-build dependencies from packaged-runtime requirements. Check the matching platform release and linked packaging documentation before installing extra dependencies.
 
@@ -62,4 +62,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Apply +0.5 exposure to one JPEG and export a separate file, then review before processing the rest of the folder.”
 
-Target app version: LightCraft 0.4.0. If the installed or globally available LightCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/lightcraft before relying on these commands.
+## Changes in 0.6.0
+
+Supported CR3/CRX and compressed Fujifilm RAF inputs now decode sensor data. Face detection/recognition and AI RAW denoise are optional model workflows, not bundled prerequisites for ordinary development. Existing libraries may retain preview-derived state; verify decoded source status and a representative full-resolution export before batch work. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+Process versions preserve existing edits when newer looks are introduced; do not change a photo process version incidentally. Library catalog format v4 and Lightroom import/keyword/folder workflows need the intended library and a backup before an authorized migration. HEIC/HEIF is included in feature-enabled releases. Contact-sheet PDF export is distinct from a photo export and can replace an existing PDF. These additional release findings have not been execution-tested.
+
+Target app version: LightCraft 0.6.0. If the installed or globally available LightCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/lightcraft before relying on these commands.

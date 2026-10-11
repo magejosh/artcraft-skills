@@ -15,20 +15,20 @@ Each app has its own skill folder, with a `SKILL.md` guide and a detailed comman
 
 | Skill | Helps with | Written for |
 | --- | --- | --- |
-| [CADCraft](skills/cadcraft/SKILL.md) | 2D drawings, CAD conversion, layers, and dimensions | 0.3.0 |
-| [DeckCraft](skills/deckcraft/SKILL.md) | Presentations, slide layouts, and slide exports | 0.3.0 |
-| [DesignCraft](skills/designcraft/SKILL.md) | Page layouts, publications, and text flow | 0.4.0 |
-| [EffectCraft](skills/effectcraft/SKILL.md) | Motion graphics, compositions, and animation | 0.6.0 |
-| [FilmCraft](skills/filmcraft/SKILL.md) | Video timelines, captions, and exports | 0.4.0 |
-| [GridCraft](skills/gridcraft/SKILL.md) | Spreadsheets, formulas, charts, and print output | 0.3.0 |
-| [LightCraft](skills/lightcraft/SKILL.md) | Photo development, culling, and batch exports | 0.4.0 |
-| [PDFCraft](skills/pdfcraft/SKILL.md) | PDF inspection, page organization, annotations, and forms | 0.4.0 |
-| [PhotoCraft](skills/photocraft/SKILL.md) | Layered image editing, masks, and adjustments | 0.5.0 |
-| [SoundCraft](skills/soundcraft/SKILL.md) | Audio sessions, mixing, and rendering | 0.3.0 |
-| [VectorCraft](skills/vectorcraft/SKILL.md) | Vector artwork, paths, and artboards | 0.7.0 |
-| [WordCraft](skills/wordcraft/SKILL.md) | Documents, styles, tracked changes, and conversion | 0.3.0 |
+| [CADCraft](skills/cadcraft/SKILL.md) | 2D drawings, CAD conversion, layers, and dimensions | 0.5.0 |
+| [DeckCraft](skills/deckcraft/SKILL.md) | Presentations, slide layouts, and slide exports | 0.5.0 |
+| [DesignCraft](skills/designcraft/SKILL.md) | Page layouts, publications, and text flow | 0.6.0 |
+| [EffectCraft](skills/effectcraft/SKILL.md) | Motion graphics, compositions, and animation | 0.7.0 |
+| [FilmCraft](skills/filmcraft/SKILL.md) | Video timelines, captions, and exports | 0.6.0 |
+| [GridCraft](skills/gridcraft/SKILL.md) | Spreadsheets, formulas, charts, and print output | 0.5.0 |
+| [LightCraft](skills/lightcraft/SKILL.md) | Photo development, culling, and batch exports | 0.6.0 |
+| [PDFCraft](skills/pdfcraft/SKILL.md) | PDF inspection, page organization, annotations, and forms | 0.6.0 |
+| [PhotoCraft](skills/photocraft/SKILL.md) | Layered image editing, masks, and adjustments | 0.6.0 |
+| [SoundCraft](skills/soundcraft/SKILL.md) | Audio sessions, mixing, and rendering | 0.5.0 |
+| [VectorCraft](skills/vectorcraft/SKILL.md) | Vector artwork, paths, and artboards | 0.9.0 |
+| [WordCraft](skills/wordcraft/SKILL.md) | Documents, styles, tracked changes, and conversion | 0.5.0 |
 
-PDFCraft was previously named PrintCraft. This collection uses the updated [PDFCraft 0.4.0](https://github.com/storytold/pdfcraft) skill.
+PDFCraft was previously named PrintCraft. This collection uses the updated [PDFCraft 0.6.0](https://github.com/storytold/pdfcraft) skill.
 
 The versions above identify the app releases these guides were written for. If you have a newer release, the skill points your assistant to that app's official documentation before it uses older commands.
 

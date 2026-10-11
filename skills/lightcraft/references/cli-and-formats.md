@@ -1,8 +1,8 @@
-# LightCraft 0.4.0: CLI and format reference
+# LightCraft 0.6.0: CLI and format reference
 
 ## Evidence and use
 
-Checked against official tag v0.4.0, commit `2472021091a28eb93a05947cfc9b941d3911543a`, including CLI parsing, export implementation, camera-look and AI-mask documentation. These are source/documentation findings, not a claim that these examples or Windows UI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
+Checked against official tag v0.6.0, commit `9e6c4c6fc9c7a7f192ce846c00ceb531e0f64dda`, including CLI parsing, export implementation, camera-look and AI-mask documentation. These are source/documentation findings, not a claim that these examples or Windows UI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `lightcraft-cli` and `lightcraft` names below are grammar shorthand. Resolve each executable as described in SKILL.md, substitute authorized inputs for synthetic relative filenames and preserve originals. No runtime helper scripts, models or executables are bundled with this skill.
 
@@ -36,6 +36,8 @@ lightcraft --memory
 - `run` supports `--demo`, `--library`, repeated `--import`, `--connect`, `--script FILE|-`, and `--keep-going`. Tokens without `=` start commands; values parse as JSON or strings. JSONL records accept `{command,params}` or `{method,params}`. Inspect each `ok/result/error` record and stop on failure unless a deliberate keep-going workflow was requested.
 - `--version` and top-level `--help` are supported. Use a full `HOST:PORT` with separated `--connect`; the optional address recognizer requires a colon. Bare `--connect` uses the default port. The connection-failure hint now reports the actual attempted port.
 
+For an approved selection, `export.contactSheet` accepts an explicit output `path`, optional `ids`, `paper=a4|letter`, `columns`, `rows`, `captions` and `landscape`. It writes a paginated PDF and replaces an existing destination; select a distinct output and inspect every caption/page. This is not a rendered-photo export or a sanitized-original copy.
+
 ## Snapshot and merge routing
 
 `snapshot [--demo|--library DIR] [--script FILE] [-o OUT.png] [--size WxH] [--scale S] [FILES...]` runs the full UI headlessly on CPU, with no desktop window or GPU. Defaults are 1600×1000 points at scale 1. JSONL scripts can send `ui.settle {timeoutMs?}` and `ui.screenshot`; inspect settled state before judging a preview. Screenshots are UI images, not photo exports. A persistent library or supplied files still have normal library/import semantics.
@@ -45,17 +47,19 @@ The CLI also has `merge hdr|panorama|hdr-panorama` and `synth-merge`. Actual mer
 ## RAW, profiles and library changes
 
 - DNG uses embedded camera matrices and profile HueSatMap/LookTable/ToneCurve. ARW/NEF/RW2 can fit a starting look to their embedded camera JPEG when calibration is absent; output pixels still come from the RAW mosaic. Failed fits retain fallback behavior. Older Sony metadata and downsized lossless ARW, Nikon 12-bit black levels, and Panasonic RW2/RAW/Leica RWL support improve in this release.
-- CR3 reads fuller container previews/metadata but remains embedded-preview-only. Compressed RAF/ORF remain preview-only. Treat temporary camera JPEGs during culling as stand-ins, not successful RAW development; wait for `source:render` and settled jobs before evaluating a decoded image.
+- Supported CR3/CRX lossless Bayer and 0x100/0x200 C-RAW and Fujifilm lossless/lossy compressed Bayer/X-Trans RAF decode sensor data. Unsupported CR3 variants and compressed ORF still fall back to embedded previews when available. Treat temporary camera JPEGs during culling as stand-ins, not successful RAW development; wait for `source:render` and settled jobs before evaluating a decoded image.
 - `calibrate [--max N] [--out DIR] INPUTS...` scans ARW/NEF/NRW, with 300 files default and zero meaning all; at least five usable photos per camera model are needed. RW2 is not collected by this command. Explicit `--out` avoids writing into the live profile directory; otherwise `LIGHTCRAFT_CAMERA_PROFILES` or the application config's `camera-profiles` is used. New profiles there affect later rendering and are read once per process.
 - A built-in ILCE-7M4 profile ships in source. Profiles are camera-look estimates, not measured spectral calibration or a guarantee of matching another application. Uncalibrated Sony/Nikon/Panasonic white balance is relative around the as-shot look; do not present its neutral 6500/0 reference as measured capture temperature.
-- XMP face regions can appear in loupe/People views; this is imported metadata, not evidence of face recognition. Recently Deleted restoration, stable-seed random sorting/reshuffle and File Path smart-album rules are available. These library mutations need the intended library and scope, not a generic preview.
+- XMP face regions can appear in loupe/People views. Optional YuNet face detection and recognition models now support People workflows; check model status and distinguish imported regions from detected/recognized results. Models are not bundled. Recently Deleted restoration, stable-seed random sorting/reshuffle and File Path smart-album rules are available. These library mutations need the intended library and scope, not a generic preview.
 - JPEG/PNG/TIFF/WebP and other common raster decoders, PSD composites and JPEG XL are documented; export supports JPEG/PNG/TIFF/lossless WebP/AVIF/DNG/original. Build features can limit AVIF/JPEG XL. Preserve original files and disclose composite-only/preview-only inputs.
 
 ## Optional AI masks and prerequisites
 
-Object and Describe masks use optional SAM 3, distinct from heuristic Subject/Sky masks. At this tag the desktop enables the feature; a standalone default CLI build and the web build omit it. Windows packaging builds the desktop and CLI together, so shared engine features may differ from a standalone CLI build. Metal accelerates it on macOS; Windows/Linux use CPU. Discover `segment.model.status` through the intended session to check `available`, `installed`, `busy` and download state. Merely finding a command in a schema does not establish a usable model.
+Object and Describe masks use optional SAM 3, distinct from heuristic Subject/Sky masks. At this tag the desktop enables the feature; a standalone default CLI build and the web build omit it. Windows packaging builds the desktop and CLI together, so shared engine features may differ from a standalone CLI build. Metal accelerates it on macOS; Windows/Linux use CPU. Discover `segment.model.status` through the intended session to check `available`, `installed`, `remote`, `busy` and download state. Merely finding a command in a schema does not establish a usable model.
 
 The weights are approximately 3.4 GB, not bundled, and governed by a separate license. Built-in download mirrors are empty at this tag; user-configured mirrors or a separately authorized model installation are needed. Do not download weights, set credentials, configure persistent access, or send `segment.model.download {acknowledged:true}` without the necessary user approval and license disclosure. Never copy tokens from documentation into commands or notes.
+
+Optional AI RAW denoise has separate opt-in models and CPU/GPU inference. Check its status and a full-resolution sample before using it. SAM 3 remote-worker mode sends photo data/prompts to a configured worker; endpoint presence is not a health check. Configure or transmit only within the requested task. No local SAM weights are needed in remote mode.
 
 Mask coordinates are normalized to the uncropped, oriented photo. Object clicks are capped at 64, and a selection retains at most four bounded detail patches. Desktop mask commands can return `pending:true`; wait for completion before checking mask/export results. Headless model-capable builds wait. Stored segmentation renders/exports without the model; changing the photo's look does not automatically recompute it.
 
@@ -65,15 +69,21 @@ Windows portable packages statically link the C runtime and include release font
 
 Control is unauthenticated loopback; use it only for a verified task-owned process. Never open a persistent library in another headless process while the GUI owns it; connect to the owning app instead. `--memory` is throwaway; `--library` saves edits. Bare GUI launch opens its default Pictures library, and a folder launch scans/imports. A portable package is not necessarily a separate library/configuration sandbox.
 
+## Changes and verification for 0.6.0
+
+Supported CR3/CRX and compressed Fujifilm RAF inputs now decode sensor data. Face detection/recognition and AI RAW denoise are optional model workflows, not bundled prerequisites for ordinary development. Existing libraries may retain preview-derived state; verify decoded source status and a representative full-resolution export before batch work. This review does not include launching the application or executing these new workflows.
+
+Process versions preserve existing edits when newer looks are introduced; do not change a photo process version incidentally. Library catalog format v4 and Lightroom import/keyword/folder workflows need the intended library and a backup before an authorized migration. HEIC/HEIF is included in feature-enabled releases. Contact-sheet PDF export is distinct from a photo export and can replace an existing PDF. These additional release findings have not been execution-tested.
+
 ## Source links
 
-- [Target release and changes since 0.2.1](https://github.com/storytold/lightcraft/releases/tag/v0.4.0)
-- [Exact CLI parser](https://github.com/storytold/lightcraft/blob/v0.4.0/apps/lightcraft-cli/src/main.rs)
-- [Preset catalogue](https://github.com/storytold/lightcraft/blob/v0.4.0/crates/engine/src/presets.rs)
-- [Export behavior and metadata](https://github.com/storytold/lightcraft/blob/v0.4.0/crates/engine/src/export.rs)
-- [Camera-look estimates and profiles](https://github.com/storytold/lightcraft/blob/v0.4.0/docs/camera-preview-colour.md)
-- [AI-mask requirements and commands](https://github.com/storytold/lightcraft/blob/v0.4.0/docs/ai-masks.md)
-- [MCP guide](https://github.com/storytold/lightcraft/blob/v0.4.0/docs/mcp.md)
-- [Control and headless snapshots](https://github.com/storytold/lightcraft/blob/v0.4.0/docs/control-protocol.md)
-- [Codec capabilities](https://github.com/storytold/lightcraft/blob/v0.4.0/crates/codecs/src/lib.rs)
-- [Windows packaging](https://github.com/storytold/lightcraft/blob/v0.4.0/packaging/windows/package.ps1)
+- [Target release and changes since 0.2.1](https://github.com/storytold/lightcraft/releases/tag/v0.6.0)
+- [Exact CLI parser](https://github.com/storytold/lightcraft/blob/v0.6.0/apps/lightcraft-cli/src/main.rs)
+- [Preset catalogue](https://github.com/storytold/lightcraft/blob/v0.6.0/crates/engine/src/presets.rs)
+- [Export behavior and metadata](https://github.com/storytold/lightcraft/blob/v0.6.0/crates/engine/src/export.rs)
+- [Camera-look estimates and profiles](https://github.com/storytold/lightcraft/blob/v0.6.0/docs/camera-preview-colour.md)
+- [AI-mask requirements and commands](https://github.com/storytold/lightcraft/blob/v0.6.0/docs/ai-masks.md)
+- [MCP guide](https://github.com/storytold/lightcraft/blob/v0.6.0/docs/mcp.md)
+- [Control and headless snapshots](https://github.com/storytold/lightcraft/blob/v0.6.0/docs/control-protocol.md)
+- [Codec capabilities](https://github.com/storytold/lightcraft/blob/v0.6.0/crates/codecs/src/lib.rs)
+- [Windows packaging](https://github.com/storytold/lightcraft/blob/v0.6.0/packaging/windows/package.ps1)

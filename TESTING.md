@@ -66,7 +66,30 @@ After the six target versions were refreshed later on 2026-10-09, a second bound
 4. Download and extract the authorized portable release into a separate versioned folder alongside the existing app. Keep the old copy for the user to remove; do not overwrite it or change system-wide defaults incidentally.
 5. Run a bounded version/help/schema check and a small copied-file trial suited to the app. Read the changed official docs before updating the skill's target version/source pins, then rerun structural checks and relevant tests.
 
-## Current six-app Windows checks
+## Twelve-app source and package review (2026-10-11)
+
+The twelve targets below were reviewed against their official tagged CLI source, linked documentation and release notes. Each official Windows x64 portable archive matched both the GitHub asset SHA-256 and the publisher checksum file, passed ZIP CRC verification, and contained GUI/CLI executables and a README. Extraction preserved existing versions. The optional portable marker is package-specific, not a universal requirement.
+
+| App | Target | Evidence scope |
+| --- | --- | --- |
+| CADCraft | 0.5.0 | Tagged source/docs and portable package verification |
+| DeckCraft | 0.5.0 | Tagged source/docs and portable package verification |
+| DesignCraft | 0.6.0 | Tagged source/docs and portable package verification |
+| EffectCraft | 0.7.0 | Tagged source/docs and portable package verification |
+| FilmCraft | 0.6.0 | Tagged source/docs and portable package verification |
+| GridCraft | 0.5.0 | Tagged source/docs and portable package verification |
+| LightCraft | 0.6.0 | Tagged source/docs and portable package verification |
+| PDFCraft | 0.6.0 | Tagged source/docs and portable package verification |
+| PhotoCraft | 0.6.0 | Tagged source/docs and portable package verification |
+| SoundCraft | 0.5.0 | Tagged source/docs and portable package verification |
+| VectorCraft | 0.9.0 | Tagged source/docs and portable package verification |
+| WordCraft | 0.5.0 | Tagged source/docs and portable package verification |
+
+GUI executable version resources matched all twelve targets, and their publisher signatures were valid. No application CLI or GUI was launched for this review; no settings/library migration, model installation, live control, document editing or new runtime smoke test was performed. Version-resource and signature inspection are file metadata checks, not proof of launch, command behavior or output fidelity. Historical runtime checks below retain their original version scope. Verify relevant commands and a bounded copied-file trial when an application task separately authorizes execution.
+
+The final bounded official release check completed on 2026-10-11 at 01:41:32 UTC. Eleven targets matched; PDFCraft 0.6.0 had just become available. After its package and guide refresh, all twelve installed package versions and skill targets matched that release snapshot, with no unknown comparisons. All twelve structural checks and all 35 mocked checker tests passed. The BOM fixture now writes explicit UTF-8 so the same test works under Windows legacy text encodings. This timestamp records a release snapshot, not a promise about future releases.
+
+## Historical six-app Windows checks
 
 On 2026-10-09, bounded Windows x64 CLI trials used the six official portable releases below. Each archive matched both its published checksum file and GitHub asset digest. The CLI and GUI executable files had valid publisher signatures; CLI output and GUI file-version metadata matched the requested versions. GUI applications were not launched by these checks.
 

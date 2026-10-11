@@ -1,8 +1,8 @@
-# WordCraft 0.3.0: CLI and format reference
+# WordCraft 0.5.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.3.0, commit `7584b9b2930ffddfe7db96b6eba977262e55135c`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.5.0, commit `e4b7d155f15a7784197ba34eeea0b54490d70eb2`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `wordcraft-cli` and `wordcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -30,7 +30,7 @@ COMMAND, JSON, READ_DIR, WRITE_DIR, and PRIVATE_TOKEN_FILE are grammar placehold
 
 ## Exact grammar and traps
 
-`run` uses --file or --template, repeated --cmd ID[=JSON], --save, --print. It does not use --in/--out or implement run --script. --print emits command results, not physical print. `render` page is 1-based; control ui.clickText page is zero-based. Convert to PNG emits page 1 only; choose render --page for another page. PDF is not input. Recognizing DOCM/DOTX is not proof of macro preservation or safe execution.
+`run` uses --file or --template, repeated --cmd ID[=JSON], --save, --print. It does not use --in/--out or implement run --script. --print emits command results, not physical print. `render` page is 1-based; control ui.clickText page is zero-based. Convert to PNG emits page 1 only; choose render --page for another page. PDF is not input. The updated save path preserves DOCM macros/signatures and DOCM/DOTX/DOTM content types. Verify retained package parts and signature status; preservation is not permission to execute macros. LaTeX .tex import/export is available.
 
 ## Live control and MCP
 
@@ -38,14 +38,20 @@ MCP --connect HOST:PORT selects live mode. CLI run itself has no --connect. Head
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
+## Changes and verification for 0.5.0
+
+DOCM macros/signatures and DOTX/DOTM content types are preserved by the updated save path; verify retained package parts and signature status after editing. LaTeX .tex import/export is available, and DOCX charts/SmartArt/OLE preservation improves. Unknown CLI options are rejected before side effects. Live control now requires a per-window key. This review does not include launching the application or executing these new workflows.
+
+Live control requires the per-window key for every request, or an initial `auth` request. MCP reads `WORDCRAFT_CONTROL_KEY` or the port-specific key file and sends it only to loopback hosts; a restart replaces the key. Never publish key contents. Missing/wrong keys, invalid JSON and oversized lines close the connection. Verify the intended session and recover state before replaying any mutation; headless `run` does not use this channel.
+
 ## Source links
 
-- [Target-version release](https://github.com/storytold/wordcraft/releases/tag/v0.3.0)
-- [apps/wordcraft-cli/src/main.rs](https://github.com/storytold/wordcraft/blob/v0.3.0/apps/wordcraft-cli/src/main.rs)
-- [crates/engine/src/io.rs](https://github.com/storytold/wordcraft/blob/v0.3.0/crates/engine/src/io.rs)
-- [docs/mcp.md](https://github.com/storytold/wordcraft/blob/v0.3.0/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/wordcraft/blob/v0.3.0/docs/control-protocol.md)
-- [README.md](https://github.com/storytold/wordcraft/blob/v0.3.0/README.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/wordcraft/blob/v0.3.0/packaging/windows/package.ps1)
+- [Target-version release](https://github.com/storytold/wordcraft/releases/tag/v0.5.0)
+- [apps/wordcraft-cli/src/main.rs](https://github.com/storytold/wordcraft/blob/v0.5.0/apps/wordcraft-cli/src/main.rs)
+- [crates/engine/src/io.rs](https://github.com/storytold/wordcraft/blob/v0.5.0/crates/engine/src/io.rs)
+- [docs/mcp.md](https://github.com/storytold/wordcraft/blob/v0.5.0/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/wordcraft/blob/v0.5.0/docs/control-protocol.md)
+- [README.md](https://github.com/storytold/wordcraft/blob/v0.5.0/README.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/wordcraft/blob/v0.5.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

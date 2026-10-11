@@ -9,7 +9,7 @@ Work with local spreadsheets through GridCraft's command engine and GUI.
 
 ## Target version and setup
 
-Written for GridCraft 0.3.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/gridcraft.
+Written for GridCraft 0.5.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/gridcraft.
 
 - Discover the CLI from `gridcraft-cli` on PATH, or set `GRIDCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -51,7 +51,7 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 XLSX, CSV/TSV and native/debug JSON; HTML export. CSV/TSV/HTML use the active sheet. PDF requires a separate engine command, not CLI convert. XLSM/XLTX/XLTM recognition does not prove macro preservation.
 
-Pre-alpha. Slicers, Solver, chart trendlines, and true Page Layout view are roadmap items. No extra Windows runtime requirement documented; web source builds need Trunk and wasm. Formula compatibility is not guaranteed solely by a function count.
+Pre-alpha. Discover current command coverage before promising Slicers, Solver, chart trendlines or Page Layout behavior. No extra Windows runtime requirement documented; web source builds need Trunk and wasm. Formula compatibility is not guaranteed solely by a function count.
 
 Distinguish source-build dependencies from packaged-runtime requirements. Check the matching platform release and linked packaging documentation before installing extra dependencies.
 
@@ -59,4 +59,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Inspect B4:F15 in a budget workbook, bold the agreed header range in a copy, and verify totals after saving.”
 
-Target app version: GridCraft 0.3.0. If the installed or globally available GridCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/gridcraft before relying on these commands.
+## Changes in 0.5.0
+
+ODS and XLSB import covers worksheet data and cached values/results; do not infer full macros, formatting or formula interoperability. The release adds the A1# spill operator and Spanish formula entry, fixes LET/LAMBDA XLSX name handling and enforces locked cells/hidden formulas across commands. Check recalculation, protection and a saved/reopened copy. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+Target app version: GridCraft 0.5.0. If the installed or globally available GridCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/gridcraft before relying on these commands.

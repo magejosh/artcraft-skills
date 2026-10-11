@@ -9,7 +9,7 @@ Edit and render local audio sessions without disturbing audio devices or other r
 
 ## Target version and setup
 
-Written for SoundCraft 0.3.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/soundcraft.
+Written for SoundCraft 0.5.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/soundcraft.
 
 - Discover the CLI from `soundcraft-cli` on PATH, or set `SOUNDCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,4 +59,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Lower the demo Kick to -6 dB, bounce a new WAV, and inspect channel count, duration, and clipping.”
 
-Target app version: SoundCraft 0.3.0. If the installed or globally available SoundCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/soundcraft before relying on these commands.
+## Changes in 0.5.0
+
+Replacing a session now stops playback; same-named clip exports receive distinct filenames and Cut All Automation uses the clipboard. I/O Setup and Tempo Operations routing improve. Verify the intended session, tempo/stretch result, output count and audio devices; the release notes do not certify physical recording or playback. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+Target app version: SoundCraft 0.5.0. If the installed or globally available SoundCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/soundcraft before relying on these commands.

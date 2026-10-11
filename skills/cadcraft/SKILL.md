@@ -9,7 +9,7 @@ Create, inspect, edit, and convert CAD drawings with CADCraft.
 
 ## Target version and setup
 
-Written for CADCraft 0.3.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/cadcraft.
+Written for CADCraft 0.5.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/cadcraft.
 
 - Discover the CLI from `cadcraft-cli` on PATH, or set `CADCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,4 +59,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Inspect a DXF, change only an agreed layer, save a new DXF, and render a PNG preview.”
 
-Target app version: CADCraft 0.3.0. If the installed or globally available CADCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/cadcraft before relying on these commands.
+## Changes in 0.5.0
+
+Image exports now support explicit current-view, extents or drawing-window framing. Check units, clipping and framing before delivery; the default view is not a promise to fit every entity. The release also improves DXF entity, layer and dimension preservation, which still needs a round-trip check on the actual drawing. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+Target app version: CADCraft 0.5.0. If the installed or globally available CADCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/cadcraft before relying on these commands.

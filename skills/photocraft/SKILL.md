@@ -9,7 +9,7 @@ Edit layered images and automate approved batches in PhotoCraft.
 
 ## Target version and setup
 
-Written for PhotoCraft 0.5.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/photocraft.
+Written for PhotoCraft 0.6.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/photocraft.
 
 - Discover the CLI from `photocraft-cli` on PATH, or set `PHOTOCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version with `--version` and inspect top-level `--help`; both are supported at this target version. Compare with release/package metadata. Do not assume every subcommand accepts `--help`.
@@ -60,4 +60,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Apply sharpening and a curves adjustment to a copied PSD, retain an editable master, and inspect a PNG export.”
 
-Target app version: PhotoCraft 0.5.0. If the installed or globally available PhotoCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/photocraft before relying on these commands.
+## Changes in 0.6.0
+
+SVG opens as editable shape layers and places as a vector smart object. CLI info, convert and run report missing-font fallbacks. Layered TIFF and metadata handling improve; inspect layer structure, warnings and metadata rather than assuming lossless preservation or sanitization. A bridge edit with a lost reply must not be blindly replayed. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+Target app version: PhotoCraft 0.6.0. If the installed or globally available PhotoCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/photocraft before relying on these commands.

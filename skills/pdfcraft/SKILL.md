@@ -9,7 +9,7 @@ Work with PDF documents through PDFCraft's one-shot CLI, schema-driven automatio
 
 ## Target version and setup
 
-Written for PDFCraft 0.4.0. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/pdfcraft.
+Written for PDFCraft 0.6.0. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/pdfcraft.
 
 Discover `pdfcraft-cli` on PATH or set `PDFCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; use the matching platform build elsewhere. Resolve the GUI separately. Do not assume an installation directory, a running app, or that older `printcraft-cli` instructions apply unchanged.
 
@@ -43,15 +43,21 @@ if (-not $cli) { $cli = (Get-Command pdfcraft-cli -ErrorAction Stop).Source }
 ## Forms, OCR, and output checks
 
 - Inspect `form_fields` before filling fields. Match exact names, field types, options, and read-only flags; then save, reopen, inspect values, and render appearances. A visible typed signature is not proof of cryptographic signing.
-- Check `ocr_status` before OCR. Use a small copied-file trial, verify recognized text against the image, and save a separate searchable PDF. Do not assume OCR models or additional languages are installed.
+- Check `ocr_status` before OCR. Use a small copied-file trial, verify recognized text against the image, and save a separate searchable PDF. The desktop release ships OCR resources; check the actual package/session before requesting more models or languages.
 - Reopen every saved PDF and check page count, order, rotation, text, metadata, and requested form/annotation changes. Render affected pages; compare important pages at a readable resolution.
 - For redaction, verify removal from extracted text, hidden content, and saved bytes with appropriate independent tooling. A black rectangle is not sufficient. Preserve the signed original and verify signature status independently after any edit.
 - Report actual output paths, changes, warnings, and what was verified. Distinguish documentation-supported features from runtime-tested behavior; file existence or exit code zero alone does not prove fidelity.
 
 ## Important limits
 
-PDFCraft 0.4.0 exposes tools for content editing, Office export, accessibility checks, PDF/A workflows, comparison, and optimization as well as page operations. Coverage varies: the version-pinned roadmap notes gaps in complex text editing, OCR beyond Latin script, Office interoperability, XFA, preflight, and signature long-term validation. Discover the relevant schema and test the actual document; a menu item or tool name is not a fidelity guarantee.
+PDFCraft 0.6.0 exposes tools for content editing, Office export, accessibility checks, PDF/A workflows, comparison, and optimization as well as page operations. Coverage varies; complex text edits, script coverage, Office interoperability, XFA, preflight and long-term signature validation require document-specific checks. Discover the relevant schema and test the actual document; a menu item or tool name is not a fidelity guarantee.
 
-The CLI's `render` command in 0.4.0 writes real PNG, JPEG, TIFF, or PAM according to the output suffix. This differs from older instructions that describe PAM-only output. Automation `page_render` returns PNG.
+The CLI's `render` command at this target version writes real PNG, JPEG, TIFF, or PAM according to the output suffix. This differs from older instructions that describe PAM-only output. Automation `page_render` returns PNG.
 
-Target app version: PDFCraft 0.4.0. If the installed or globally available PDFCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/pdfcraft before relying on these commands.
+## Changes in 0.6.0
+
+Desktop release packages now ship OCR resources. Check ocr_status in the actual session before OCR instead of immediately requesting a download. Compact MCP exposes a core tool set plus discovery; use the returned schemas for advanced operations. Package presence does not establish OCR accuracy or signature validity. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+PDF/A verification now checks the output-intent color space; image-to-PDF creation retains embedded ICC profiles. The release also improves encrypted-document signing, certificate constraints, OCR/batch result preservation and annotation/page organization. Check the exact schemas, per-file results, saved copies and independent signature/standard validation. Windows portable launches can hand documents to the existing instance, so verify the target window instead of assuming a fresh isolated process. These are tagged-source and release-note findings, not runtime tests.
+
+Target app version: PDFCraft 0.6.0. If the installed or globally available PDFCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/pdfcraft before relying on these commands.

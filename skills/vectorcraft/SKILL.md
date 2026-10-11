@@ -9,7 +9,7 @@ Create and convert local vector artwork with VectorCraft while preserving editab
 
 ## Target version and setup
 
-Written for VectorCraft 0.7.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/vectorcraft.
+Written for VectorCraft 0.9.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/vectorcraft.
 
 - Discover the CLI from `vectorcraft-cli` on PATH, or set `VECTORCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version with `--version` and inspect top-level `--help`; both are supported at this target version. Compare with release/package metadata. Do not assume every subcommand accepts `--help`.
@@ -59,4 +59,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Convert an existing native drawing to a new PDF and check artboards, text, gradients, and clipping.”
 
-Target app version: VectorCraft 0.7.0. If the installed or globally available VectorCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/vectorcraft before relying on these commands.
+## Changes in 0.9.0
+
+CLI/export .ai output now follows Save As; selected-artboard SVG export excludes other art, while SVG round trips retain hidden objects and data-* attributes. PDF retains text with embedded subset fonts and raster exports omit guides. Check artboard boundaries, layers, font fallback and searchable text in the actual output. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+PDF import now clips to the crop box, reports missing fonts at open, and improves packaging of transitive placed links. Batch steps can reference earlier results; inspect every result and failure before saving. An app.quit request can report that it asked for confirmation; do not infer that the process exited. These additional release findings have not been execution-tested.
+
+Target app version: VectorCraft 0.9.0. If the installed or globally available VectorCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/vectorcraft before relying on these commands.

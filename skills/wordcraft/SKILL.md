@@ -9,7 +9,7 @@ Create, inspect, edit, and convert word-processing documents with WordCraft.
 
 ## Target version and setup
 
-Written for WordCraft 0.3.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/wordcraft.
+Written for WordCraft 0.5.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/wordcraft.
 
 - Discover the CLI from `wordcraft-cli` on PATH, or set `WORDCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -49,7 +49,7 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 ## Formats and limits
 
-Open DOCX/DOCM/DOTX, text, Markdown, HTML, RTF, ODT, native JSON; export DOCX/PDF/text/Markdown/HTML/RTF/ODT/PNG/JSON. PDF is output-only; legacy binary DOC is unverified. PNG convert outputs page 1.
+Open DOCX/DOCM/DOTX/DOTM, LaTeX .tex, text, Markdown, HTML, RTF, ODT, native JSON; export DOCX/PDF/text/Markdown/HTML/RTF/ODT/PNG/JSON/LaTeX. PDF is output-only; legacy binary DOC is unverified. PNG convert outputs page 1.
 
 Charts, SmartArt, equation editor, Draw tab, and native printing are roadmap work. Offline proofing uses public-domain Moby data. No external Windows portable runtime dependency is documented.
 
@@ -59,4 +59,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Inspect a DOCX, bold one agreed text selection in a copy, convert to PDF, and review pagination.”
 
-Target app version: WordCraft 0.3.0. If the installed or globally available WordCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/wordcraft before relying on these commands.
+## Changes in 0.5.0
+
+DOCM macros/signatures and DOTX/DOTM content types are preserved by the updated save path; verify retained package parts and signature status after editing. LaTeX .tex import/export is available, and DOCX charts/SmartArt/OLE preservation improves. Unknown CLI options are rejected before side effects. Live control now requires a per-window key. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+Target app version: WordCraft 0.5.0. If the installed or globally available WordCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/wordcraft before relying on these commands.

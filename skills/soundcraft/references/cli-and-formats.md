@@ -1,8 +1,8 @@
-# SoundCraft 0.3.0: CLI and format reference
+# SoundCraft 0.5.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.3.0, commit `c51e5d5ec52f11c6264b72e26661fa712feb5345`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.5.0, commit `4410486fc21561a9db0dc33961a2017469127e0d`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `soundcraft-cli` and `soundcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -38,14 +38,18 @@ Live MCP uses --connect, not --bridge. Explicitly set app --port 7801: parser de
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
+## Changes and verification for 0.5.0
+
+Replacing a session now stops playback; same-named clip exports receive distinct filenames and Cut All Automation uses the clipboard. I/O Setup and Tempo Operations routing improve. Verify the intended session, tempo/stretch result, output count and audio devices; the release notes do not certify physical recording or playback. This review does not include launching the application or executing these new workflows.
+
 ## Source links
 
-- [Target-version release](https://github.com/storytold/soundcraft/releases/tag/v0.3.0)
-- [apps/soundcraft-cli/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.3.0/apps/soundcraft-cli/src/main.rs)
-- [apps/soundcraft/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.3.0/apps/soundcraft/src/main.rs)
-- [docs/mcp.md](https://github.com/storytold/soundcraft/blob/v0.3.0/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/soundcraft/blob/v0.3.0/docs/control-protocol.md)
-- [README.md](https://github.com/storytold/soundcraft/blob/v0.3.0/README.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/soundcraft/blob/v0.3.0/packaging/windows/package.ps1)
+- [Target-version release](https://github.com/storytold/soundcraft/releases/tag/v0.5.0)
+- [apps/soundcraft-cli/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.5.0/apps/soundcraft-cli/src/main.rs)
+- [apps/soundcraft/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.5.0/apps/soundcraft/src/main.rs)
+- [docs/mcp.md](https://github.com/storytold/soundcraft/blob/v0.5.0/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/soundcraft/blob/v0.5.0/docs/control-protocol.md)
+- [README.md](https://github.com/storytold/soundcraft/blob/v0.5.0/README.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/soundcraft/blob/v0.5.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

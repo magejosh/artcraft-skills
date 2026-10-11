@@ -9,7 +9,7 @@ Edit and deliver local video timelines with FilmCraft without disturbing other p
 
 ## Target version and setup
 
-Written for FilmCraft 0.4.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/filmcraft.
+Written for FilmCraft 0.6.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/filmcraft.
 
 - Discover the CLI from `filmcraft-cli` on PATH, or set `FILMCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -49,9 +49,9 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 ## Formats and limits
 
-.fcproj projects. Export H.264 MP4/AAC, ProRes/DNxHR/APV/MJPEG QuickTime, supported MXF variants, PNG/TIFF/BMP sequences, GIF and WAV/AIFF. HEVC export is hardware-only on supported macOS systems in this version. Caption SRT/WebVTT/SCC; timeline FCP7 XML, FCPXML 1.9–1.11, OTIO, EDL, AAF, OMF2.
+.fcproj projects. Export H.264 MP4/AAC, ProRes/DNxHR/APV/MJPEG QuickTime, supported MXF variants, PNG/TIFF/BMP/JPEG/Targa/DPX/OpenEXR sequences, GIF and WAV/AIFF/AAC audio. HEVC and AV1 export depend on an available hardware encoder; inspect supported profiles and HDR capability on the actual host. Caption SRT/WebVTT/SCC; timeline FCP7 XML, FCPXML 1.9–1.11, OTIO, EDL, AAF, OMF2.
 
-Windows now has Media Foundation/D3D11 hardware decoding and opt-in NVIDIA NVENC H.264 encoding; macOS uses VideoToolbox. Profile, driver and codec-extension availability matter, and export compositing can remain CPU-bound. Linux has no hardware decode path here. AV1 export, camera RAW, E-AC3 and VST3/AU/OpenFX hosting remain unsupported. No FFmpeg runtime dependency. Speech-to-text is optional and unavailable commands report the missing build feature; supplied transcripts can still be edited. Prefer CLI `help`; the GUI’s improved --help does not change the CLI parser.
+Windows now has Media Foundation/D3D11 hardware decoding and opt-in NVIDIA NVENC H.264 encoding; macOS uses VideoToolbox. Profile, driver and codec-extension availability matter, and export compositing can remain CPU-bound. Linux H.264/HEVC hardware decode depends on an available backend. Hardware-dependent AV1 export and E-AC3 decoding are documented; camera RAW and VST3/AU/OpenFX hosting remain unsupported. No FFmpeg runtime dependency. Speech-to-text is optional and unavailable commands report the missing build feature; supplied transcripts can still be edited. Prefer CLI `help`; the GUI’s improved --help does not change the CLI parser.
 
 Official Windows portable packages include GUI and CLI executables with a statically linked C runtime; the packaging script requires no Visual C++ redistributable. Optional Windows decoder extensions and supported GPU drivers are distinct from source-build tools. Do not install extensions, drivers or speech models merely because an export or transcript feature exists.
 
@@ -59,4 +59,8 @@ Official Windows portable packages include GUI and CLI executables with a static
 
 “Inspect a timeline and prepare a verified short H.264 export before authorizing a full-length render.”
 
-Target app version: FilmCraft 0.4.0. If the installed or globally available FilmCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/filmcraft before relying on these commands.
+## Changes in 0.6.0
+
+The export source adds hardware-dependent AV1, ProRes 4444/4444 XQ alpha, JPEG/Targa/DPX/OpenEXR sequences and audio-only AAC. Check the actual encoder availability, export settings and complete output. Source capability does not establish GPU support or codec fidelity on the host. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+Target app version: FilmCraft 0.6.0. If the installed or globally available FilmCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/filmcraft before relying on these commands.

@@ -1,8 +1,8 @@
-# DeckCraft 0.3.0: CLI and format reference
+# DeckCraft 0.5.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.3.0, commit `d0e57d7e25f9852179cc66be12dd6188f1c05535`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.5.0, commit `a98df49b21632d69a3da994d35df1ea91dab41af`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `deckcraft-cli` and `deckcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -38,13 +38,19 @@ MCP is headless by default; --connect accepts PORT or HOST:PORT. For raw control
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
+## Changes and verification for 0.5.0
+
+Morph now includes shape movement, resizing and blending plus Words/Characters text modes. Arabic/BiDi typography and table fitting/PDF text improve. Check slide-show playback, table overflow and exported searchable text with the actual fonts; a static slide render cannot certify a transition. This review does not include launching the application or executing these new workflows.
+
+This release also morphs changed shape outlines, corrects old/new slide transition display, exposes PDF notes/handout options through MCP export, and supports animated GIF playback with pause. Confirm the export tool schema, hyperlink behavior and complete slide-show playback; animation is not established by a static PNG. These additional release findings have not been execution-tested.
+
 ## Source links
 
-- [Target-version release](https://github.com/storytold/deckcraft/releases/tag/v0.3.0)
-- [apps/deckcraft-cli/src/main.rs](https://github.com/storytold/deckcraft/blob/v0.3.0/apps/deckcraft-cli/src/main.rs)
-- [crates/engine/src/cmd/file.rs](https://github.com/storytold/deckcraft/blob/v0.3.0/crates/engine/src/cmd/file.rs)
-- [docs/mcp.md](https://github.com/storytold/deckcraft/blob/v0.3.0/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/deckcraft/blob/v0.3.0/docs/control-protocol.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/deckcraft/blob/v0.3.0/packaging/windows/package.ps1)
+- [Target-version release](https://github.com/storytold/deckcraft/releases/tag/v0.5.0)
+- [apps/deckcraft-cli/src/main.rs](https://github.com/storytold/deckcraft/blob/v0.5.0/apps/deckcraft-cli/src/main.rs)
+- [crates/engine/src/cmd/file.rs](https://github.com/storytold/deckcraft/blob/v0.5.0/crates/engine/src/cmd/file.rs)
+- [docs/mcp.md](https://github.com/storytold/deckcraft/blob/v0.5.0/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/deckcraft/blob/v0.5.0/docs/control-protocol.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/deckcraft/blob/v0.5.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

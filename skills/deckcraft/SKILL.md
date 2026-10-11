@@ -9,7 +9,7 @@ Build and render presentation decks with DeckCraft's shared command engine and G
 
 ## Target version and setup
 
-Written for DeckCraft 0.3.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/deckcraft.
+Written for DeckCraft 0.5.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/deckcraft.
 
 - Discover the CLI from `deckcraft-cli` on PATH, or set `DECKCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,4 +59,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Add a title-only slide to a sample deck, save an editable copy, and render all slides for visual review.”
 
-Target app version: DeckCraft 0.3.0. If the installed or globally available DeckCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/deckcraft before relying on these commands.
+## Changes in 0.5.0
+
+Morph now includes shape movement, resizing and blending plus Words/Characters text modes. Arabic/BiDi typography and table fitting/PDF text improve. Check slide-show playback, table overflow and exported searchable text with the actual fonts; a static slide render cannot certify a transition. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+This release also morphs changed shape outlines, corrects old/new slide transition display, exposes PDF notes/handout options through MCP export, and supports animated GIF playback with pause. Confirm the export tool schema, hyperlink behavior and complete slide-show playback; animation is not established by a static PNG. These additional release findings have not been execution-tested.
+
+Target app version: DeckCraft 0.5.0. If the installed or globally available DeckCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/deckcraft before relying on these commands.

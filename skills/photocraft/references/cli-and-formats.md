@@ -1,8 +1,8 @@
-# PhotoCraft 0.5.0: CLI and format reference
+# PhotoCraft 0.6.0: CLI and format reference
 
 ## Evidence and use
 
-Checked against official tag v0.5.0, commit `e5e3e397523b4db6a016dd19526e4c68514fcc72`, including the parser, command documentation, format capabilities and packaging source. These are source/documentation findings, not a claim that these examples or Windows GUI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
+Checked against official tag v0.6.0, commit `0c72d95425dece90ef9a1cceb49e3315c96e22d5`, including the parser, command documentation, format capabilities and packaging source. These are source/documentation findings, not a claim that these examples or Windows GUI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `photocraft-cli` and `photocraft` names below are grammar shorthand. Resolve each executable as described in SKILL.md; replace synthetic relative filenames with authorized inputs and distinct outputs. No runtime helper scripts, models, or executables are bundled with this skill.
 
@@ -62,15 +62,19 @@ Over desktop control, use root-scoped `app.open`/`app.save`, not `file.open/save
 - Metadata behavior is surface-specific. Exact source sets CLI conversion/save defaults to full document XMP; Export As starts at `metadata=none`. Layered PSD/PSB/.pcraft preserve full XMP. Do not treat CLI conversion as sanitization or invent a `--metadata` flag. A choice about XMP is not evidence that all EXIF/location data is removed. Inspect actual metadata before sharing.
 - Windows portable packaging includes the CLI/GUI and `portable.txt`; the marker redirects state to adjacent PhotoCraftData, with an application-data fallback if unwritable. Preserve that state. The C runtime is statically linked; Rust/SDK/WiX requirements in the packaging script concern building, not portable use.
 
+## Changes and verification for 0.6.0
+
+SVG opens as editable shape layers and places as a vector smart object. CLI info, convert and run report missing-font fallbacks. Layered TIFF and metadata handling improve; inspect layer structure, warnings and metadata rather than assuming lossless preservation or sanitization. A bridge edit with a lost reply must not be blindly replayed. This review does not include launching the application or executing these new workflows.
+
 ## Source links
 
-- [Target release and changes since 0.3.0](https://github.com/storytold/photocraft/releases/tag/v0.5.0)
-- [Exact CLI parser](https://github.com/storytold/photocraft/blob/v0.5.0/apps/photocraft-cli/src/lib.rs)
-- [CLI guide](https://github.com/storytold/photocraft/blob/v0.5.0/book/src/automation/cli.md)
-- [MCP guide](https://github.com/storytold/photocraft/blob/v0.5.0/book/src/automation/mcp.md)
-- [Control, actions and type methods](https://github.com/storytold/photocraft/blob/v0.5.0/docs/control-protocol.md)
-- [Automation restrictions](https://github.com/storytold/photocraft/blob/v0.5.0/crates/automation/src/workspace.rs)
-- [Raster formats and layered TIFF](https://github.com/storytold/photocraft/blob/v0.5.0/book/src/formats/raster-formats.md)
-- [Export defaults](https://github.com/storytold/photocraft/blob/v0.5.0/crates/io/src/lib.rs)
-- [Export As metadata default](https://github.com/storytold/photocraft/blob/v0.5.0/crates/ui-egui/src/export_dialog.rs)
-- [Windows packaging](https://github.com/storytold/photocraft/blob/v0.5.0/packaging/windows/package.ps1)
+- [Target release and changes since 0.3.0](https://github.com/storytold/photocraft/releases/tag/v0.6.0)
+- [Exact CLI parser](https://github.com/storytold/photocraft/blob/v0.6.0/apps/photocraft-cli/src/lib.rs)
+- [CLI guide](https://github.com/storytold/photocraft/blob/v0.6.0/book/src/automation/cli.md)
+- [MCP guide](https://github.com/storytold/photocraft/blob/v0.6.0/book/src/automation/mcp.md)
+- [Control, actions and type methods](https://github.com/storytold/photocraft/blob/v0.6.0/docs/control-protocol.md)
+- [Automation restrictions](https://github.com/storytold/photocraft/blob/v0.6.0/crates/automation/src/workspace.rs)
+- [Raster formats and layered TIFF](https://github.com/storytold/photocraft/blob/v0.6.0/book/src/formats/raster-formats.md)
+- [Export defaults](https://github.com/storytold/photocraft/blob/v0.6.0/crates/io/src/lib.rs)
+- [Export As metadata default](https://github.com/storytold/photocraft/blob/v0.6.0/crates/ui-egui/src/export_dialog.rs)
+- [Windows packaging](https://github.com/storytold/photocraft/blob/v0.6.0/packaging/windows/package.ps1)

@@ -1,8 +1,8 @@
-# PDFCraft 0.4.0: CLI and format reference
+# PDFCraft 0.6.0: CLI and format reference
 
 ## Evidence and use
 
-Command grammar and tool schemas were checked against upstream tag v0.4.0, commit `96c58f6f4452f8f8d23c3071ff252a8e3395bac1`. These are source/documentation findings; do not treat all examples or features as runtime-tested. Prefer this version's parser and schemas when current README examples differ.
+Command grammar and tool schemas were checked against upstream tag v0.6.0, commit `53a5880386789fc3531e54f6e6ffdef9a8e41f1a`. These are source/documentation findings; do not treat all examples or features as runtime-tested. Prefer this version's parser and schemas when current README examples differ.
 
 Resolve `pdfcraft-cli` and `pdfcraft` as described in SKILL.md. The filenames and directories below are synthetic, not supplied assets. Substitute authorized input files and separate output destinations. Quote host paths correctly. For JSON arguments, prefer the documented script-file form when shell quoting is uncertain.
 
@@ -57,7 +57,7 @@ Ordinary document edits remain in memory until `doc_save`, but `sign_document` s
 ## Forms and OCR
 
 - `form_fields` takes `doc` and returns actual field names, types, values, options, and flags. `form_fill` takes `doc` and a `values` object keyed by those names: strings for text/radio/combo fields, booleans for checkboxes, and string arrays for multi-select lists. Do not guess field names or flatten forms silently.
-- `ocr_status` needs no open document. It reports model availability and languages. This version looks for models using `PDFCRAFT_MODELS` and packaged resource locations. Missing models require a separate authorized setup step; a source-build model command is not a portable-installation instruction.
+- `ocr_status` needs no open document. It reports model availability and languages. This version looks for models using `PDFCRAFT_MODELS` and packaged resource locations. Official desktop release packages now include OCR resources; check those first. Missing models or extra languages require a separate authorized setup step; a source-build model command is not a portable-installation instruction.
 - `ocr_recognize` takes `doc`, optional one-based `pages`, `dpi` from 72 to 600, `language` set to `en`, and `skip_text_pages` (default true). It adds searchable text; it does not establish recognition accuracy.
 
 A bounded OCR script for an authorized copy, after model availability has been checked:
@@ -101,15 +101,23 @@ MCP is an opt-in stdio server; it does not attach to the desktop GUI. Custom bui
 
 Never publish the control file, put its token into messages or command arguments, or reuse an unrelated app's session. The tagged source applies owner-only file permissions on Unix. Do not assume Windows ACLs are secured by that Unix-specific code; verify access protection through authorized means before using desktop control.
 
+## Changes and verification for 0.6.0
+
+Desktop release packages now ship OCR resources. Check ocr_status in the actual session before OCR instead of immediately requesting a download. Compact MCP exposes a core tool set plus discovery; use the returned schemas for advanced operations. Package presence does not establish OCR accuracy or signature validity. This review does not include launching the application or executing these new workflows.
+
+`pdfcraft-cli mcp [--root DIR] [--compact]` starts an opt-in stdio server. Compact mode lists twelve core tools plus `tool_search` and `tool_call`; discover omitted operations and schemas through those tools. It does not remove advanced operations or attach to the GUI.
+
+PDF/A verification now checks the output-intent color space; image-to-PDF creation retains embedded ICC profiles. The release also improves encrypted-document signing, certificate constraints, OCR/batch result preservation and annotation/page organization. Check the exact schemas, per-file results, saved copies and independent signature/standard validation. Windows portable launches can hand documents to the existing instance, so verify the target window instead of assuming a fresh isolated process. These are tagged-source and release-note findings, not runtime tests.
+
 ## Source links
 
-- [Target-version release](https://github.com/storytold/pdfcraft/releases/tag/v0.4.0)
-- [CLI parser and output formats](https://github.com/storytold/pdfcraft/blob/v0.4.0/apps/pdfcraft-cli/src/main.rs)
-- [Automation tool schemas](https://github.com/storytold/pdfcraft/blob/v0.4.0/crates/automation/src/tools.rs)
-- [Automation execution and file-root handling](https://github.com/storytold/pdfcraft/blob/v0.4.0/crates/automation/src/lib.rs)
-- [Desktop launch and control-file handling](https://github.com/storytold/pdfcraft/blob/v0.4.0/apps/pdfcraft/src/main.rs)
-- [OCR model discovery](https://github.com/storytold/pdfcraft/blob/v0.4.0/crates/ocr/src/lib.rs)
-- [Version-pinned app overview](https://github.com/storytold/pdfcraft/blob/v0.4.0/README.md)
-- [Version-pinned capability limitations](https://github.com/storytold/pdfcraft/blob/v0.4.0/ROADMAP.md)
+- [Target-version release](https://github.com/storytold/pdfcraft/releases/tag/v0.6.0)
+- [CLI parser and output formats](https://github.com/storytold/pdfcraft/blob/v0.6.0/apps/pdfcraft-cli/src/main.rs)
+- [Automation tool schemas](https://github.com/storytold/pdfcraft/blob/v0.6.0/crates/automation/src/tools.rs)
+- [Automation execution and file-root handling](https://github.com/storytold/pdfcraft/blob/v0.6.0/crates/automation/src/lib.rs)
+- [Desktop launch and control-file handling](https://github.com/storytold/pdfcraft/blob/v0.6.0/apps/pdfcraft/src/main.rs)
+- [OCR model discovery](https://github.com/storytold/pdfcraft/blob/v0.6.0/crates/ocr/src/lib.rs)
+- [Version-pinned app overview](https://github.com/storytold/pdfcraft/blob/v0.6.0/README.md)
+- [Version-pinned capability limitations](https://github.com/storytold/pdfcraft/blob/v0.6.0/ROADMAP.md)
 
 No application executable, OCR model, credential, or runtime helper is bundled with this skill.

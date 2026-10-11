@@ -1,8 +1,8 @@
-# VectorCraft 0.7.0: CLI and format reference
+# VectorCraft 0.9.0: CLI and format reference
 
 ## Evidence and use
 
-Checked against official tag v0.7.0, commit `af7a5239be4636035abf7ecf79e6b0b8d274c7c3`, with intervening 0.5/0.6 release notes and the exact CLI, format schemas and control documentation. These are source/documentation findings, not a claim of execution-tested Windows behavior. Recheck after upgrading and prefer matching-version documentation over main.
+Checked against official tag v0.9.0, commit `10f1c56a861869936af0027cef14b1cf5d8cf515`, with intervening 0.5/0.6 release notes and the exact CLI, format schemas and control documentation. These are source/documentation findings, not a claim of execution-tested Windows behavior. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `vectorcraft-cli` and `vectorcraft` names below are grammar shorthand. Resolve each executable as described in SKILL.md, substitute authorized paths for synthetic relative examples, and preserve source files. No runtime helper scripts or executables are bundled with this skill.
 
@@ -62,15 +62,23 @@ Choose explicit `mcp --headless` or `mcp --connect HOST:PORT`; they are mutually
 
 Windows packages statically link the C runtime; optional craft-fonts is included in official builds with system fallback. Canvas rasterization is CPU-based, while UI compositing requires a working GPU adapter. Windows prefers DX12 before Vulkan on a given adapter and can retry another adapter on startup failure. Do not equate successful headless conversion with GUI/GPU compatibility, install source-build tooling, or run the large `bench`/`perf` defaults merely to check installation.
 
+`run` and MCP `command_batch` parameter strings exactly matching `$N`, `$N.path` or `$last.path` use earlier results (N is zero-based; the implicit run --in open is not counted). References must target completed earlier steps. Inspect `completed`, `failed` and each result, keeping stop-on-error unless the task requires otherwise.
+
+## Changes and verification for 0.9.0
+
+CLI/export .ai output now follows Save As; selected-artboard SVG export excludes other art, while SVG round trips retain hidden objects and data-* attributes. PDF retains text with embedded subset fonts and raster exports omit guides. Check artboard boundaries, layers, font fallback and searchable text in the actual output. This review does not include launching the application or executing these new workflows.
+
+PDF import now clips to the crop box, reports missing fonts at open, and improves packaging of transitive placed links. Batch steps can reference earlier results; inspect every result and failure before saving. An app.quit request can report that it asked for confirmation; do not infer that the process exited. These additional release findings have not been execution-tested.
+
 ## Source links
 
-- [Target release](https://github.com/storytold/vectorcraft/releases/tag/v0.7.0)
+- [Target release](https://github.com/storytold/vectorcraft/releases/tag/v0.9.0)
 - [0.5 capability changes](https://github.com/storytold/vectorcraft/releases/tag/v0.5.0)
 - [0.6 changes](https://github.com/storytold/vectorcraft/releases/tag/v0.6.0)
-- [Exact CLI parser](https://github.com/storytold/vectorcraft/blob/v0.7.0/apps/vectorcraft-cli/src/main.rs)
-- [Format and import/export schemas](https://github.com/storytold/vectorcraft/blob/v0.7.0/crates/engine/src/cmd/fileio/mod.rs)
-- [Import implementation](https://github.com/storytold/vectorcraft/blob/v0.7.0/crates/engine/src/cmd/fileio/load.rs)
-- [MCP and bounded reads](https://github.com/storytold/vectorcraft/blob/v0.7.0/docs/mcp.md)
-- [Control protocol](https://github.com/storytold/vectorcraft/blob/v0.7.0/docs/control-protocol.md)
-- [Graphics and fonts](https://github.com/storytold/vectorcraft/blob/v0.7.0/docs/development.md)
-- [Windows packaging](https://github.com/storytold/vectorcraft/blob/v0.7.0/packaging/windows/package.ps1)
+- [Exact CLI parser](https://github.com/storytold/vectorcraft/blob/v0.9.0/apps/vectorcraft-cli/src/main.rs)
+- [Format and import/export schemas](https://github.com/storytold/vectorcraft/blob/v0.9.0/crates/engine/src/cmd/fileio/mod.rs)
+- [Import implementation](https://github.com/storytold/vectorcraft/blob/v0.9.0/crates/engine/src/cmd/fileio/load.rs)
+- [MCP and bounded reads](https://github.com/storytold/vectorcraft/blob/v0.9.0/docs/mcp.md)
+- [Control protocol](https://github.com/storytold/vectorcraft/blob/v0.9.0/docs/control-protocol.md)
+- [Graphics and fonts](https://github.com/storytold/vectorcraft/blob/v0.9.0/docs/development.md)
+- [Windows packaging](https://github.com/storytold/vectorcraft/blob/v0.9.0/packaging/windows/package.ps1)

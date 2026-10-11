@@ -1,8 +1,8 @@
-# EffectCraft 0.6.0: CLI and format reference
+# EffectCraft 0.7.0: CLI and format reference
 
 ## Evidence and use
 
-Commands and capability notes were reviewed against upstream tag v0.6.0, commit `6943872cf65b3da1275f1e0f808b60b2e51d84dc`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
+Commands and capability notes were reviewed against upstream tag v0.7.0, commit `813c7c4650f0d4c805da620c8d5837c9600ad2e3`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
 
 Bare `effectcraft-cli` and `effectcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files. Windows portable packaging includes both executables with a statically linked C runtime; no Visual C++ redistributable is required. Rust 1.95+ is a source-build prerequisite, not a packaged-runtime dependency. No FFmpeg runtime is needed.
 
@@ -13,7 +13,7 @@ For JSON-bearing arguments, confirm native argument passing: Windows PowerShell 
 ```text
 effectcraft-cli --version
 effectcraft-cli commands --filter render.backend --schemas --json
-effectcraft-cli commands --filter keys.easePreset --schemas --json
+effectcraft-cli commands --filter scriptui --schemas --json
 effectcraft-cli exec render.backend --empty --json
 effectcraft-cli info --project main.ecproj --json
 effectcraft-cli props Main '#1' --project main.ecproj --json
@@ -39,6 +39,8 @@ GPU and control examples are optional modes, not prerequisites or permission to 
 - `render` supports start/end seconds, work area, frame rate, resolution, quality, channels, audio and codec-specific flags. `render-frame` makes one PNG; `--transparent` preserves alpha. Check output-module schemas and settings instead of inferring codec/alpha from an extension.
 - JavaScript scripts use the documented After Effects-style object model. Script file/network access is constrained by the app's scripting preference; do not expand that permission as an incidental workaround.
 
+Render output `--out` paths are relative to the working directory in this version. Use an explicit intended destination. MCP documents progress/cancellation and preserves unsaved bridge work across restart; inspect job/project state before retrying an ambiguous mutation.
+
 ## GPU diagnostics and 3D routing
 
 `render.backend {}` reports `renderer`, `gpuAcceleration`, `adapter`, `active` (`gpu`/`cpu`) and `why` (a CPU reason or null). The project saying “Mercury GPU Acceleration” is not evidence that a GPU compositor is attached.
@@ -47,17 +49,17 @@ GPU and control examples are optional modes, not prerequisites or permission to 
 - `comp.renderer {}` is a different setting: `classic3d` or `advanced3d`. `layer.newModel` and `layer.new3dPrimitive` automatically switch a Classic 3D comp to Advanced 3D in the same edit. Verify model visibility and the rest of the composition after that switch; switching back hides model layers.
 - The release improves older-GPU startup, oversized-composition viewing and failed-window-start fallback to OpenGL. These are upstream fixes, not proof the current host works. Inspect backend diagnostics and a small render before a costly export; do not change OS/GPU settings blindly.
 
-## Ease presets and visual editing changes
+## Ease Presets and extensions
 
-`keys.easePreset.list` lists built-in/user curves. `keys.easePreset.apply` accepts a preset name or a curve (`{outInfluence,outSpeed,inInfluence,inSpeed}` or `[x1,y1,x2,y2]`) and applies it to neighbouring selected keyframe pairs of each property in one undo step. Speeds are relative to the segment's average speed. A single selected key is insufficient. `capture` reads the first selected pair; hold/no-change pairs may not have a usable curve.
+Ease Presets is now the bundled `extensions/scriptui-panels/Ease Presets.jsx` panel, opened from Window. The old `keys.easePreset.*` core API is not the current route. It applies curves to neighbouring selected keyframe pairs through the public scripting API, in one undo step. A single selected key is insufficient. Inspect the selected properties, curve and resulting motion.
 
-`save {name,curve?}`, `rename {name,newName}` and `delete {name}` change the user's preset library; saving an existing user name replaces it. Do not treat these as part of a project-only edit. Built-ins cannot be overwritten/renamed/deleted.
+Use `file.scripts.list` to discover scripts/panels and matching schemas for `scriptui.list`, `scriptui.get`, `scriptui.click`, `scriptui.set` and `scriptui.close`. Running scripts can edit the project; installing scripts/panels and saving/renaming/deleting user presets change persistent state. User presets now live in `script_settings.json`; settings loading migrates older `ease_presets.json` entries while preserving the old file. Treat that as an application settings change, not a read-only check.
 
-The release also improves shape-content drawing/copy/paste/duplication, mask selection and linked feather, layer/scale/work-area snapping, Puppet pin key visibility and audio-reactive previews. Use those GUI routes when helpful, then inspect actual selected contents, keyframe curves and rendered frames rather than inferring success from selection changes.
+WebAssembly effect extensions use `effect.plugins.load {path|folder}` and `effect.plugins.list`; After Effects native `.aex`/`.plugin` ABI binaries are unsupported. Script `.js`/`.jsx` support does not imply `.jsxbin` or ExtendScript preprocessor support. Confirm compatibility and task authorization before loading an extension.
 
 ## Formats and verification
 
-Native `.ecproj` is versioned JSON. Lottie export uses `file.exportLottie`, not a render codec; `.lottie` creates a dotLottie archive. Inspect its `{path,bytes,warnings}` for unsupported effects, cameras/lights, audio or footage, then inspect player playback. AEP/AEPX import and After Effects plug-ins remain unsupported; a mentioned research candidate is not an implemented importer.
+Native `.ecproj` is versioned JSON. Lottie export uses `file.exportLottie`, not a render codec; `.lottie` creates a dotLottie archive. Inspect its `{path,bytes,warnings}` for unsupported effects, cameras/lights, audio or footage, then inspect player playback. AEP/AEPX import and native After Effects SDK plug-ins remain unsupported; a mentioned research candidate is not an implemented importer.
 
 Documented media outputs include H.264, HEVC/AV1 MP4, ProRes MOV, WebM, GIF, image sequences including EXR, WAV and AIFF; inspect the exact preset/schema for profile, channels and alpha. Native `.prproj` is not an interchange format: timeline interchange uses FCP7 XML/FCPXML/OTIO/EDL/AAF/OMF and may prerender unsupported layers to adjacent ProRes files. Inspect missing-media and unsupported-feature reports before delivery. ML-assisted tools require optional model downloads; do not fetch them without task authorization.
 
@@ -69,17 +71,21 @@ MCP starts empty unless `--project` or `--demo` is given. Bridge mode uses `--br
 
 The control port is unauthenticated loopback JSON-lines, not HTTP. Enable it only for the task. Invalid/non-request input or lines over 4 MiB close the connection; at most 16 connections are served. Requests normally time out after 60 seconds. Inspect failure state before retrying a mutation; use supported job/queue state for long work. GUI fallback does not authorize disturbing an unrelated session.
 
+## Changes and verification for 0.7.0
+
+Ease Presets moved from core commands into a bundled ScriptUI extension. Scripts, panels and WebAssembly effects have distinct extension surfaces and side effects. Multilayer EXR, above-one floating-point values and OCIO handling improve; inspect channels, color transforms and rendered pixels on the intended project. This review does not include launching the application or executing these new workflows.
+
 ## Source links
 
-- [Target-version release and changelog](https://github.com/storytold/effectcraft/releases/tag/v0.6.0)
-- [CLI parser](https://github.com/storytold/effectcraft/blob/v0.6.0/apps/effectcraft-cli/src/main.rs)
-- [Agent workflow and MCP](https://github.com/storytold/effectcraft/blob/v0.6.0/docs/agents.md)
-- [Backend schema and diagnostics](https://github.com/storytold/effectcraft/blob/v0.6.0/crates/engine/src/commands/file.rs)
-- [3D renderer commands](https://github.com/storytold/effectcraft/blob/v0.6.0/crates/engine/src/commands/model3d.rs)
-- [Ease-preset commands](https://github.com/storytold/effectcraft/blob/v0.6.0/crates/engine/src/ease_presets.rs)
-- [Render queue schema](https://github.com/storytold/effectcraft/blob/v0.6.0/crates/engine/src/commands/render_queue.rs)
-- [Control protocol](https://github.com/storytold/effectcraft/blob/v0.6.0/docs/control-protocol.md)
-- [Formats and limitations](https://github.com/storytold/effectcraft/blob/v0.6.0/README.md) and [compatibility assessment](https://github.com/storytold/effectcraft/blob/v0.6.0/docs/gaps.md)
-- [Windows packaging](https://github.com/storytold/effectcraft/blob/v0.6.0/packaging/windows/package.ps1)
+- [Target-version release and changelog](https://github.com/storytold/effectcraft/releases/tag/v0.7.0)
+- [CLI parser](https://github.com/storytold/effectcraft/blob/v0.7.0/apps/effectcraft-cli/src/main.rs)
+- [Agent workflow and MCP](https://github.com/storytold/effectcraft/blob/v0.7.0/docs/agents.md)
+- [Backend schema and diagnostics](https://github.com/storytold/effectcraft/blob/v0.7.0/crates/engine/src/commands/file.rs)
+- [3D renderer commands](https://github.com/storytold/effectcraft/blob/v0.7.0/crates/engine/src/commands/model3d.rs)
+- [Scripts, ScriptUI and effect extensions](https://github.com/storytold/effectcraft/blob/v0.7.0/docs/plugins.md)
+- [Render queue schema](https://github.com/storytold/effectcraft/blob/v0.7.0/crates/engine/src/commands/render_queue.rs)
+- [Control protocol](https://github.com/storytold/effectcraft/blob/v0.7.0/docs/control-protocol.md)
+- [Formats and limitations](https://github.com/storytold/effectcraft/blob/v0.7.0/README.md) and [compatibility assessment](https://github.com/storytold/effectcraft/blob/v0.7.0/docs/gaps.md)
+- [Windows packaging](https://github.com/storytold/effectcraft/blob/v0.7.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

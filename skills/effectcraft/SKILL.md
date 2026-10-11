@@ -9,7 +9,7 @@ Create and inspect layered motion graphics, preserving an editable EffectCraft p
 
 ## Target version and setup
 
-Written for EffectCraft 0.6.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/effectcraft.
+Written for EffectCraft 0.7.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/effectcraft.
 
 - Discover the CLI from `effectcraft-cli` on PATH, or set `EFFECTCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -51,7 +51,7 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 .ecproj versioned JSON; Lottie .json/.lottie. Documented outputs include H.264 MP4, ProRes MOV, HEVC/AV1 MP4, WebM, image sequences including EXR, GIF, and WAV/AIFF; check the exact matching preset/schema.
 
-Cannot open AEP/AEPX or run After Effects plug-ins; the upstream compatibility assessment still reports unmeasured differences. The GUI now starts empty, but project-less CLI render still uses the demo; explicitly supply --project. Headless CLI/MCP rendering defaults to CPU; --gpu needs a usable adapter and the project must enable GPU acceleration. Full CLI render rejects --bridge. Optional ML models are separate downloads; no FFmpeg runtime dependency.
+Cannot open AEP/AEPX or run native After Effects SDK plug-ins; documented JavaScript/ScriptUI and WebAssembly extensions are separate supported surfaces; the upstream compatibility assessment still reports unmeasured differences. The GUI now starts empty, but project-less CLI render still uses the demo; explicitly supply --project. Headless CLI/MCP rendering defaults to CPU; --gpu needs a usable adapter and the project must enable GPU acceleration. Full CLI render rejects --bridge. Optional ML models are separate downloads; no FFmpeg runtime dependency.
 
 Rust 1.95+ is for source builds. Official Windows portable packages include GUI and CLI executables with a statically linked C runtime, so the packaging script requires no Visual C++ redistributable. Diagnose GPU fallback before changing system settings. Ease-preset save/rename/delete can write the app configuration and is separate from saving the project.
 
@@ -59,4 +59,8 @@ Rust 1.95+ is for source builds. Official Windows portable packages include GUI 
 
 “Animate a known layer's position in a copied project, render a short preview, and inspect its first and last keyframes.”
 
-Target app version: EffectCraft 0.6.0. If the installed or globally available EffectCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/effectcraft before relying on these commands.
+## Changes in 0.7.0
+
+Ease Presets moved from core commands into a bundled ScriptUI extension. Scripts, panels and WebAssembly effects have distinct extension surfaces and side effects. Multilayer EXR, above-one floating-point values and OCIO handling improve; inspect channels, color transforms and rendered pixels on the intended project. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+
+Target app version: EffectCraft 0.7.0. If the installed or globally available EffectCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/effectcraft before relying on these commands.

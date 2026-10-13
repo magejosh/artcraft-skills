@@ -7,10 +7,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
-    "cadcraft": "0.5.0", "deckcraft": "0.5.0", "designcraft": "0.6.0",
-    "effectcraft": "0.8.0", "filmcraft": "0.6.0", "gridcraft": "0.5.0",
-    "lightcraft": "0.6.0", "pdfcraft": "0.6.0", "photocraft": "0.7.0",
-    "soundcraft": "0.5.0", "vectorcraft": "0.9.0", "wordcraft": "0.5.0",
+    "cadcraft": "0.6.2", "deckcraft": "0.6.1", "designcraft": "0.7.1",
+    "effectcraft": "0.9.2", "filmcraft": "0.7.2", "gridcraft": "0.6.1",
+    "lightcraft": "0.7.1", "pdfcraft": "0.7.1", "photocraft": "0.8.2",
+    "soundcraft": "0.6.1", "vectorcraft": "0.10.0", "wordcraft": "0.6.1",
 }
 
 

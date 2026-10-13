@@ -9,7 +9,7 @@ Compose multipage publications and verify text flow and page appearance in Desig
 
 ## Target version and setup
 
-Written for DesignCraft 0.6.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/designcraft.
+Written for DesignCraft 0.7.1. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/designcraft.
 
 - Discover the CLI from `designcraft-cli` on PATH, or set `DESIGNCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,8 +59,8 @@ Official Windows portable packages include GUI and CLI executables with a static
 
 “Render the sample magazine to a new output folder and review all pages for clipping and overset text.”
 
-## Changes in 0.6.0
+## Changes in 0.7.1
 
-The parser rejects page, scale or PDF options placed after the last export. PDF/A image retention and IDML stacking/packaged asset handling improve. Built-in PDF/X-4 validation is available, but its scope does not replace an independent validator when a delivery standard requires one. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+Placed PDF/SVG dimensions, Portuguese hyphenation and IDML missing-part handling improve. Inspect placed size, text flow and import warnings. Windows PDF printing is available when explicitly requested. After a lost MCP reply, inspect the document state before retrying a mutation. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
 
-Target app version: DesignCraft 0.6.0. If the installed or globally available DesignCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/designcraft before relying on these commands.
+Target app version: DesignCraft 0.7.1. If the installed or globally available DesignCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/designcraft before relying on these commands.

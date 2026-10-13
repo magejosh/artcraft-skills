@@ -1,8 +1,8 @@
-# VectorCraft 0.9.0: CLI and format reference
+# VectorCraft 0.10.0: CLI and format reference
 
 ## Evidence and use
 
-Checked against official tag v0.9.0, commit `10f1c56a861869936af0027cef14b1cf5d8cf515`, with intervening 0.5/0.6 release notes and the exact CLI, format schemas and control documentation. These are source/documentation findings, not a claim of execution-tested Windows behavior. Recheck after upgrading and prefer matching-version documentation over main.
+Checked against official tag v0.10.0, commit `71174477cc056020fe712ae59901d76b870ca9d9`, with intervening 0.5/0.6 release notes and the exact CLI, format schemas and control documentation. These are source/documentation findings, not a claim of execution-tested Windows behavior. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `vectorcraft-cli` and `vectorcraft` names below are grammar shorthand. Resolve each executable as described in SKILL.md, substitute authorized paths for synthetic relative examples, and preserve source files. No runtime helper scripts or executables are bundled with this skill.
 
@@ -64,7 +64,11 @@ Windows packages statically link the C runtime; optional craft-fonts is included
 
 `run` and MCP `command_batch` parameter strings exactly matching `$N`, `$N.path` or `$last.path` use earlier results (N is zero-based; the implicit run --in open is not counted). References must target completed earlier steps. Inspect `completed`, `failed` and each result, keeping stop-on-error unless the task requires otherwise.
 
-## Changes and verification for 0.9.0
+## Changes and verification for 0.10.0
+
+AI/PDF export and import improve artboard, bleed and gradient handling; verify page bounds and artwork after reopening. EPS import has bounded parsing fixes. Image tracing scales inputs above 64 megapixels down, so inspect detail in the resulting paths before delivery. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+
+## Previously documented behavior and verification
 
 CLI/export .ai output now follows Save As; selected-artboard SVG export excludes other art, while SVG round trips retain hidden objects and data-* attributes. PDF retains text with embedded subset fonts and raster exports omit guides. Check artboard boundaries, layers, font fallback and searchable text in the actual output. This review does not include launching the application or executing these new workflows.
 
@@ -72,13 +76,13 @@ PDF import now clips to the crop box, reports missing fonts at open, and improve
 
 ## Source links
 
-- [Target release](https://github.com/storytold/vectorcraft/releases/tag/v0.9.0)
+- [Target release](https://github.com/storytold/vectorcraft/releases/tag/v0.10.0)
 - [0.5 capability changes](https://github.com/storytold/vectorcraft/releases/tag/v0.5.0)
 - [0.6 changes](https://github.com/storytold/vectorcraft/releases/tag/v0.6.0)
-- [Exact CLI parser](https://github.com/storytold/vectorcraft/blob/v0.9.0/apps/vectorcraft-cli/src/main.rs)
-- [Format and import/export schemas](https://github.com/storytold/vectorcraft/blob/v0.9.0/crates/engine/src/cmd/fileio/mod.rs)
-- [Import implementation](https://github.com/storytold/vectorcraft/blob/v0.9.0/crates/engine/src/cmd/fileio/load.rs)
-- [MCP and bounded reads](https://github.com/storytold/vectorcraft/blob/v0.9.0/docs/mcp.md)
-- [Control protocol](https://github.com/storytold/vectorcraft/blob/v0.9.0/docs/control-protocol.md)
-- [Graphics and fonts](https://github.com/storytold/vectorcraft/blob/v0.9.0/docs/development.md)
-- [Windows packaging](https://github.com/storytold/vectorcraft/blob/v0.9.0/packaging/windows/package.ps1)
+- [Exact CLI parser](https://github.com/storytold/vectorcraft/blob/v0.10.0/apps/vectorcraft-cli/src/main.rs)
+- [Format and import/export schemas](https://github.com/storytold/vectorcraft/blob/v0.10.0/crates/engine/src/cmd/fileio/mod.rs)
+- [Import implementation](https://github.com/storytold/vectorcraft/blob/v0.10.0/crates/engine/src/cmd/fileio/load.rs)
+- [MCP and bounded reads](https://github.com/storytold/vectorcraft/blob/v0.10.0/docs/mcp.md)
+- [Control protocol](https://github.com/storytold/vectorcraft/blob/v0.10.0/docs/control-protocol.md)
+- [Graphics and fonts](https://github.com/storytold/vectorcraft/blob/v0.10.0/docs/development.md)
+- [Windows packaging](https://github.com/storytold/vectorcraft/blob/v0.10.0/packaging/windows/package.ps1)

@@ -9,7 +9,7 @@ Edit layered images and automate approved batches in PhotoCraft.
 
 ## Target version and setup
 
-Written for PhotoCraft 0.7.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/photocraft.
+Written for PhotoCraft 0.8.2. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/photocraft.
 
 - Discover the CLI from `photocraft-cli` on PATH, or set `PHOTOCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version with `--version` and inspect top-level `--help`; both are supported at this target version. Compare with release/package metadata. Do not assume every subcommand accepts `--help`.
@@ -60,8 +60,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Apply sharpening and a curves adjustment to a copied PSD, retain an editable master, and inspect a PNG export.”
 
-## Changes in 0.7.0
+## Changes in 0.8.2
 
-Automation accepts absolute paths beneath its authorized read/write roots while retaining traversal and escape checks. OpenRaster opens and saves layers/groups, with unsupported content rendered or warned about. Duplicated Smart Objects can share contents; inspect all affected instances. Recorded actions can include Save/Save As, so review output paths and nested failures before replay or batch processing. These changes do not establish lossless format preservation. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+FITS read/write and KRA composite-only import are available. Batch action playback skips recorded view and save steps; run reports recorded-action failures. Inspect nested results and partial effects, and keep the original layered document when importing a flattened KRA composite. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
 
-Target app version: PhotoCraft 0.7.0. If the installed or globally available PhotoCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/photocraft before relying on these commands.
+Target app version: PhotoCraft 0.8.2. If the installed or globally available PhotoCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/photocraft before relying on these commands.

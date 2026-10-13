@@ -9,7 +9,7 @@ Edit and render local audio sessions without disturbing audio devices or other r
 
 ## Target version and setup
 
-Written for SoundCraft 0.5.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/soundcraft.
+Written for SoundCraft 0.6.1. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/soundcraft.
 
 - Discover the CLI from `soundcraft-cli` on PATH, or set `SOUNDCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -51,7 +51,7 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 .scraft session plus Audio Files/ media. WAV/BWF/RF64, AIFF/AIFC, FLAC read/write; MP3/Ogg/AAC/ALAC/CAF and MP4/MOV audio inputs. MIDI import/export, MusicXML/score output. Bounce formats WAV/AIFF/FLAC.
 
-Pre-alpha. Windows uses WASAPI; ALSA headers are Linux build requirements. Plug-in depth needs verification. Validate JSON before run/app because malformed JSON may silently become {}; script parsing fails explicitly. CLI convert chooses AIFF for .aif/.aiff, FLAC for .flac, and WAV for every other suffix.
+Pre-alpha. Windows uses WASAPI; ALSA headers are Linux build requirements. Plug-in depth needs verification. Malformed JSON fails in run, app and script; a command with no JSON uses an empty object. CLI convert selects a supported encoder from the output suffix and rejects unsupported extensions.
 
 Distinguish source-build dependencies from packaged-runtime requirements. Check the matching platform release and linked packaging documentation before installing extra dependencies.
 
@@ -59,8 +59,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Lower the demo Kick to -6 dB, bounce a new WAV, and inspect channel count, duration, and clipping.”
 
-## Changes in 0.5.0
+## Changes in 0.6.1
 
-Replacing a session now stops playback; same-named clip exports receive distinct filenames and Cut All Automation uses the clipboard. I/O Setup and Tempo Operations routing improve. Verify the intended session, tempo/stretch result, output count and audio devices; the release notes do not certify physical recording or playback. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+Malformed command JSON now fails explicitly. Save Copy does not retarget the open session; bus bounce rejects an unknown named bus, MIDI export honors the track filter and includes controllers, and consolidation creates separate output files per item. Verify the active session, routing, output count and audio channels before delivery. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
 
-Target app version: SoundCraft 0.5.0. If the installed or globally available SoundCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/soundcraft before relying on these commands.
+Target app version: SoundCraft 0.6.1. If the installed or globally available SoundCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/soundcraft before relying on these commands.

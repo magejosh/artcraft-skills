@@ -1,8 +1,8 @@
-# DeckCraft 0.5.0: CLI and format reference
+# DeckCraft 0.6.1: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.5.0, commit `a98df49b21632d69a3da994d35df1ea91dab41af`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.6.1, commit `688c7ef592c901ca4541c25e210c1b302e4dc066`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `deckcraft-cli` and `deckcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -30,7 +30,7 @@ COMMAND, JSON, READ_DIR, WRITE_DIR, and PRIVATE_TOKEN_FILE are grammar placehold
 
 ## Exact grammar and traps
 
-`run` uses --in, --sample, repeated --cmd ID[=JSON], --save, --export, --print. --print prints results, not to a physical printer. `describe COMMAND` supplies the schema. Render --slide is zero-based; --all makes slide-01.png etc. `render` always writes PNG bytes even when a path ends .jpg; use convert/file.export for JPEG. Use file.export's schema for PDF notes/handouts parameters, not invented CLI flags. Coordinates use slide points (1/72 inch). Convert to .jpg/.jpeg exports slide 0 as real JPEG; file.export also accepts format=jpeg, slide (zero-based), and scale. JPEG quality is fixed at 92; scale defaults to 2 pixels/point and is clamped 0.01–16.
+`run` uses --in, --sample, repeated --cmd ID[=JSON], --save, --export, --print. --print prints results, not to a physical printer. `describe COMMAND` supplies the schema. Render --slide is zero-based; --all makes slide-01.png etc. `render` always writes PNG bytes even when a path ends .jpg; use convert/file.export for JPEG. Use file.export's schema for PDF notes/handouts parameters, not invented CLI flags. `render --edit` includes editor placeholder prompts and dashed outlines; omit it for a presentation-output preview. Coordinates use slide points (1/72 inch). Convert to .jpg/.jpeg exports slide 0 as real JPEG; file.export also accepts format=jpeg, slide (zero-based), and scale. JPEG quality is fixed at 92; scale defaults to 2 pixels/point and is clamped 0.01–16.
 
 ## Live control and MCP
 
@@ -38,7 +38,11 @@ MCP is headless by default; --connect accepts PORT or HOST:PORT. For raw control
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
-## Changes and verification for 0.5.0
+## Changes and verification for 0.6.1
+
+Render accepts --edit to include editor placeholder prompts and outlines. Use the ordinary render for presentation output; an editor preview does not represent the slide-show appearance. The 0.6.1 release notes concern packaging/signing, not a claim of newly tested slide behavior. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+
+## Previously documented behavior and verification
 
 Morph now includes shape movement, resizing and blending plus Words/Characters text modes. Arabic/BiDi typography and table fitting/PDF text improve. Check slide-show playback, table overflow and exported searchable text with the actual fonts; a static slide render cannot certify a transition. This review does not include launching the application or executing these new workflows.
 
@@ -46,11 +50,12 @@ This release also morphs changed shape outlines, corrects old/new slide transiti
 
 ## Source links
 
-- [Target-version release](https://github.com/storytold/deckcraft/releases/tag/v0.5.0)
-- [apps/deckcraft-cli/src/main.rs](https://github.com/storytold/deckcraft/blob/v0.5.0/apps/deckcraft-cli/src/main.rs)
-- [crates/engine/src/cmd/file.rs](https://github.com/storytold/deckcraft/blob/v0.5.0/crates/engine/src/cmd/file.rs)
-- [docs/mcp.md](https://github.com/storytold/deckcraft/blob/v0.5.0/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/deckcraft/blob/v0.5.0/docs/control-protocol.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/deckcraft/blob/v0.5.0/packaging/windows/package.ps1)
+- [Editor-view rendering](https://github.com/storytold/deckcraft/blob/v0.6.1/crates/render/src/lib.rs)
+- [Target-version release](https://github.com/storytold/deckcraft/releases/tag/v0.6.1)
+- [apps/deckcraft-cli/src/main.rs](https://github.com/storytold/deckcraft/blob/v0.6.1/apps/deckcraft-cli/src/main.rs)
+- [crates/engine/src/cmd/file.rs](https://github.com/storytold/deckcraft/blob/v0.6.1/crates/engine/src/cmd/file.rs)
+- [docs/mcp.md](https://github.com/storytold/deckcraft/blob/v0.6.1/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/deckcraft/blob/v0.6.1/docs/control-protocol.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/deckcraft/blob/v0.6.1/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

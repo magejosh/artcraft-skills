@@ -1,8 +1,8 @@
-# DesignCraft 0.6.0: CLI and format reference
+# DesignCraft 0.7.1: CLI and format reference
 
 ## Evidence and use
 
-Commands and capability notes were reviewed against upstream tag v0.6.0, commit `a9124a0517594ce9872f73637e7b841a4967bcf9`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
+Commands and capability notes were reviewed against upstream tag v0.7.1, commit `3624f488192a8eeade11bd27609c9e5056214e75`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
 
 Bare `designcraft-cli` and `designcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files. Windows portable packaging includes both executables and statically links the C runtime; no Visual C++ redistributable is required by that packaging script.
 
@@ -71,21 +71,25 @@ MCP defaults to an isolated empty Letter document; `--sample` is optional. `--co
 
 Control is unauthenticated loopback JSON-lines, not HTTP. Enable it only for the task. Invalid/non-request input, lines over 4 MiB, and excess connections are rejected; a malformed request closes that connection (16 concurrent connections maximum). Inspect errors before reconnecting, and never blindly replay a possibly completed mutation. Web builds lack this desktop listener.
 
-## Changes and verification for 0.6.0
+## Changes and verification for 0.7.1
+
+Placed PDF/SVG dimensions, Portuguese hyphenation and IDML missing-part handling improve. Inspect placed size, text flow and import warnings. Windows PDF printing is available when explicitly requested. After a lost MCP reply, inspect the document state before retrying a mutation. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+
+## Previously documented behavior and verification
 
 The parser rejects page, scale or PDF options placed after the last export. PDF/A image retention and IDML stacking/packaged asset handling improve. Built-in PDF/X-4 validation is available, but its scope does not replace an independent validator when a delivery standard requires one. This review does not include launching the application or executing these new workflows.
 
 ## Source links
 
-- [Target-version release and changelog](https://github.com/storytold/designcraft/releases/tag/v0.6.0)
-- [CLI parser](https://github.com/storytold/designcraft/blob/v0.6.0/apps/designcraft-cli/src/main.rs)
-- [Agent workflow](https://github.com/storytold/designcraft/blob/v0.6.0/docs/agents.md)
-- [Data-merge schemas](https://github.com/storytold/designcraft/blob/v0.6.0/crates/engine/src/cmd/datamerge/mod.rs) and [parser limits](https://github.com/storytold/designcraft/blob/v0.6.0/crates/engine/src/cmd/datamerge/parse.rs)
-- [Text selection and direction](https://github.com/storytold/designcraft/blob/v0.6.0/crates/engine/src/cmd/text.rs)
-- [Preflight](https://github.com/storytold/designcraft/blob/v0.6.0/crates/engine/src/cmd/preflight.rs)
-- [CJK boundaries](https://github.com/storytold/designcraft/blob/v0.6.0/docs/cjk-typography.md) and [Arabic boundaries](https://github.com/storytold/designcraft/blob/v0.6.0/docs/arabic-typography.md)
-- [File formats](https://github.com/storytold/designcraft/blob/v0.6.0/crates/engine/src/cmd/file.rs), [PDF command](https://github.com/storytold/designcraft/blob/v0.6.0/crates/engine/src/cmd/export.rs), and [PDF exporter](https://github.com/storytold/designcraft/blob/v0.6.0/crates/pdf/src/export.rs)
-- [MCP](https://github.com/storytold/designcraft/blob/v0.6.0/docs/mcp.md) and [control protocol](https://github.com/storytold/designcraft/blob/v0.6.0/docs/control-protocol.md)
-- [Windows packaging](https://github.com/storytold/designcraft/blob/v0.6.0/packaging/windows/package.ps1)
+- [Target-version release and changelog](https://github.com/storytold/designcraft/releases/tag/v0.7.1)
+- [CLI parser](https://github.com/storytold/designcraft/blob/v0.7.1/apps/designcraft-cli/src/main.rs)
+- [Agent workflow](https://github.com/storytold/designcraft/blob/v0.7.1/docs/agents.md)
+- [Data-merge schemas](https://github.com/storytold/designcraft/blob/v0.7.1/crates/engine/src/cmd/datamerge/mod.rs) and [parser limits](https://github.com/storytold/designcraft/blob/v0.7.1/crates/engine/src/cmd/datamerge/parse.rs)
+- [Text selection and direction](https://github.com/storytold/designcraft/blob/v0.7.1/crates/engine/src/cmd/text.rs)
+- [Preflight](https://github.com/storytold/designcraft/blob/v0.7.1/crates/engine/src/cmd/preflight.rs)
+- [CJK boundaries](https://github.com/storytold/designcraft/blob/v0.7.1/docs/cjk-typography.md) and [Arabic boundaries](https://github.com/storytold/designcraft/blob/v0.7.1/docs/arabic-typography.md)
+- [File formats](https://github.com/storytold/designcraft/blob/v0.7.1/crates/engine/src/cmd/file.rs), [PDF command](https://github.com/storytold/designcraft/blob/v0.7.1/crates/engine/src/cmd/export.rs), and [PDF exporter](https://github.com/storytold/designcraft/blob/v0.7.1/crates/pdf/src/export.rs)
+- [MCP](https://github.com/storytold/designcraft/blob/v0.7.1/docs/mcp.md) and [control protocol](https://github.com/storytold/designcraft/blob/v0.7.1/docs/control-protocol.md)
+- [Windows packaging](https://github.com/storytold/designcraft/blob/v0.7.1/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

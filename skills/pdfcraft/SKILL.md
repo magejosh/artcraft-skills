@@ -9,7 +9,7 @@ Work with PDF documents through PDFCraft's one-shot CLI, schema-driven automatio
 
 ## Target version and setup
 
-Written for PDFCraft 0.6.0. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/pdfcraft.
+Written for PDFCraft 0.7.1. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/pdfcraft.
 
 Discover `pdfcraft-cli` on PATH or set `PDFCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; use the matching platform build elsewhere. Resolve the GUI separately. Do not assume an installation directory, a running app, or that older `printcraft-cli` instructions apply unchanged.
 
@@ -29,7 +29,7 @@ if (-not $cli) { $cli = (Get-Command pdfcraft-cli -ErrorAction Stop).Source }
 & $cli tools
 ```
 
-`--version` is supported; generic `--help` prints usage and exits unsuccessfully in this version. Use the linked parser reference and `tools` schemas instead of inventing a help hierarchy.
+`--version`, top-level `--help`/`-h`/`help`, and command-specific `--help`/`-h` are supported. Use the linked parser and `tools` schemas for exact options.
 
 ## Choose the appropriate workflow
 
@@ -50,14 +50,12 @@ if (-not $cli) { $cli = (Get-Command pdfcraft-cli -ErrorAction Stop).Source }
 
 ## Important limits
 
-PDFCraft 0.6.0 exposes tools for content editing, Office export, accessibility checks, PDF/A workflows, comparison, and optimization as well as page operations. Coverage varies; complex text edits, script coverage, Office interoperability, XFA, preflight and long-term signature validation require document-specific checks. Discover the relevant schema and test the actual document; a menu item or tool name is not a fidelity guarantee.
+PDFCraft 0.7.1 exposes tools for content editing, Office export, accessibility checks, PDF/A workflows, comparison, and optimization as well as page operations. Coverage varies; complex text edits, script coverage, Office interoperability, XFA, preflight and long-term signature validation require document-specific checks. Discover the relevant schema and test the actual document; a menu item or tool name is not a fidelity guarantee.
 
 The CLI's `render` command at this target version writes real PNG, JPEG, TIFF, or PAM according to the output suffix. This differs from older instructions that describe PAM-only output. Automation `page_render` returns PNG.
 
-## Changes in 0.6.0
+## Changes in 0.7.1
 
-Desktop release packages now ship OCR resources. Check ocr_status in the actual session before OCR instead of immediately requesting a download. Compact MCP exposes a core tool set plus discovery; use the returned schemas for advanced operations. Package presence does not establish OCR accuracy or signature validity. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+The CLI can audit suspected faux redactions; findings require inspection and do not apply redactions. PPTX export, XFA workflows, picture-area OCR and accessibility structure/review tools have expanded. Verify exported content and human review records; a visible scanned signature is distinct from a cryptographic signature. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
 
-PDF/A verification now checks the output-intent color space; image-to-PDF creation retains embedded ICC profiles. The release also improves encrypted-document signing, certificate constraints, OCR/batch result preservation and annotation/page organization. Check the exact schemas, per-file results, saved copies and independent signature/standard validation. Windows portable launches can hand documents to the existing instance, so verify the target window instead of assuming a fresh isolated process. These are tagged-source and release-note findings, not runtime tests.
-
-Target app version: PDFCraft 0.6.0. If the installed or globally available PDFCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/pdfcraft before relying on these commands.
+Target app version: PDFCraft 0.7.1. If the installed or globally available PDFCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/pdfcraft before relying on these commands.

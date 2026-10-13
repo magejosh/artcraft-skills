@@ -9,7 +9,7 @@ Create, inspect, edit, and convert CAD drawings with CADCraft.
 
 ## Target version and setup
 
-Written for CADCraft 0.5.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/cadcraft.
+Written for CADCraft 0.6.2. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/cadcraft.
 
 - Discover the CLI from `cadcraft-cli` on PATH, or set `CADCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -49,7 +49,7 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 ## Formats and limits
 
-DXF ASCII/binary R12–2018; DWG R13–2018 through acadrust; PDF plotting; SVG and PNG export. Command scripts resemble .scr files.
+DXF ASCII/binary and DWG through acadrust; SVG/SVGZ import; PDF plotting; SVG and PNG export. Confirm the required DXF/DWG save version and inspect unsupported entities. Command scripts resemble .scr files.
 
 No external Windows runtime dependency is documented. Trunk is a web source-build dependency. Validate CAD fidelity and supported entity types on the actual file.
 
@@ -59,8 +59,8 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Inspect a DXF, change only an agreed layer, save a new DXF, and render a PNG preview.”
 
-## Changes in 0.5.0
+## Changes in 0.6.2
 
-Image exports now support explicit current-view, extents or drawing-window framing. Check units, clipping and framing before delivery; the default view is not a promise to fit every entity. The release also improves DXF entity, layer and dimension preservation, which still needs a round-trip check on the actual drawing. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+SVG/SVGZ can be imported alongside DXF/DWG. DXF/DWG output version handling and entity support have expanded; inspect imported geometry, units and unsupported-entity warnings, then save and reopen the required CAD format. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
 
-Target app version: CADCraft 0.5.0. If the installed or globally available CADCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/cadcraft before relying on these commands.
+Target app version: CADCraft 0.6.2. If the installed or globally available CADCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/cadcraft before relying on these commands.

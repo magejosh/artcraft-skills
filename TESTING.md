@@ -66,6 +66,14 @@ After the six target versions were refreshed later on 2026-10-09, a second bound
 4. Download and extract the authorized portable release into a separate versioned folder alongside the existing app. Keep the old copy for the user to remove; do not overwrite it or change system-wide defaults incidentally.
 5. Run a bounded version/help/schema check and a small copied-file trial suited to the app. Read the changed official docs before updating the skill's target version/source pins, then rerun structural checks and relevant tests.
 
+## Installed-version source refresh (2026-10-13)
+
+The current targets in `skills.json` were matched to the newest installed portable copies through GUI executable version resources and sibling CLI-file presence, then reviewed against matching official release tags, commits, CLI parsers and relevant format/automation source. Earlier installed copies remained in place. The targets are CADCraft 0.6.2, DeckCraft 0.6.1, DesignCraft 0.7.1, EffectCraft 0.9.2, FilmCraft 0.7.2, GridCraft 0.6.1, LightCraft 0.7.1, PDFCraft 0.7.1, PhotoCraft 0.8.2, SoundCraft 0.6.1, VectorCraft 0.10.0 and WordCraft 0.6.1.
+
+This refresh did not download or install apps, launch CLI/GUI executables, migrate settings, run exports or repeat package checksum/signature verification. File-version metadata and CLI presence do not establish startup, command behavior or output fidelity. New workflow notes are source/documentation findings; earlier runtime records below retain their original version scope. The target selection is an installed-version snapshot, not a claim that every target remains the latest upstream release.
+
+All twelve structural checks, all 35 offline checker tests and the whitespace check passed after the refresh. The manifest test's PDFCraft expectation was updated to the new target. The optional skill-creator YAML validator was unavailable because PyYAML was not installed; no dependency was added.
+
 ## Twelve-app source and package review (2026-10-11)
 
 The twelve targets below were reviewed against their official tagged CLI source, linked documentation and release notes. Each official Windows x64 portable archive matched both the GitHub asset SHA-256 and the publisher checksum file, passed ZIP CRC verification, and contained GUI/CLI executables and a README. Extraction preserved existing versions. The optional portable marker is package-specific, not a universal requirement.

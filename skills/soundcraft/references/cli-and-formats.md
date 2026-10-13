@@ -1,8 +1,8 @@
-# SoundCraft 0.5.0: CLI and format reference
+# SoundCraft 0.6.1: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.5.0, commit `4410486fc21561a9db0dc33961a2017469127e0d`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.6.1, commit `6cf896e76c0ec82a11bf2494f209cfe7c8507f74`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `soundcraft-cli` and `soundcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -30,26 +30,34 @@ COMMAND, JSON, READ_DIR, WRITE_DIR, and PRIVATE_TOKEN_FILE are grammar placehold
 
 ## Exact grammar and traps
 
-`run` takes --in, repeated --cmd ID=JSON, --save, --bounce, --inspect. Scripts contain COMMAND_ID followed by JSON per line; blanks and # comments are skipped, and malformed JSON fails. Validate JSON before run/app because malformed JSON can silently become {}. run --start/--end accept numeric seconds or time strings; engine time may use samples, {seconds:2.5}, or prefixed bars_beats. Use inspected track names/IDs and clip IDs. Top-level --help works; general subcommand --help does not.
+`convert IN OUT [--bit-depth 16|24|32f] [--rate HZ] [--normalize]` writes converted audio. Output extension selects a supported encoder; unsupported extensions fail. Bit depth defaults to 24; choose a distinct output and inspect its actual format, rate and channels.
+
+`commands [FILTER]` uses a positional filter, matching command IDs or labels; `describe ID` returns one command's details. `parity [--write PATH]` emits a Markdown command-coverage report to stdout, or writes/replaces the requested file with --write. This reports registry coverage, not audio fidelity or runtime verification.
+
+`run` takes --in, repeated --cmd ID=JSON, --save, --bounce, --inspect. Scripts contain COMMAND_ID followed by JSON per line; blanks and # comments are skipped, and malformed JSON fails. Malformed JSON fails in run, app and script; omitting JSON supplies an empty object. Script --keep-going continues after command failures, so inspect every result rather than trusting the final exit status. run --start/--end accept numeric seconds or time strings; engine time may use samples, {seconds:2.5}, or prefixed bars_beats. Use inspected track names/IDs and clip IDs. Top-level --help works; general subcommand --help does not.
 
 ## Live control and MCP
 
-Live MCP uses --connect, not --bridge. Explicitly set app --port 7801: parser default is 7979. Bare app IDs map to engine.execute, except session.* are treated as raw methods; use explicit engine.execute for ambiguity. Headless MCP needs no window/audio device. Keep session media in Audio Files/ with the .scraft project.
+Live MCP uses --connect, not --bridge. Explicitly set app --port 7801: parser default is 7979. Dotted app command IDs map to engine.execute except explicit control methods such as session.inspect; do not treat all session.* commands as raw control methods. Headless MCP needs no window/audio device. Keep session media in Audio Files/ with the .scraft project.
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
-## Changes and verification for 0.5.0
+## Changes and verification for 0.6.1
+
+Malformed command JSON now fails explicitly. Save Copy does not retarget the open session; bus bounce rejects an unknown named bus, MIDI export honors the track filter and includes controllers, and consolidation creates separate output files per item. Verify the active session, routing, output count and audio channels before delivery. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+
+## Previously documented behavior and verification
 
 Replacing a session now stops playback; same-named clip exports receive distinct filenames and Cut All Automation uses the clipboard. I/O Setup and Tempo Operations routing improve. Verify the intended session, tempo/stretch result, output count and audio devices; the release notes do not certify physical recording or playback. This review does not include launching the application or executing these new workflows.
 
 ## Source links
 
-- [Target-version release](https://github.com/storytold/soundcraft/releases/tag/v0.5.0)
-- [apps/soundcraft-cli/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.5.0/apps/soundcraft-cli/src/main.rs)
-- [apps/soundcraft/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.5.0/apps/soundcraft/src/main.rs)
-- [docs/mcp.md](https://github.com/storytold/soundcraft/blob/v0.5.0/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/soundcraft/blob/v0.5.0/docs/control-protocol.md)
-- [README.md](https://github.com/storytold/soundcraft/blob/v0.5.0/README.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/soundcraft/blob/v0.5.0/packaging/windows/package.ps1)
+- [Target-version release](https://github.com/storytold/soundcraft/releases/tag/v0.6.1)
+- [apps/soundcraft-cli/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.6.1/apps/soundcraft-cli/src/main.rs)
+- [apps/soundcraft/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.6.1/apps/soundcraft/src/main.rs)
+- [docs/mcp.md](https://github.com/storytold/soundcraft/blob/v0.6.1/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/soundcraft/blob/v0.6.1/docs/control-protocol.md)
+- [README.md](https://github.com/storytold/soundcraft/blob/v0.6.1/README.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/soundcraft/blob/v0.6.1/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

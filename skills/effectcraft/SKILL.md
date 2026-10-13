@@ -9,7 +9,7 @@ Create and inspect layered motion graphics, preserving an editable EffectCraft p
 
 ## Target version and setup
 
-Written for EffectCraft 0.8.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/effectcraft.
+Written for EffectCraft 0.9.2. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/effectcraft.
 
 - Discover the CLI from `effectcraft-cli` on PATH, or set `EFFECTCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,8 +59,8 @@ Rust 1.95+ is for source builds. Official Windows portable packages include GUI 
 
 “Animate a known layer's position in a copied project, render a short preview, and inspect its first and last keyframes.”
 
-## Changes in 0.8.0
+## Changes in 0.9.2
 
-Property/keyframe commands now honor explicit layer or composition time bases. CLI renders accept Essential Graphics templates with a JSON values file; VP9 WebM honors --bitrate. Render-queue defaults for an unsaved project go to the Movies folder or home, while an explicit CLI --out remains relative to the working directory. MCP can confine file access to explicit roots; confined sessions refuse scripts and application-launch commands. Verify timing, output paths and actual render results. These are source-reviewed changes; earlier runtime checks apply only to their recorded versions. See the reference for exact grammar and verification.
+Import support expands to STL/FBX models, TGA/HDR/DPX/Cineon stills or sequences, MXF and animated WebP. Inspect model orientation, footage interpretation and frame/alpha results. Raw RGB/ARGB QuickTime is an output-module choice; discover its schema rather than inferring it from .mov. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
 
-Target app version: EffectCraft 0.8.0. If the installed or globally available EffectCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/effectcraft before relying on these commands.
+Target app version: EffectCraft 0.9.2. If the installed or globally available EffectCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/effectcraft before relying on these commands.

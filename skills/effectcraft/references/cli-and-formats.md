@@ -1,8 +1,8 @@
-# EffectCraft 0.8.0: CLI and format reference
+# EffectCraft 0.9.2: CLI and format reference
 
 ## Evidence and use
 
-Commands and capability notes were reviewed against upstream tag v0.8.0, commit `f953cd2855bf36beffa6a4d608e9bf4b226e9442`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
+Commands and capability notes were reviewed against upstream tag v0.9.2, commit `470ea7a3af82ee1dd1d2f86c777fe6891bd0c37b`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
 
 Bare `effectcraft-cli` and `effectcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files. Windows portable packaging includes both executables with a statically linked C runtime; no Visual C++ redistributable is required. Rust 1.95+ is a source-build prerequisite, not a packaged-runtime dependency. No FFmpeg runtime is needed.
 
@@ -66,7 +66,7 @@ WebAssembly effect extensions use `effect.plugins.load {path|folder}` and `effec
 
 ## Formats and verification
 
-Native `.ecproj` is versioned JSON. Lottie export uses `file.exportLottie`, not a render codec; `.lottie` creates a dotLottie archive. Inspect its `{path,bytes,warnings}` for unsupported effects, cameras/lights, audio or footage, then inspect player playback. AEP/AEPX import and native After Effects SDK plug-ins remain unsupported; a mentioned research candidate is not an implemented importer.
+Native `.ecproj` is versioned JSON. Source documents a 30,000-pixel open/project-size limit; this does not establish that a large composition will fit memory or render reliably. STL/FBX models, TGA/HDR/DPX/Cineon stills and sequences, MXF OP1a/OP-Atom and animated WebP have import support. Verify model orientation, timing and color after import. Lottie export uses `file.exportLottie`, not a render codec; `.lottie` creates a dotLottie archive. Inspect its `{path,bytes,warnings}` for unsupported effects, cameras/lights, audio or footage, then inspect player playback. AEP/AEPX import and native After Effects SDK plug-ins remain unsupported; a mentioned research candidate is not an implemented importer.
 
 Documented media outputs include H.264, HEVC/AV1 MP4, ProRes MOV, WebM, GIF, image sequences including EXR, WAV and AIFF; inspect the exact preset/schema for profile, channels and alpha. Native `.prproj` is not an interchange format: timeline interchange uses FCP7 XML/FCPXML/OTIO/EDL/AAF/OMF and may prerender unsupported layers to adjacent ProRes files. Inspect missing-media and unsupported-feature reports before delivery. ML-assisted tools require optional model downloads; do not fetch them without task authorization.
 
@@ -80,23 +80,27 @@ The control port is unauthenticated loopback JSON-lines, not HTTP. Enable it onl
 
 MCP `--automation-read-root DIR` / `--automation-write-root DIR` are repeatable. Supplying either enables confinement: reads may use a read or write root; writes require a write root. Command file paths must be absolute and resolve inside the roots, with no parent traversal or symlink escape. Implicit project/queue writes and batch steps are checked too. Scripts, installing scripts, Execute File and Reveal are refused while confined. With neither flag, this optional confinement is not enabled; do not assume PhotoCraft's fail-closed default applies.
 
-## Changes and verification for 0.8.0
+## Changes and verification for 0.9.2
+
+Import support expands to STL/FBX models, TGA/HDR/DPX/Cineon stills or sequences, MXF and animated WebP. Inspect model orientation, footage interpretation and frame/alpha results. Raw RGB/ARGB QuickTime is an output-module choice; discover its schema rather than inferring it from .mov. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+
+## Previously documented behavior and verification
 
 Property/keyframe commands now honor explicit layer or composition time bases. CLI renders accept Essential Graphics templates with a JSON values file; VP9 WebM honors --bitrate. Render-queue defaults for an unsaved project go to the Movies folder or home, while an explicit CLI --out remains relative to the working directory. MCP can confine file access to explicit roots; confined sessions refuse scripts and application-launch commands. Verify timing, output paths and actual render results. This review does not include launching the application or executing these new workflows.
 
 ## Source links
 
-- [Template CLI validation](https://github.com/storytold/effectcraft/blob/v0.8.0/apps/effectcraft-cli/src/template.rs)
-- [MCP filesystem confinement](https://github.com/storytold/effectcraft/blob/v0.8.0/crates/automation/src/confine.rs)
-- [Target-version release and changelog](https://github.com/storytold/effectcraft/releases/tag/v0.8.0)
-- [CLI parser](https://github.com/storytold/effectcraft/blob/v0.8.0/apps/effectcraft-cli/src/main.rs)
-- [Agent workflow and MCP](https://github.com/storytold/effectcraft/blob/v0.8.0/docs/agents.md)
-- [Backend schema and diagnostics](https://github.com/storytold/effectcraft/blob/v0.8.0/crates/engine/src/commands/file.rs)
-- [3D renderer commands](https://github.com/storytold/effectcraft/blob/v0.8.0/crates/engine/src/commands/model3d.rs)
-- [Scripts, ScriptUI and effect extensions](https://github.com/storytold/effectcraft/blob/v0.8.0/docs/plugins.md)
-- [Render queue schema](https://github.com/storytold/effectcraft/blob/v0.8.0/crates/engine/src/commands/render_queue.rs)
-- [Control protocol](https://github.com/storytold/effectcraft/blob/v0.8.0/docs/control-protocol.md)
-- [Formats and limitations](https://github.com/storytold/effectcraft/blob/v0.8.0/README.md) and [compatibility assessment](https://github.com/storytold/effectcraft/blob/v0.8.0/docs/gaps.md)
-- [Windows packaging](https://github.com/storytold/effectcraft/blob/v0.8.0/packaging/windows/package.ps1)
+- [Template CLI validation](https://github.com/storytold/effectcraft/blob/v0.9.2/apps/effectcraft-cli/src/template.rs)
+- [MCP filesystem confinement](https://github.com/storytold/effectcraft/blob/v0.9.2/crates/automation/src/confine.rs)
+- [Target-version release and changelog](https://github.com/storytold/effectcraft/releases/tag/v0.9.2)
+- [CLI parser](https://github.com/storytold/effectcraft/blob/v0.9.2/apps/effectcraft-cli/src/main.rs)
+- [Agent workflow and MCP](https://github.com/storytold/effectcraft/blob/v0.9.2/docs/agents.md)
+- [Backend schema and diagnostics](https://github.com/storytold/effectcraft/blob/v0.9.2/crates/engine/src/commands/file.rs)
+- [3D renderer commands](https://github.com/storytold/effectcraft/blob/v0.9.2/crates/engine/src/commands/model3d.rs)
+- [Scripts, ScriptUI and effect extensions](https://github.com/storytold/effectcraft/blob/v0.9.2/docs/plugins.md)
+- [Render queue schema](https://github.com/storytold/effectcraft/blob/v0.9.2/crates/engine/src/commands/render_queue.rs)
+- [Control protocol](https://github.com/storytold/effectcraft/blob/v0.9.2/docs/control-protocol.md)
+- [Formats and limitations](https://github.com/storytold/effectcraft/blob/v0.9.2/README.md) and [compatibility assessment](https://github.com/storytold/effectcraft/blob/v0.9.2/docs/gaps.md)
+- [Windows packaging](https://github.com/storytold/effectcraft/blob/v0.9.2/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

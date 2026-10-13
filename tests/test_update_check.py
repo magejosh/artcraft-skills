@@ -295,7 +295,7 @@ class ManifestTests(OfflineTest):
                     "LightCraft", "PDFCraft", "PhotoCraft", "SoundCraft", "VectorCraft", "WordCraft"}
         self.assertEqual(len(rows), 12)
         self.assertEqual({row["app"] for row in rows}, expected)
-        self.assertEqual(next(row["app_version"] for row in rows if row["app"] == "PDFCraft"), "0.6.0")
+        self.assertEqual(next(row["app_version"] for row in rows if row["app"] == "PDFCraft"), "0.7.1")
         for row in rows:
             checker.canonical_repository(row["upstream_repository"])
             checker.parse_version(row["app_version"])

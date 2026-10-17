@@ -9,7 +9,7 @@ Compose multipage publications and verify text flow and page appearance in Desig
 
 ## Target version and setup
 
-Written for DesignCraft 0.7.1. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/designcraft.
+Written for DesignCraft 0.8.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/designcraft.
 
 - Discover the CLI from `designcraft-cli` on PATH, or set `DESIGNCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,8 +59,10 @@ Official Windows portable packages include GUI and CLI executables with a static
 
 “Render the sample magazine to a new output folder and review all pages for clipping and overset text.”
 
-## Changes in 0.7.1
+## Changes in 0.8.0
 
-Placed PDF/SVG dimensions, Portuguese hyphenation and IDML missing-part handling improve. Inspect placed size, text flow and import warnings. Windows PDF printing is available when explicitly requested. After a lost MCP reply, inspect the document state before retrying a mutation. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+Script files accept UTF-8 with or without a BOM; script --help documents command lines, JSONL/arrays and earlier-result references. Most engine commands ignore unknown parameters, so a successful result is not proof a misspelled field was applied: check describe and inspect the result. Saves and CLI image exports use atomic replacement, which still replaces an existing destination. Preflight accounts for transformed image resolution; inspect linked assets, overset and the final PDF.
 
-Target app version: DesignCraft 0.7.1. If the installed or globally available DesignCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/designcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: DesignCraft 0.8.0. If the installed or globally available DesignCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/designcraft before relying on these commands.

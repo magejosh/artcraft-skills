@@ -9,7 +9,7 @@ Create and inspect layered motion graphics, preserving an editable EffectCraft p
 
 ## Target version and setup
 
-Written for EffectCraft 0.9.2. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/effectcraft.
+Written for EffectCraft 0.10.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/effectcraft.
 
 - Discover the CLI from `effectcraft-cli` on PATH, or set `EFFECTCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,8 +59,10 @@ Rust 1.95+ is for source builds. Official Windows portable packages include GUI 
 
 “Animate a known layer's position in a copied project, render a short preview, and inspect its first and last keyframes.”
 
-## Changes in 0.9.2
+## Changes in 0.10.0
 
-Import support expands to STL/FBX models, TGA/HDR/DPX/Cineon stills or sequences, MXF and animated WebP. Inspect model orientation, footage interpretation and frame/alpha results. Raw RGB/ARGB QuickTime is an output-module choice; discover its schema rather than inferring it from .mov. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+file.importProject merges another EffectCraft project into the open project; inspect its schema and imported project items before placing them in a composition. It is distinct from opening/replacing the project or importing an After Effects AEP. Scripting adds CompItem.saveFrameToPng and improves coordinate transforms and footage proxies. PSD group nesting is bounded at 64. These changes require project save/reopen and representative-frame checks, not just a successful command.
 
-Target app version: EffectCraft 0.9.2. If the installed or globally available EffectCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/effectcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: EffectCraft 0.10.0. If the installed or globally available EffectCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/effectcraft before relying on these commands.

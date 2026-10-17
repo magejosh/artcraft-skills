@@ -15,20 +15,21 @@ Each app has its own skill folder, with a `SKILL.md` guide and a detailed comman
 
 | Skill | Helps with | Written for |
 | --- | --- | --- |
-| [CADCraft](skills/cadcraft/SKILL.md) | 2D drawings, CAD conversion, layers, and dimensions | 0.6.2 |
-| [DeckCraft](skills/deckcraft/SKILL.md) | Presentations, slide layouts, and slide exports | 0.6.1 |
-| [DesignCraft](skills/designcraft/SKILL.md) | Page layouts, publications, and text flow | 0.7.1 |
-| [EffectCraft](skills/effectcraft/SKILL.md) | Motion graphics, compositions, and animation | 0.9.2 |
-| [FilmCraft](skills/filmcraft/SKILL.md) | Video timelines, captions, and exports | 0.7.2 |
-| [GridCraft](skills/gridcraft/SKILL.md) | Spreadsheets, formulas, charts, and print output | 0.6.1 |
-| [LightCraft](skills/lightcraft/SKILL.md) | Photo development, culling, and batch exports | 0.7.1 |
-| [PDFCraft](skills/pdfcraft/SKILL.md) | PDF inspection, page organization, annotations, and forms | 0.7.1 |
-| [PhotoCraft](skills/photocraft/SKILL.md) | Layered image editing, masks, and adjustments | 0.8.2 |
-| [SoundCraft](skills/soundcraft/SKILL.md) | Audio sessions, mixing, and rendering | 0.6.1 |
-| [VectorCraft](skills/vectorcraft/SKILL.md) | Vector artwork, paths, and artboards | 0.10.0 |
-| [WordCraft](skills/wordcraft/SKILL.md) | Documents, styles, tracked changes, and conversion | 0.6.1 |
+| [CADCraft](skills/cadcraft/SKILL.md) | 2D drawings, CAD conversion, layers, and dimensions | 0.7.0 |
+| [DeckCraft](skills/deckcraft/SKILL.md) | Presentations, slide layouts, and slide exports | 0.7.0 |
+| [DesignCraft](skills/designcraft/SKILL.md) | Page layouts, publications, and text flow | 0.8.0 |
+| [EffectCraft](skills/effectcraft/SKILL.md) | Motion graphics, compositions, and animation | 0.10.0 |
+| [FigCraft](skills/figcraft/SKILL.md) | Interface design, components, auto layout, and prototypes | 0.6.0 |
+| [FilmCraft](skills/filmcraft/SKILL.md) | Video timelines, captions, and exports | 0.8.0 |
+| [GridCraft](skills/gridcraft/SKILL.md) | Spreadsheets, formulas, charts, and print output | 0.7.0 |
+| [LightCraft](skills/lightcraft/SKILL.md) | Photo development, culling, and batch exports | 0.8.0 |
+| [PDFCraft](skills/pdfcraft/SKILL.md) | PDF inspection, page organization, annotations, and forms | 0.8.0 |
+| [PhotoCraft](skills/photocraft/SKILL.md) | Layered image editing, masks, and adjustments | 0.9.0 |
+| [SoundCraft](skills/soundcraft/SKILL.md) | Audio sessions, mixing, and rendering | 0.7.0 |
+| [VectorCraft](skills/vectorcraft/SKILL.md) | Vector artwork, paths, and artboards | 0.12.0 |
+| [WordCraft](skills/wordcraft/SKILL.md) | Documents, styles, tracked changes, and conversion | 0.7.0 |
 
-PDFCraft was previously named PrintCraft. This collection uses the updated [PDFCraft 0.7.1](https://github.com/storytold/pdfcraft) skill.
+PDFCraft was previously named PrintCraft. This collection uses the updated [PDFCraft 0.8.0](https://github.com/storytold/pdfcraft) skill.
 
 The versions above identify the app releases these guides were written for. If you have a newer release, the skill points your assistant to that app's official documentation before it uses older commands.
 
@@ -63,7 +64,7 @@ Run the read-only release checker with Python 3.9 or newer:
 python3 tools/update_check.py
 ```
 
-On Windows, use `py -3 tools/update_check.py`. It compares the twelve versions in `skills.json` with the latest stable releases in their official GitHub repositories and shows release and portable-download links. It reports failures as unknown rather than claiming you are up to date.
+On Windows, use `py -3 tools/update_check.py`. It compares the thirteen versions in `skills.json` with the latest stable releases in their official GitHub repositories and shows release and portable-download links. It reports failures as unknown rather than claiming you are up to date.
 
 The baseline is the version each skill was written for, not a scan of the apps installed on your computer. The checker does not download packages, install apps, or change skills. When you decide to update an app, keep the new portable version alongside the existing version until you choose to remove the old copy.
 

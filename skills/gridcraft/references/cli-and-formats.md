@@ -1,8 +1,8 @@
-# GridCraft 0.6.1: CLI and format reference
+# GridCraft 0.7.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.6.1, commit `fc45b7f6d8ab79ef20f74e3c8347a2fd731e6af5`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.7.0, commit `d9d09f0baa912e88c5111107903fc8c640214b57`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `gridcraft-cli` and `gridcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -33,7 +33,7 @@ COMMAND, JSON, READ_DIR, WRITE_DIR, and PRIVATE_TOKEN_FILE are grammar placehold
 
 ## Exact grammar and traps
 
-`run` supports --in, --sample, --cmd, --script, --out, --print RANGE, --sheet, --csv, --formulas, --quiet. Commands may be ID, ID=JSON, ID JSON, or JSONL {command,params}; scripts execute in command-line order and stop on first failure. `cat` reads ranges; `eval --in FILE` evaluates against a workbook. Choose --sheet for flat CSV/TSV/HTML export. CLI convert does not export PDF. Use file.exportPdf with {path, sheets:active|all, range?, fitToPage?}; range selects cells on the active sheet. Explicitly activate the target sheet first. The result includes pages/bytes/path. Never use run --out output.pdf: ordinary save can put XLSX bytes behind a .pdf suffix. functions --search helps discover supported formula names. For PDF, run --sheet only affects console --print, not command selection: use sheet.activate. A Sheet! prefix in range does not select that sheet. Without range, PDF uses stored printArea or used bounds including charts/images/shapes. Page Setup controls margins/paper/scaling/title rows/breaks. sheets=all includes visible sheets; fitToPage bottoms out at 10% and cannot guarantee one page. Inspect file.printPreview before large exports (2,000-page cap). The print path maps fonts to standard PDF families; visually inspect CJK/multilingual glyphs, wrapping and searchable text rather than assuming the grid and PDF have identical font coverage.
+`run` supports --in, --sample, --cmd, --script, --out, --print RANGE, --sheet, --csv, --formulas, --quiet. Commands may be ID, ID=JSON, ID JSON, or JSONL {command,params}; scripts execute in command-line order and stop on first failure. `cat` reads ranges; `eval --in FILE` evaluates against a workbook. Choose --sheet for flat CSV/TSV/HTML export. CLI convert does not export PDF. Use file.exportPdf with {path, sheets:active|all, range?, fitToPage?}; range selects cells on the active sheet. Explicitly activate the target sheet first. The result includes pages/bytes/path. Do not use run --out output.pdf: ordinary save rejects unsupported suffixes; use file.exportPdf. functions --search helps discover supported formula names. For PDF, run --sheet only affects console --print, not command selection: use sheet.activate. A Sheet! prefix in range does not select that sheet. Without range, PDF uses stored printArea or used bounds including charts/images/shapes. Page Setup controls margins/paper/scaling/title rows/breaks. sheets=all includes visible sheets; fitToPage bottoms out at 10% and cannot guarantee one page. Inspect file.printPreview before large exports (2,000-page cap). The print path maps fonts to standard PDF families; visually inspect CJK/multilingual glyphs, wrapping and searchable text rather than assuming the grid and PDF have identical font coverage.
 
 ## Formula and round-trip check
 
@@ -45,9 +45,11 @@ Control is newline-delimited JSON on loopback; GRIDCRAFT_CONTROL_PORT is support
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
-## Changes and verification for 0.6.1
+## Changes and verification for 0.7.0
 
-The check subcommand compares formula results with cached values and checks XLSX round-trip fidelity; skipped or missing oracle values are not proof of correctness. XLSX preservation, conditional formatting, validation and controls improve; verify formulas, controls and saved workbook structure. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+Unknown or missing save extensions are now rejected instead of receiving XLSX bytes. Convert rebases relative external-workbook links for the destination folder. XLSX checking compares conditional-format rule contents as well as counts; its skipped/missing-oracle results still need review. Preserve editable ink, formulas and links by saving/reopening the required workbook format; XLS/ODS/XLSB remain import-only.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -55,15 +57,15 @@ ODS and XLSB import covers worksheet data and cached values/results; do not infe
 
 ## Source links
 
-- [Read-only formula and round-trip checker](https://github.com/storytold/gridcraft/blob/v0.6.1/apps/gridcraft-cli/src/check.rs)
-- [PDF export command and schema](https://github.com/storytold/gridcraft/blob/v0.6.1/crates/engine/src/cmd/print.rs)
+- [Read-only formula and round-trip checker](https://github.com/storytold/gridcraft/blob/v0.7.0/apps/gridcraft-cli/src/check.rs)
+- [PDF export command and schema](https://github.com/storytold/gridcraft/blob/v0.7.0/crates/engine/src/cmd/print.rs)
 
-- [Target-version release](https://github.com/storytold/gridcraft/releases/tag/v0.6.1)
-- [apps/gridcraft-cli/src/main.rs](https://github.com/storytold/gridcraft/blob/v0.6.1/apps/gridcraft-cli/src/main.rs)
-- [docs/cli.md](https://github.com/storytold/gridcraft/blob/v0.6.1/docs/cli.md)
-- [docs/mcp.md](https://github.com/storytold/gridcraft/blob/v0.6.1/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/gridcraft/blob/v0.6.1/docs/control-protocol.md)
-- [crates/engine/src/io.rs](https://github.com/storytold/gridcraft/blob/v0.6.1/crates/engine/src/io.rs)
-- [packaging/windows/package.ps1](https://github.com/storytold/gridcraft/blob/v0.6.1/packaging/windows/package.ps1)
+- [Target-version release](https://github.com/storytold/gridcraft/releases/tag/v0.7.0)
+- [apps/gridcraft-cli/src/main.rs](https://github.com/storytold/gridcraft/blob/v0.7.0/apps/gridcraft-cli/src/main.rs)
+- [docs/cli.md](https://github.com/storytold/gridcraft/blob/v0.7.0/docs/cli.md)
+- [docs/mcp.md](https://github.com/storytold/gridcraft/blob/v0.7.0/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/gridcraft/blob/v0.7.0/docs/control-protocol.md)
+- [crates/engine/src/io.rs](https://github.com/storytold/gridcraft/blob/v0.7.0/crates/engine/src/io.rs)
+- [packaging/windows/package.ps1](https://github.com/storytold/gridcraft/blob/v0.7.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

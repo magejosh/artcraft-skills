@@ -4,98 +4,106 @@
     {
       "skill": "cadcraft",
       "app": "CADCraft",
-      "app_version": "0.6.2",
+      "app_version": "0.7.0",
       "upstream_repository": "https://github.com/storytold/cadcraft",
-      "source_tag": "v0.6.2",
-      "source_commit": "00c7613f1af3c73f7157fa91d9fe2635c6f23c06"
+      "source_tag": "v0.7.0",
+      "source_commit": "fc4e98315a8d771b5ab832f0ade0b5e7b106df7f"
     },
     {
       "skill": "deckcraft",
       "app": "DeckCraft",
-      "app_version": "0.6.1",
+      "app_version": "0.7.0",
       "upstream_repository": "https://github.com/storytold/deckcraft",
-      "source_tag": "v0.6.1",
-      "source_commit": "688c7ef592c901ca4541c25e210c1b302e4dc066"
+      "source_tag": "v0.7.0",
+      "source_commit": "d78e657e4cb1e490ceb5445785c052d9cf5ad963"
     },
     {
       "skill": "designcraft",
       "app": "DesignCraft",
-      "app_version": "0.7.1",
+      "app_version": "0.8.0",
       "upstream_repository": "https://github.com/storytold/designcraft",
-      "source_tag": "v0.7.1",
-      "source_commit": "3624f488192a8eeade11bd27609c9e5056214e75"
+      "source_tag": "v0.8.0",
+      "source_commit": "11a51d5b665aec8d6e675bd107a8a01514f10d00"
     },
     {
       "skill": "effectcraft",
       "app": "EffectCraft",
-      "app_version": "0.9.2",
+      "app_version": "0.10.0",
       "upstream_repository": "https://github.com/storytold/effectcraft",
-      "source_tag": "v0.9.2",
-      "source_commit": "470ea7a3af82ee1dd1d2f86c777fe6891bd0c37b"
+      "source_tag": "v0.10.0",
+      "source_commit": "05955c08b4fd025f1a09882df72e6dbff1a8148a"
+    },
+    {
+      "skill": "figcraft",
+      "app": "FigCraft",
+      "app_version": "0.6.0",
+      "upstream_repository": "https://github.com/storytold/figcraft",
+      "source_tag": "v0.6.0",
+      "source_commit": "833f0d2c27f0acbae5394848930ae531fc89c724"
     },
     {
       "skill": "filmcraft",
       "app": "FilmCraft",
-      "app_version": "0.7.2",
+      "app_version": "0.8.0",
       "upstream_repository": "https://github.com/storytold/filmcraft",
-      "source_tag": "v0.7.2",
-      "source_commit": "71438c627b5cbcfb550526c3971f4d0037733c5c"
+      "source_tag": "v0.8.0",
+      "source_commit": "f03e21556d8e3a7155b91892d958debd5255d7af"
     },
     {
       "skill": "gridcraft",
       "app": "GridCraft",
-      "app_version": "0.6.1",
+      "app_version": "0.7.0",
       "upstream_repository": "https://github.com/storytold/gridcraft",
-      "source_tag": "v0.6.1",
-      "source_commit": "fc45b7f6d8ab79ef20f74e3c8347a2fd731e6af5"
+      "source_tag": "v0.7.0",
+      "source_commit": "d9d09f0baa912e88c5111107903fc8c640214b57"
     },
     {
       "skill": "lightcraft",
       "app": "LightCraft",
-      "app_version": "0.7.1",
+      "app_version": "0.8.0",
       "upstream_repository": "https://github.com/storytold/lightcraft",
-      "source_tag": "v0.7.1",
-      "source_commit": "701f78ea2e586d4748705f10fdf5c4181dc1fd49"
+      "source_tag": "v0.8.0",
+      "source_commit": "16dbb90499d3c63a6582fcbba1b2550a6e2da032"
     },
     {
       "skill": "pdfcraft",
       "app": "PDFCraft",
-      "app_version": "0.7.1",
+      "app_version": "0.8.0",
       "upstream_repository": "https://github.com/storytold/pdfcraft",
-      "source_tag": "v0.7.1",
-      "source_commit": "7163ba3dee8becfff6871c9a65d0d8314314742b"
+      "source_tag": "v0.8.0",
+      "source_commit": "9931329b9fae0b05373b4dc3ac7c58541f0891a4"
     },
     {
       "skill": "photocraft",
       "app": "PhotoCraft",
-      "app_version": "0.8.2",
+      "app_version": "0.9.0",
       "upstream_repository": "https://github.com/storytold/photocraft",
-      "source_tag": "v0.8.2",
-      "source_commit": "d43db3e153c76aefce9b32cef9099e458eaf17a8"
+      "source_tag": "v0.9.0",
+      "source_commit": "c699e3cda69f4852b43c0b191ab0091aaeff9d6a"
     },
     {
       "skill": "soundcraft",
       "app": "SoundCraft",
-      "app_version": "0.6.1",
+      "app_version": "0.7.0",
       "upstream_repository": "https://github.com/storytold/soundcraft",
-      "source_tag": "v0.6.1",
-      "source_commit": "6cf896e76c0ec82a11bf2494f209cfe7c8507f74"
+      "source_tag": "v0.7.0",
+      "source_commit": "3a28a657692c1b98b28c276d8f61df9471074f0f"
     },
     {
       "skill": "vectorcraft",
       "app": "VectorCraft",
-      "app_version": "0.10.0",
+      "app_version": "0.12.0",
       "upstream_repository": "https://github.com/storytold/vectorcraft",
-      "source_tag": "v0.10.0",
-      "source_commit": "71174477cc056020fe712ae59901d76b870ca9d9"
+      "source_tag": "v0.12.0",
+      "source_commit": "8bc65329286dc1b84aa392997bb205613c3e96cb"
     },
     {
       "skill": "wordcraft",
       "app": "WordCraft",
-      "app_version": "0.6.1",
+      "app_version": "0.7.0",
       "upstream_repository": "https://github.com/storytold/wordcraft",
-      "source_tag": "v0.6.1",
-      "source_commit": "7dfa6b0ee2aeeafec004c51fdd2ab9a697da3cc4"
+      "source_tag": "v0.7.0",
+      "source_commit": "fc41918814f62645b6746ed68e71e8c2c2e85d6f"
     }
   ]
 }

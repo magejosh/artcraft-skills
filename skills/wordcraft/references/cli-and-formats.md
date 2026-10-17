@@ -1,8 +1,8 @@
-# WordCraft 0.6.1: CLI and format reference
+# WordCraft 0.7.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.6.1, commit `7dfa6b0ee2aeeafec004c51fdd2ab9a697da3cc4`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.7.0, commit `fc41918814f62645b6746ed68e71e8c2c2e85d6f`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `wordcraft-cli` and `wordcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -11,6 +11,7 @@ For JSON-bearing arguments, confirm native argument passing: Windows PowerShell 
 ## Supported command examples
 
 ```text
+wordcraft-cli convert report.docx report.xml --format wordml2003
 wordcraft --sample
 wordcraft report.docx
 wordcraft-cli convert report.docx report.pdf
@@ -38,9 +39,11 @@ MCP --connect HOST:PORT selects live mode. CLI run itself has no --connect. Head
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
-## Changes and verification for 0.6.1
+## Changes and verification for 0.7.0
 
-Legacy DOC/DOT import includes partial support for pictures, shapes, formatting and sections; compare the result against the original. Mail merge supports spreadsheet recipient lists and conditional/next-record fields. Verify merged header/footer fields, lists, pagination and preserved DOCX XML rather than assuming a lossless round trip. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+convert IN OUT --format wordml2003 writes Word 2003 XML; .xml without that selection defaults to Flat OPC (also explicit --format flatopc). text now retains bullet/number labels. RTF code-page handling, WMF/EMF pictures and DOCX ink preservation improve; verify text, page layout and retained editable content after saving. Exported page images now render headers/footers at full strength.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -50,12 +53,12 @@ Live control requires the per-window key for every request, or an initial `auth`
 
 ## Source links
 
-- [Target-version release](https://github.com/storytold/wordcraft/releases/tag/v0.6.1)
-- [apps/wordcraft-cli/src/main.rs](https://github.com/storytold/wordcraft/blob/v0.6.1/apps/wordcraft-cli/src/main.rs)
-- [crates/engine/src/io.rs](https://github.com/storytold/wordcraft/blob/v0.6.1/crates/engine/src/io.rs)
-- [docs/mcp.md](https://github.com/storytold/wordcraft/blob/v0.6.1/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/wordcraft/blob/v0.6.1/docs/control-protocol.md)
-- [README.md](https://github.com/storytold/wordcraft/blob/v0.6.1/README.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/wordcraft/blob/v0.6.1/packaging/windows/package.ps1)
+- [Target-version release](https://github.com/storytold/wordcraft/releases/tag/v0.7.0)
+- [apps/wordcraft-cli/src/main.rs](https://github.com/storytold/wordcraft/blob/v0.7.0/apps/wordcraft-cli/src/main.rs)
+- [crates/engine/src/io.rs](https://github.com/storytold/wordcraft/blob/v0.7.0/crates/engine/src/io.rs)
+- [docs/mcp.md](https://github.com/storytold/wordcraft/blob/v0.7.0/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/wordcraft/blob/v0.7.0/docs/control-protocol.md)
+- [README.md](https://github.com/storytold/wordcraft/blob/v0.7.0/README.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/wordcraft/blob/v0.7.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

@@ -9,7 +9,7 @@ Edit and deliver local video timelines with FilmCraft without disturbing other p
 
 ## Target version and setup
 
-Written for FilmCraft 0.7.2. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/filmcraft.
+Written for FilmCraft 0.8.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/filmcraft.
 
 - Discover the CLI from `filmcraft-cli` on PATH, or set `FILMCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -51,7 +51,7 @@ Return the output path or approved attachment, changes made, and any warnings. D
 
 .fcproj projects. Export H.264 MP4/AAC, ProRes/DNxHR/APV/MJPEG QuickTime, supported MXF variants, PNG/TIFF/BMP/JPEG/Targa/DPX/OpenEXR sequences, GIF and WAV/AIFF/AAC audio. HEVC and AV1 export depend on an available hardware encoder; inspect supported profiles and HDR capability on the actual host. Caption SRT/WebVTT/SCC; timeline FCP7 XML, FCPXML 1.9–1.11, OTIO, EDL, AAF, OMF2.
 
-Windows now has Media Foundation/D3D11 hardware decoding and opt-in NVIDIA NVENC H.264 encoding; macOS uses VideoToolbox. Profile, driver and codec-extension availability matter, and export compositing can remain CPU-bound. Linux H.264/HEVC hardware decode depends on an available backend. Hardware-dependent AV1 export and E-AC3 decoding are documented; CinemaDNG/DNG import is supported, but that does not establish support for every camera RAW format. VST3/AU/OpenFX hosting remains unsupported. No FFmpeg runtime dependency. Speech-to-text is optional and unavailable commands report the missing build feature; supplied transcripts can still be edited. Prefer CLI `help`; the GUI’s improved --help does not change the CLI parser.
+Windows now has Media Foundation/D3D11 hardware decoding and opt-in NVIDIA NVENC H.264 encoding; macOS uses VideoToolbox. Profile, driver and codec-extension availability matter, and export compositing can remain CPU-bound. Linux H.264/HEVC hardware decode depends on an available backend. Hardware-dependent AV1 export and E-AC3 decoding are documented; CinemaDNG/DNG import is supported, but that does not establish support for every camera RAW format. VST3/AU/OpenFX hosting remains unsupported. No FFmpeg runtime dependency. Speech-to-text is optional and unavailable commands report the missing build feature; supplied transcripts can still be edited. CLI `help` and `--help`, including `export --help`, print the reference before project work.
 
 Official Windows portable packages include GUI and CLI executables with a statically linked C runtime; the packaging script requires no Visual C++ redistributable. Optional Windows decoder extensions and supported GPU drivers are distinct from source-build tools. Do not install extensions, drivers or speech models merely because an export or transcript feature exists.
 
@@ -59,8 +59,10 @@ Official Windows portable packages include GUI and CLI executables with a static
 
 “Inspect a timeline and prepare a verified short H.264 export before authorizing a full-length render.”
 
-## Changes in 0.7.2
+## Changes in 0.8.0
 
-Export/render reports offline media and exits with failure when placeholders were rendered; --allow-offline explicitly accepts those placeholders. Unknown export-setting keys now fail. Verify all media and the completed output before delivery, including newly supported image/audio imports. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+The CLI recognizes --help anywhere, including export --help, before project work. Export adds 32-bit integer/float audio; supported inputs expand to ADTS AAC, Radiance HDR, YUV4MPEG2 and PXR24 OpenEXR. Caption sidecars are clipped to the exported range. Choose exact export settings through the schema, inspect offline-media warnings, and check both audio precision and caption timing in the output.
 
-Target app version: FilmCraft 0.7.2. If the installed or globally available FilmCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/filmcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: FilmCraft 0.8.0. If the installed or globally available FilmCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/filmcraft before relying on these commands.

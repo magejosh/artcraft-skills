@@ -9,7 +9,7 @@ Work with PDF documents through PDFCraft's one-shot CLI, schema-driven automatio
 
 ## Target version and setup
 
-Written for PDFCraft 0.7.1. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/pdfcraft.
+Written for PDFCraft 0.8.0. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/pdfcraft.
 
 Discover `pdfcraft-cli` on PATH or set `PDFCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; use the matching platform build elsewhere. Resolve the GUI separately. Do not assume an installation directory, a running app, or that older `printcraft-cli` instructions apply unchanged.
 
@@ -50,12 +50,14 @@ if (-not $cli) { $cli = (Get-Command pdfcraft-cli -ErrorAction Stop).Source }
 
 ## Important limits
 
-PDFCraft 0.7.1 exposes tools for content editing, Office export, accessibility checks, PDF/A workflows, comparison, and optimization as well as page operations. Coverage varies; complex text edits, script coverage, Office interoperability, XFA, preflight and long-term signature validation require document-specific checks. Discover the relevant schema and test the actual document; a menu item or tool name is not a fidelity guarantee.
+PDFCraft 0.8.0 exposes tools for content editing, Office export, accessibility checks, PDF/A workflows, comparison, and optimization as well as page operations. Coverage varies; complex text edits, script coverage, Office interoperability, XFA, preflight and long-term signature validation require document-specific checks. Discover the relevant schema and test the actual document; a menu item or tool name is not a fidelity guarantee.
 
 The CLI's `render` command at this target version writes real PNG, JPEG, TIFF, or PAM according to the output suffix. This differs from older instructions that describe PAM-only output. Automation `page_render` returns PNG.
 
-## Changes in 0.7.1
+## Changes in 0.8.0
 
-The CLI can audit suspected faux redactions; findings require inspection and do not apply redactions. PPTX export, XFA workflows, picture-area OCR and accessibility structure/review tools have expanded. Verify exported content and human review records; a visible scanned signature is distinct from a cryptographic signature. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+The CLI adds batch FILES-OR-DIRS... --steps convert,ocr,optimize --out-dir DIR with optional --recursive, --root and --stop-on-error. This writes files and may run OCR; scope inputs and review every per-file result before a larger batch. Chained edit page numbers refer to the document after preceding options. text now respects copy restrictions and requires the appropriate password when copying is prohibited. Save validation and syncing improvements do not replace checking the saved PDF.
 
-Target app version: PDFCraft 0.7.1. If the installed or globally available PDFCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/pdfcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: PDFCraft 0.8.0. If the installed or globally available PDFCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/pdfcraft before relying on these commands.

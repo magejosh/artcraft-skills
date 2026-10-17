@@ -289,13 +289,13 @@ class ManifestTests(OfflineTest):
             with self.assertRaises(ValueError):
                 checker.load_manifest(path)
 
-    def test_real_manifest_has_expected_twelve_apps_and_pdfcraft(self):
+    def test_real_manifest_has_expected_thirteen_apps_and_pdfcraft(self):
         rows = checker.load_manifest(MODULE_PATH.parents[1] / "skills.json")
-        expected = {"CADCraft", "DeckCraft", "DesignCraft", "EffectCraft", "FilmCraft", "GridCraft",
+        expected = {"CADCraft", "DeckCraft", "DesignCraft", "EffectCraft", "FigCraft", "FilmCraft", "GridCraft",
                     "LightCraft", "PDFCraft", "PhotoCraft", "SoundCraft", "VectorCraft", "WordCraft"}
-        self.assertEqual(len(rows), 12)
+        self.assertEqual(len(rows), 13)
         self.assertEqual({row["app"] for row in rows}, expected)
-        self.assertEqual(next(row["app_version"] for row in rows if row["app"] == "PDFCraft"), "0.7.1")
+        self.assertEqual(next(row["app_version"] for row in rows if row["app"] == "PDFCraft"), "0.8.0")
         for row in rows:
             checker.canonical_repository(row["upstream_repository"])
             checker.parse_version(row["app_version"])

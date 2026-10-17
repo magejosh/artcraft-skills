@@ -9,7 +9,7 @@ Edit and render local audio sessions without disturbing audio devices or other r
 
 ## Target version and setup
 
-Written for SoundCraft 0.6.1. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/soundcraft.
+Written for SoundCraft 0.7.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/soundcraft.
 
 - Discover the CLI from `soundcraft-cli` on PATH, or set `SOUNDCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,8 +59,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Lower the demo Kick to -6 dB, bounce a new WAV, and inspect channel count, duration, and clipping.”
 
-## Changes in 0.6.1
+## Changes in 0.7.0
 
-Malformed command JSON now fails explicitly. Save Copy does not retarget the open session; bus bounce rejects an unknown named bus, MIDI export honors the track filter and includes controllers, and consolidation creates separate output files per item. Verify the active session, routing, output count and audio channels before delivery. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+Headless MCP accepts --automation-read-root DIR and --automation-write-root DIR. Supplying roots confines agent file access; an omitted access root grants none of that access, and roots conflict with --connect. This does not confine an attached GUI or ordinary one-shot CLI calls. convert rejects invalid sample rates/bit depths before reading audio. Oversized renders now fail rather than silently truncating; verify duration and channels of the actual bounce.
 
-Target app version: SoundCraft 0.6.1. If the installed or globally available SoundCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/soundcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: SoundCraft 0.7.0. If the installed or globally available SoundCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/soundcraft before relying on these commands.

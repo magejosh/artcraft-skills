@@ -1,8 +1,8 @@
-# SoundCraft 0.6.1: CLI and format reference
+# SoundCraft 0.7.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.6.1, commit `6cf896e76c0ec82a11bf2494f209cfe7c8507f74`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.7.0, commit `3a28a657692c1b98b28c276d8f61df9471074f0f`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `soundcraft-cli` and `soundcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -42,9 +42,11 @@ Live MCP uses --connect, not --bridge. Explicitly set app --port 7801: parser de
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
-## Changes and verification for 0.6.1
+## Changes and verification for 0.7.0
 
-Malformed command JSON now fails explicitly. Save Copy does not retarget the open session; bus bounce rejects an unknown named bus, MIDI export honors the track filter and includes controllers, and consolidation creates separate output files per item. Verify the active session, routing, output count and audio channels before delivery. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+Headless MCP accepts --automation-read-root DIR and --automation-write-root DIR. Supplying roots confines agent file access; an omitted access root grants none of that access, and roots conflict with --connect. This does not confine an attached GUI or ordinary one-shot CLI calls. convert rejects invalid sample rates/bit depths before reading audio. Oversized renders now fail rather than silently truncating; verify duration and channels of the actual bounce.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -52,12 +54,14 @@ Replacing a session now stops playback; same-named clip exports receive distinct
 
 ## Source links
 
-- [Target-version release](https://github.com/storytold/soundcraft/releases/tag/v0.6.1)
-- [apps/soundcraft-cli/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.6.1/apps/soundcraft-cli/src/main.rs)
-- [apps/soundcraft/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.6.1/apps/soundcraft/src/main.rs)
-- [docs/mcp.md](https://github.com/storytold/soundcraft/blob/v0.6.1/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/soundcraft/blob/v0.6.1/docs/control-protocol.md)
-- [README.md](https://github.com/storytold/soundcraft/blob/v0.6.1/README.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/soundcraft/blob/v0.6.1/packaging/windows/package.ps1)
+- [Automation root semantics](https://github.com/storytold/soundcraft/blob/v0.7.0/crates/engine/src/file_access.rs)
+
+- [Target-version release](https://github.com/storytold/soundcraft/releases/tag/v0.7.0)
+- [apps/soundcraft-cli/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.7.0/apps/soundcraft-cli/src/main.rs)
+- [apps/soundcraft/src/main.rs](https://github.com/storytold/soundcraft/blob/v0.7.0/apps/soundcraft/src/main.rs)
+- [docs/mcp.md](https://github.com/storytold/soundcraft/blob/v0.7.0/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/soundcraft/blob/v0.7.0/docs/control-protocol.md)
+- [README.md](https://github.com/storytold/soundcraft/blob/v0.7.0/README.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/soundcraft/blob/v0.7.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

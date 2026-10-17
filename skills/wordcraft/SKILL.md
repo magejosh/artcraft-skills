@@ -9,7 +9,7 @@ Create, inspect, edit, and convert word-processing documents with WordCraft.
 
 ## Target version and setup
 
-Written for WordCraft 0.6.1. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/wordcraft.
+Written for WordCraft 0.7.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/wordcraft.
 
 - Discover the CLI from `wordcraft-cli` on PATH, or set `WORDCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,8 +59,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Inspect a DOCX, bold one agreed text selection in a copy, convert to PDF, and review pagination.”
 
-## Changes in 0.6.1
+## Changes in 0.7.0
 
-Legacy DOC/DOT import includes partial support for pictures, shapes, formatting and sections; compare the result against the original. Mail merge supports spreadsheet recipient lists and conditional/next-record fields. Verify merged header/footer fields, lists, pagination and preserved DOCX XML rather than assuming a lossless round trip. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+convert IN OUT --format wordml2003 writes Word 2003 XML; .xml without that selection defaults to Flat OPC (also explicit --format flatopc). text now retains bullet/number labels. RTF code-page handling, WMF/EMF pictures and DOCX ink preservation improve; verify text, page layout and retained editable content after saving. Exported page images now render headers/footers at full strength.
 
-Target app version: WordCraft 0.6.1. If the installed or globally available WordCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/wordcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: WordCraft 0.7.0. If the installed or globally available WordCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/wordcraft before relying on these commands.

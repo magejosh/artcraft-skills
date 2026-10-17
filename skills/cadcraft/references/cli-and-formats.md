@@ -1,8 +1,8 @@
-# CADCraft 0.6.2: CLI and format reference
+# CADCraft 0.7.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.6.2, commit `00c7613f1af3c73f7157fa91d9fe2635c6f23c06`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.7.0, commit `fc4e98315a8d771b5ab832f0ade0b5e7b106df7f`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `cadcraft-cli` and `cadcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -30,7 +30,7 @@ COMMAND, JSON, READ_DIR, WRITE_DIR, and PRIVATE_TOKEN_FILE are grammar placehold
 
 The I/O layer imports DXF/DWG and SVG/SVGZ. SVG import converts to drawing geometry; inspect fidelity after import. DXF/DWG save supports output versions from 2000 through 2018; defaults preserve a supported source version or use 2018 for new drawings, with DWG defaulting to at least 2004. Discover the save schema before specifying version or binary-DXF settings.
 
-`run` takes a positional input, not --in. Its --cmd takes one argument `id {json}`, split at the first space, not ID=JSON; there is no --params. --script expands literal \\n; --script-file reads UTF-8. Supported flags include --sample, --metric, --script, --script-file, --cmd, --save, --export, --view and --window. Save/export share one extension-selected output slot, so repeated flags keep only the last output. PNG conversion defaults to 2400×1600 and the current drawing view; do not invent run --scale/--page/--all-pages. Commands supports a positional filter; no describe/app subcommand.
+`run` takes a positional input, not --in. Its --cmd takes one argument `id {json}`, split at the first space, not ID=JSON; there is no --params. --script expands literal \\n; --script-file reads UTF-8. Supported flags include --sample, --metric, --script, --script-file, --cmd, --save, --export, --view and --window. Save/export share one extension-selected output slot, so repeated flags keep only the last output. PNG conversion defaults to 2400×1600 fitted to drawing extents; run uses a command-changed view, otherwise extents; do not invent run --scale/--page/--all-pages. Commands supports a positional filter; no describe/app subcommand.
 
 `convert INPUT OUTPUT` and `run` image exports accept `--view extents|current` or `--window x0,y0,x1,y1`, mutually exclusive. Window coordinates are finite drawing-unit bounds with x0 < x1 and y0 < y1, fitted to the image. Framing requires PNG/SVG/PDF output and is rejected for DXF. Unknown options and a missing `--connect` address fail explicitly.
 
@@ -40,9 +40,11 @@ MCP is headless by default. --connect requires HOST:PORT for a live app. Control
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
-## Changes and verification for 0.6.2
+## Changes and verification for 0.7.0
 
-SVG/SVGZ can be imported alongside DXF/DWG. DXF/DWG output version handling and entity support have expanded; inspect imported geometry, units and unsupported-entity warnings, then save and reopen the required CAD format. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+MCP adds --lazy and --launch, both requiring --connect HOST:PORT. --lazy defers connection until a tool call; --launch is documented to open the GUI on macOS at that call and therefore needs an authorized launch workflow; do not assume the same launch behavior on Windows/Linux. Conversion reports skipped input records on stderr; inspect those warnings and the saved drawing. Image conversion fits extents by default; run exports use a view changed by commands, otherwise extents. Explicit --view current or --window remains available.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -50,11 +52,11 @@ Image exports now support explicit current-view, extents or drawing-window frami
 
 ## Source links
 
-- [Target-version release](https://github.com/storytold/cadcraft/releases/tag/v0.6.2)
-- [apps/cadcraft-cli/src/main.rs](https://github.com/storytold/cadcraft/blob/v0.6.2/apps/cadcraft-cli/src/main.rs)
-- [crates/io/src/lib.rs](https://github.com/storytold/cadcraft/blob/v0.6.2/crates/io/src/lib.rs)
-- [docs/mcp.md](https://github.com/storytold/cadcraft/blob/v0.6.2/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/cadcraft/blob/v0.6.2/docs/control-protocol.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/cadcraft/blob/v0.6.2/packaging/windows/package.ps1)
+- [Target-version release](https://github.com/storytold/cadcraft/releases/tag/v0.7.0)
+- [apps/cadcraft-cli/src/main.rs](https://github.com/storytold/cadcraft/blob/v0.7.0/apps/cadcraft-cli/src/main.rs)
+- [crates/io/src/lib.rs](https://github.com/storytold/cadcraft/blob/v0.7.0/crates/io/src/lib.rs)
+- [docs/mcp.md](https://github.com/storytold/cadcraft/blob/v0.7.0/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/cadcraft/blob/v0.7.0/docs/control-protocol.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/cadcraft/blob/v0.7.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

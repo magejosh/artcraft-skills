@@ -1,8 +1,8 @@
-# PDFCraft 0.7.1: CLI and format reference
+# PDFCraft 0.8.0: CLI and format reference
 
 ## Evidence and use
 
-Command grammar and tool schemas were checked against upstream tag v0.7.1, commit `7163ba3dee8becfff6871c9a65d0d8314314742b`. These are source/documentation findings; do not treat all examples or features as runtime-tested. Prefer this version's parser and schemas when current README examples differ.
+Command grammar and tool schemas were checked against upstream tag v0.8.0, commit `9931329b9fae0b05373b4dc3ac7c58541f0891a4`. These are source/documentation findings; do not treat all examples or features as runtime-tested. Prefer this version's parser and schemas when current README examples differ.
 
 Resolve `pdfcraft-cli` and `pdfcraft` as described in SKILL.md. The filenames and directories below are synthetic, not supplied assets. Substitute authorized input files and separate output destinations. Quote host paths correctly. For JSON arguments, prefer the documented script-file form when shell quoting is uncertain.
 
@@ -105,9 +105,11 @@ MCP is an opt-in stdio server; it does not attach to the desktop GUI. Custom bui
 
 Never publish the control file, put its token into messages or command arguments, or reuse an unrelated app's session. The tagged source applies owner-only file permissions on Unix. Do not assume Windows ACLs are secured by that Unix-specific code; verify access protection through authorized means before using desktop control.
 
-## Changes and verification for 0.7.1
+## Changes and verification for 0.8.0
 
-The CLI can audit suspected faux redactions; findings require inspection and do not apply redactions. PPTX export, XFA workflows, picture-area OCR and accessibility structure/review tools have expanded. Verify exported content and human review records; a visible scanned signature is distinct from a cryptographic signature. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+The CLI adds batch FILES-OR-DIRS... --steps convert,ocr,optimize --out-dir DIR with optional --recursive, --root and --stop-on-error. This writes files and may run OCR; scope inputs and review every per-file result before a larger batch. Chained edit page numbers refer to the document after preceding options. text now respects copy restrictions and requires the appropriate password when copying is prohibited. Save validation and syncing improvements do not replace checking the saved PDF.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -119,13 +121,15 @@ PDF/A verification now checks the output-intent color space; image-to-PDF creati
 
 ## Source links
 
-- [Target-version release](https://github.com/storytold/pdfcraft/releases/tag/v0.7.1)
-- [CLI parser and output formats](https://github.com/storytold/pdfcraft/blob/v0.7.1/apps/pdfcraft-cli/src/main.rs)
-- [Automation tool schemas](https://github.com/storytold/pdfcraft/blob/v0.7.1/crates/automation/src/tools.rs)
-- [Automation execution and file-root handling](https://github.com/storytold/pdfcraft/blob/v0.7.1/crates/automation/src/lib.rs)
-- [Desktop launch and control-file handling](https://github.com/storytold/pdfcraft/blob/v0.7.1/apps/pdfcraft/src/main.rs)
-- [OCR model discovery](https://github.com/storytold/pdfcraft/blob/v0.7.1/crates/ocr/src/lib.rs)
-- [Version-pinned app overview](https://github.com/storytold/pdfcraft/blob/v0.7.1/README.md)
-- [Version-pinned capability limitations](https://github.com/storytold/pdfcraft/blob/v0.7.1/ROADMAP.md)
+- [Batch flags and failure reporting](https://github.com/storytold/pdfcraft/blob/v0.8.0/apps/pdfcraft-cli/src/batch.rs)
+
+- [Target-version release](https://github.com/storytold/pdfcraft/releases/tag/v0.8.0)
+- [CLI parser and output formats](https://github.com/storytold/pdfcraft/blob/v0.8.0/apps/pdfcraft-cli/src/main.rs)
+- [Automation tool schemas](https://github.com/storytold/pdfcraft/blob/v0.8.0/crates/automation/src/tools.rs)
+- [Automation execution and file-root handling](https://github.com/storytold/pdfcraft/blob/v0.8.0/crates/automation/src/lib.rs)
+- [Desktop launch and control-file handling](https://github.com/storytold/pdfcraft/blob/v0.8.0/apps/pdfcraft/src/main.rs)
+- [OCR model discovery](https://github.com/storytold/pdfcraft/blob/v0.8.0/crates/ocr/src/lib.rs)
+- [Version-pinned app overview](https://github.com/storytold/pdfcraft/blob/v0.8.0/README.md)
+- [Version-pinned capability limitations](https://github.com/storytold/pdfcraft/blob/v0.8.0/ROADMAP.md)
 
 No application executable, OCR model, credential, or runtime helper is bundled with this skill.

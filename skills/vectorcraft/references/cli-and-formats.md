@@ -1,8 +1,8 @@
-# VectorCraft 0.10.0: CLI and format reference
+# VectorCraft 0.12.0: CLI and format reference
 
 ## Evidence and use
 
-Checked against official tag v0.10.0, commit `71174477cc056020fe712ae59901d76b870ca9d9`, with intervening 0.5/0.6 release notes and the exact CLI, format schemas and control documentation. These are source/documentation findings, not a claim of execution-tested Windows behavior. Recheck after upgrading and prefer matching-version documentation over main.
+Checked against official tag v0.12.0, commit `8bc65329286dc1b84aa392997bb205613c3e96cb`, with intervening 0.5/0.6 release notes and the exact CLI, format schemas and control documentation. These are source/documentation findings, not a claim of execution-tested Windows behavior. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `vectorcraft-cli` and `vectorcraft` names below are grammar shorthand. Resolve each executable as described in SKILL.md, substitute authorized paths for synthetic relative examples, and preserve source files. No runtime helper scripts or executables are bundled with this skill.
 
@@ -11,6 +11,7 @@ For JSON arguments, confirm native argument passing: Windows PowerShell 5.1 may 
 ## Supported command examples
 
 ```text
+vectorcraft-cli convert artwork.vectorcraft legacy.ai --ai-version 7 --hidden-objects layer --transparent-images flatten
 vectorcraft-cli --version
 vectorcraft-cli --help
 vectorcraft-cli commands
@@ -36,7 +37,7 @@ vectorcraft-cli mcp --connect 127.0.0.1:7979
 ## Exact grammar
 
 - `run` supports `--in/-i`, repeated `--cmd/-c ID` followed by `--params/-p JSON-OBJECT`, repeated `--export/-o FILE`, and `--scale/-s`. Export steps occur in sequence among commands, so place them after the intended edits. No `run --save`, `--sample`, `--script`, `--connect`, `--artboard`, or `--range`.
-- `convert IN OUT` accepts `--scale/-s`, zero-based `--artboard/-a`, one-based `--range/-r` (for example `1-3,5`) and `--outline-text`. Use one artboard selector. PDF defaults to all artboards; most other formats default to the first; EPS uses visible art bounds. `--outline-text` is for SVG paths, not a promise to outline every output format.
+- `convert IN OUT` accepts `--scale/-s`, zero-based `--artboard/-a`, one-based `--range/-r` (for example `1-3,5`) and `--outline-text`. Use one artboard selector. PDF defaults to all artboards; most other formats default to the first; EPS uses visible art bounds. `--outline-text` writes SVG text as paths and also selects outlined type for legacy AI output; it does not promise outlining for every format.
 - `commands` emits the JSON catalogue without a filter or separate describe/app subcommand. `--version` and top-level `--help` are supported. Do not assume ignored trailing arguments are valid filters or that subcommands implement their own help.
 - `info FILE` now includes import warnings, title/color information, artboards, object counts by kind and fonts. `run` emits JSON per step; review every result and warning. No output file is created for query-only runs.
 - Rich per-format settings are engine-command parameters, not arbitrary CLI flags. Discover `document.formats` before using `document.export`, `document.exportPdf`, `document.exportEps` or screen-export commands. Account for every returned `files` and `linked` sidecar, not just the requested path.
@@ -64,9 +65,11 @@ Windows packages statically link the C runtime; optional craft-fonts is included
 
 `run` and MCP `command_batch` parameter strings exactly matching `$N`, `$N.path` or `$last.path` use earlier results (N is zero-based; the implicit run --in open is not counted). References must target completed earlier steps. Inspect `completed`, `failed` and each result, keeping stop-on-error unless the task requires otherwise.
 
-## Changes and verification for 0.10.0
+## Changes and verification for 0.12.0
 
-AI/PDF export and import improve artboard, bleed and gradient handling; verify page bounds and artwork after reopening. EPS import has bounded parsing fixes. Image tracing scales inputs above 64 megapixels down, so inspect detail in the resulting paths before delivery. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+convert adds --decimals N (SVG precision 1-7, default 3), --editing-data and legacy AI options. --ai-version 7 preserves supported groups/layers/type and can write one suffixed file per artboard; default pdf is PDF-compatible AI. --hidden-objects layer|omit|visible defaults to layer; --transparent-images flatten|omit defaults to flatten. --editing-data deliberately chooses readable AI editing data even when it differs from the PDF appearance. Review importWarnings and output warnings, preserve the original, and inspect every generated file.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -76,13 +79,13 @@ PDF import now clips to the crop box, reports missing fonts at open, and improve
 
 ## Source links
 
-- [Target release](https://github.com/storytold/vectorcraft/releases/tag/v0.10.0)
+- [Target release](https://github.com/storytold/vectorcraft/releases/tag/v0.12.0)
 - [0.5 capability changes](https://github.com/storytold/vectorcraft/releases/tag/v0.5.0)
 - [0.6 changes](https://github.com/storytold/vectorcraft/releases/tag/v0.6.0)
-- [Exact CLI parser](https://github.com/storytold/vectorcraft/blob/v0.10.0/apps/vectorcraft-cli/src/main.rs)
-- [Format and import/export schemas](https://github.com/storytold/vectorcraft/blob/v0.10.0/crates/engine/src/cmd/fileio/mod.rs)
-- [Import implementation](https://github.com/storytold/vectorcraft/blob/v0.10.0/crates/engine/src/cmd/fileio/load.rs)
-- [MCP and bounded reads](https://github.com/storytold/vectorcraft/blob/v0.10.0/docs/mcp.md)
-- [Control protocol](https://github.com/storytold/vectorcraft/blob/v0.10.0/docs/control-protocol.md)
-- [Graphics and fonts](https://github.com/storytold/vectorcraft/blob/v0.10.0/docs/development.md)
-- [Windows packaging](https://github.com/storytold/vectorcraft/blob/v0.10.0/packaging/windows/package.ps1)
+- [Exact CLI parser](https://github.com/storytold/vectorcraft/blob/v0.12.0/apps/vectorcraft-cli/src/main.rs)
+- [Format and import/export schemas](https://github.com/storytold/vectorcraft/blob/v0.12.0/crates/engine/src/cmd/fileio/mod.rs)
+- [Import implementation](https://github.com/storytold/vectorcraft/blob/v0.12.0/crates/engine/src/cmd/fileio/load.rs)
+- [MCP and bounded reads](https://github.com/storytold/vectorcraft/blob/v0.12.0/docs/mcp.md)
+- [Control protocol](https://github.com/storytold/vectorcraft/blob/v0.12.0/docs/control-protocol.md)
+- [Graphics and fonts](https://github.com/storytold/vectorcraft/blob/v0.12.0/docs/development.md)
+- [Windows packaging](https://github.com/storytold/vectorcraft/blob/v0.12.0/packaging/windows/package.ps1)

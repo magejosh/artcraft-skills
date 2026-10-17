@@ -9,7 +9,7 @@ Create and convert local vector artwork with VectorCraft while preserving editab
 
 ## Target version and setup
 
-Written for VectorCraft 0.10.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/vectorcraft.
+Written for VectorCraft 0.12.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/vectorcraft.
 
 - Discover the CLI from `vectorcraft-cli` on PATH, or set `VECTORCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version with `--version` and inspect top-level `--help`; both are supported at this target version. Compare with release/package metadata. Do not assume every subcommand accepts `--help`.
@@ -59,8 +59,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Convert an existing native drawing to a new PDF and check artboards, text, gradients, and clipping.”
 
-## Changes in 0.10.0
+## Changes in 0.12.0
 
-AI/PDF export and import improve artboard, bleed and gradient handling; verify page bounds and artwork after reopening. EPS import has bounded parsing fixes. Image tracing scales inputs above 64 megapixels down, so inspect detail in the resulting paths before delivery. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+convert adds --decimals N (SVG precision 1-7, default 3), --editing-data and legacy AI options. --ai-version 7 preserves supported groups/layers/type and can write one suffixed file per artboard; default pdf is PDF-compatible AI. --hidden-objects layer|omit|visible defaults to layer; --transparent-images flatten|omit defaults to flatten. --editing-data deliberately chooses readable AI editing data even when it differs from the PDF appearance. Review importWarnings and output warnings, preserve the original, and inspect every generated file.
 
-Target app version: VectorCraft 0.10.0. If the installed or globally available VectorCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/vectorcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: VectorCraft 0.12.0. If the installed or globally available VectorCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/vectorcraft before relying on these commands.

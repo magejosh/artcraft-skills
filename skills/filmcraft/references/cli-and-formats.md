@@ -1,8 +1,8 @@
-# FilmCraft 0.7.2: CLI and format reference
+# FilmCraft 0.8.0: CLI and format reference
 
 ## Evidence and use
 
-Commands and capability notes were reviewed against upstream tag v0.7.2, commit `71438c627b5cbcfb550526c3971f4d0037733c5c`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
+Commands and capability notes were reviewed against upstream tag v0.8.0, commit `f03e21556d8e3a7155b91892d958debd5255d7af`, including the parser, command schemas and release changelog. These are source/documentation findings, not a guarantee of runtime or visual behavior on a particular machine. Recheck after upgrading; earlier-version smoke tests do not certify this release.
 
 Bare `filmcraft-cli` and `filmcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files. The Windows portable package includes GUI/CLI executables with a statically linked C runtime; no Visual C++ redistributable is required. No FFmpeg runtime dependency is needed.
 
@@ -32,7 +32,7 @@ These preview commands require an existing authorized project with a sufficient 
 
 ## Exact grammar and traps
 
-- Use CLI `help`, not assumed subcommand `--help`. The GUI's newly improved help/unknown-option handling does not change this CLI's parser: generic `--x` tokens can be consumed as flags. Verify the returned effect, not only the exit code. `--version`/`-V` also work after parsed global options; use the matching parser rather than guessing flag consumption.
+- CLI `help` and `--help` are supported, including `export --help`. Other generic `--x` tokens can still be consumed as flags. Verify the returned effect, not only the exit code. `--version`/`-V` also work after parsed global options; use the matching parser rather than guessing flag consumption.
 - Global `--project` chooses the project. Without a project/demo the headless engine starts empty. `--save` writes back; `--save-as` writes a new project. `--bridge` and `--project`/`--demo` are mutually exclusive.
 - Parameters are one JSON object or `key=value` pairs; values parse as JSON when possible and dotted keys nest. `run script.jsonl` expects one `{"id":"COMMAND","params":{...}}` per line; `-` reads stdin. Inspect per-line `ok`/`error` when `--keep-going` is used. Exit 0/1/2 means success/command failure/usage error.
 - Timeline values are integer ticks at 254016000000 ticks/second. Use a documented `seconds`, `frame` or `timecode` alternative where available; `sourceIn`/`duration` tick parameters are not seconds.
@@ -77,9 +77,11 @@ Live mode uses `--bridge`, not `--connect`, against the task's verified session.
 
 Reopen the saved native project and play the complete output. Check first/last frames and edit boundaries, duration, frame rate/size, codec/profile, caption timing, nested sequences, offline media and audio sync/levels. Inspect interchange warnings and job results. File existence, successful export initiation or nominal hardware availability alone is insufficient.
 
-## Changes and verification for 0.7.2
+## Changes and verification for 0.8.0
 
-Export/render reports offline media and exits with failure when placeholders were rendered; --allow-offline explicitly accepts those placeholders. Unknown export-setting keys now fail. Verify all media and the completed output before delivery, including newly supported image/audio imports. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+The CLI recognizes --help anywhere, including export --help, before project work. Export adds 32-bit integer/float audio; supported inputs expand to ADTS AAC, Radiance HDR, YUV4MPEG2 and PXR24 OpenEXR. Caption sidecars are clipped to the exported range. Choose exact export settings through the schema, inspect offline-media warnings, and check both audio precision and caption timing in the output.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -87,15 +89,15 @@ The export source adds hardware-dependent AV1, ProRes 4444/4444 XQ alpha, JPEG/T
 
 ## Source links
 
-- [Target-version release and changelog](https://github.com/storytold/filmcraft/releases/tag/v0.7.2)
-- [CLI entrypoint](https://github.com/storytold/filmcraft/blob/v0.7.2/apps/filmcraft-cli/src/main.rs) and [argument parser](https://github.com/storytold/filmcraft/blob/v0.7.2/apps/filmcraft-cli/src/args.rs)
-- [Engine command schemas and inspection](https://github.com/storytold/filmcraft/blob/v0.7.2/crates/engine/src/commands.rs)
-- [Export formats/settings](https://github.com/storytold/filmcraft/blob/v0.7.2/crates/export/src/lib.rs) and [parameter merge/queue](https://github.com/storytold/filmcraft/blob/v0.7.2/crates/engine/src/export_tools.rs)
-- [Platform capabilities and limits](https://github.com/storytold/filmcraft/blob/v0.7.2/crates/platform/README.md) and [registration](https://github.com/storytold/filmcraft/blob/v0.7.2/crates/platform/src/lib.rs)
-- [Agent workflow, jobs and MCP](https://github.com/storytold/filmcraft/blob/v0.7.2/docs/agents.md)
-- [Control protocol](https://github.com/storytold/filmcraft/blob/v0.7.2/docs/control-protocol.md)
-- [Transcript build/model limits](https://github.com/storytold/filmcraft/blob/v0.7.2/docs/transcripts.md)
-- [README](https://github.com/storytold/filmcraft/blob/v0.7.2/README.md)
-- [Windows packaging](https://github.com/storytold/filmcraft/blob/v0.7.2/packaging/windows/package.ps1)
+- [Target-version release and changelog](https://github.com/storytold/filmcraft/releases/tag/v0.8.0)
+- [CLI entrypoint](https://github.com/storytold/filmcraft/blob/v0.8.0/apps/filmcraft-cli/src/main.rs) and [argument parser](https://github.com/storytold/filmcraft/blob/v0.8.0/apps/filmcraft-cli/src/args.rs)
+- [Engine command schemas and inspection](https://github.com/storytold/filmcraft/blob/v0.8.0/crates/engine/src/commands.rs)
+- [Export formats/settings](https://github.com/storytold/filmcraft/blob/v0.8.0/crates/export/src/lib.rs) and [parameter merge/queue](https://github.com/storytold/filmcraft/blob/v0.8.0/crates/engine/src/export_tools.rs)
+- [Platform capabilities and limits](https://github.com/storytold/filmcraft/blob/v0.8.0/crates/platform/README.md) and [registration](https://github.com/storytold/filmcraft/blob/v0.8.0/crates/platform/src/lib.rs)
+- [Agent workflow, jobs and MCP](https://github.com/storytold/filmcraft/blob/v0.8.0/docs/agents.md)
+- [Control protocol](https://github.com/storytold/filmcraft/blob/v0.8.0/docs/control-protocol.md)
+- [Transcript build/model limits](https://github.com/storytold/filmcraft/blob/v0.8.0/docs/transcripts.md)
+- [README](https://github.com/storytold/filmcraft/blob/v0.8.0/README.md)
+- [Windows packaging](https://github.com/storytold/filmcraft/blob/v0.8.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.

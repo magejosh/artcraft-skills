@@ -9,7 +9,7 @@ Create, inspect, edit, and convert CAD drawings with CADCraft.
 
 ## Target version and setup
 
-Written for CADCraft 0.6.2. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/cadcraft.
+Written for CADCraft 0.7.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/cadcraft.
 
 - Discover the CLI from `cadcraft-cli` on PATH, or set `CADCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,8 +59,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Inspect a DXF, change only an agreed layer, save a new DXF, and render a PNG preview.”
 
-## Changes in 0.6.2
+## Changes in 0.7.0
 
-SVG/SVGZ can be imported alongside DXF/DWG. DXF/DWG output version handling and entity support have expanded; inspect imported geometry, units and unsupported-entity warnings, then save and reopen the required CAD format. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+MCP adds --lazy and --launch, both requiring --connect HOST:PORT. --lazy defers connection until a tool call; --launch is documented to open the GUI on macOS at that call and therefore needs an authorized launch workflow; do not assume the same launch behavior on Windows/Linux. Conversion reports skipped input records on stderr; inspect those warnings and the saved drawing. Image conversion fits extents by default; run exports use a view changed by commands, otherwise extents. Explicit --view current or --window remains available.
 
-Target app version: CADCraft 0.6.2. If the installed or globally available CADCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/cadcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: CADCraft 0.7.0. If the installed or globally available CADCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/cadcraft before relying on these commands.

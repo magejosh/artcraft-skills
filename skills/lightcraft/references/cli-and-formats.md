@@ -1,8 +1,8 @@
-# LightCraft 0.7.1: CLI and format reference
+# LightCraft 0.8.0: CLI and format reference
 
 ## Evidence and use
 
-Checked against official tag v0.7.1, commit `701f78ea2e586d4748705f10fdf5c4181dc1fd49`, including CLI parsing, export implementation, camera-look and AI-mask documentation. These are source/documentation findings, not a claim that these examples or Windows UI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
+Checked against official tag v0.8.0, commit `16dbb90499d3c63a6582fcbba1b2550a6e2da032`, including CLI parsing, export implementation, camera-look and AI-mask documentation. These are source/documentation findings, not a claim that these examples or Windows UI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `lightcraft-cli` and `lightcraft` names below are grammar shorthand. Resolve each executable as described in SKILL.md, substitute authorized inputs for synthetic relative filenames and preserve originals. No runtime helper scripts, models or executables are bundled with this skill.
 
@@ -11,6 +11,7 @@ For JSON arguments, verify native argument passing: Windows PowerShell 5.1 may s
 ## Supported command examples
 
 ```text
+lightcraft-cli render photo.jpg -o developed.dng --opt format=rendereddng
 lightcraft-cli --version
 lightcraft-cli --help
 lightcraft-cli controls --json
@@ -32,9 +33,9 @@ lightcraft --memory
 - `render INPUT -o OUTPUT` accepts repeated `--set CONTROL=NUMBER`, `--settings FILE`, `--preset ID`, `--size N`, `--quality Q`, `--opt KEY=VALUE`. It applies preset, then settings JSON, then individual control values regardless of option order. Default size is full cropped resolution; set a bounded size for a trial.
 - Preset lists have expanded; discover IDs with `run presets.list`, then use `--preset` or the `preset.apply` command. A dot is not a preset and the old four-ID list is not exhaustive.
 - `--opt` values parse as JSON or strings and are merged after `--size`/`--quality`, so explicit export options can override them. Format normally follows the output extension; an explicit `format` option wins. Match the extension, encoded format, bit depth and color profile deliberately.
-- Export metadata defaults to all. For rendered exports, `--opt metadata=none` omits descriptive metadata while retaining ICC where supported; AVIF always uses sRGB without an embedded profile. Original/DNG take a separate path that bypasses this metadata filter: `format=original` copies source bytes unchanged plus an XMP settings sidecar, and DNG embeds its settings packet. Neither is a sanitized export or a baked edit. Verify both output and sidecars. Render checks originals/sidecars against overwrite, including differently named symlinks; this guard is not permission to overwrite other files.
+- Export metadata defaults to all. For rendered exports, `--opt metadata=none` omits descriptive metadata while retaining ICC where supported; SDR AVIF uses sRGB; HDR AVIF has a separate PQ/HLG path. Original/DNG take a separate path that bypasses this metadata filter: `format=original` copies source bytes unchanged plus an XMP settings sidecar, and DNG embeds its settings packet. Neither is a sanitized export or a baked edit. Verify both output and sidecars. Render checks originals/sidecars against overwrite, including differently named symlinks; this guard is not permission to overwrite other files.
 - `run` supports `--demo`, `--library`, repeated `--import`, `--connect`, `--script FILE|-`, and `--keep-going`. Tokens without `=` start commands; values parse as JSON or strings. JSONL records accept `{command,params}` or `{method,params}`. Inspect each `ok/result/error` record and stop on failure unless a deliberate keep-going workflow was requested.
-- `--version` and top-level `--help` are supported. Use a full `HOST:PORT` with separated `--connect`; the optional address recognizer requires a colon. Bare `--connect` uses the default port. The connection-failure hint now reports the actual attempted port.
+- `--version` and top-level `--help` are supported. Separated `--connect` accepts `HOST:PORT` or a bare numeric port (loopback). Bare `--connect` uses the default port. The connection-failure hint now reports the actual attempted port.
 
 For an approved selection, `export.contactSheet` accepts an explicit output `path`, optional `ids`, `paper=a4|letter`, `columns`, `rows`, `captions` and `landscape`. It writes a paginated PDF and replaces an existing destination; select a distinct output and inspect every caption/page. This is not a rendered-photo export or a sanitized-original copy.
 
@@ -55,7 +56,7 @@ The CLI also has `merge hdr|panorama|hdr-panorama` and `synth-merge`. Actual mer
 - `calibrate [--max N] [--out DIR] INPUTS...` scans ARW/NEF/NRW, with 300 files default and zero meaning all; at least five usable photos per camera model are needed. RW2 is not collected by this command. Explicit `--out` avoids writing into the live profile directory; otherwise `LIGHTCRAFT_CAMERA_PROFILES` or the application config's `camera-profiles` is used. New profiles there affect later rendering and are read once per process.
 - A built-in ILCE-7M4 profile ships in source. Profiles are camera-look estimates, not measured spectral calibration or a guarantee of matching another application. Uncalibrated Sony/Nikon/Panasonic white balance is relative around the as-shot look; do not present its neutral 6500/0 reference as measured capture temperature.
 - XMP face regions can appear in loupe/People views. Optional YuNet face detection and recognition models now support People workflows; check model status and distinguish imported regions from detected/recognized results. Models are not bundled. Recently Deleted restoration, stable-seed random sorting/reshuffle and File Path smart-album rules are available. These library mutations need the intended library and scope, not a generic preview.
-- JPEG/PNG/TIFF/WebP and other common raster decoders, PSD composites and JPEG XL are documented; export supports JPEG/PNG/TIFF/lossless WebP/AVIF/JPEG XL/DNG/original. Build features can limit AVIF/JPEG XL. Preserve original files and disclose composite-only/preview-only inputs.
+- JPEG/PNG/TIFF/WebP and other common raster decoders, PSD composites and JPEG XL are documented; export supports JPEG/PNG/TIFF/flat PSD/lossless WebP/AVIF/JPEG XL/raw-data DNG/rendered DNG/original. Build features can limit AVIF/JPEG XL. Preserve original files and disclose composite-only/preview-only inputs.
 
 ## Optional AI masks and prerequisites
 
@@ -75,9 +76,11 @@ Windows portable packages statically link the C runtime and include release font
 
 Control is unauthenticated loopback; use it only for a verified task-owned process. Never open a persistent library in another headless process while the GUI owns it; connect to the owning app instead. `--memory` is throwaway; `--library` saves edits. Bare GUI launch opens its default Pictures library, and a folder launch scans/imports. A portable package is not necessarily a separate library/configuration sandbox.
 
-## Changes and verification for 0.7.1
+## Changes and verification for 0.8.0
 
-JPEG XL output supports lossy/lossless and 8/16-bit exports, including a 16-bit Rec.2020 PQ HDR path. Library selection and Lightroom import are distinct workflows. Verify the intended library, metadata choices and output profile; source support does not establish viewer or host compatibility. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+run and mcp --connect accept a bare port as loopback as well as HOST:PORT. Rendered DNG is a distinct export format (format=rendereddng): it bakes the developed image into a 16-bit-float linear DNG, unlike raw-data DNG plus XMP settings. AVIF HDR supports PQ/HLG; inspect hdr and hdrTransfer options and the actual viewer. These exports do not establish RAW fidelity or display compatibility.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -87,14 +90,14 @@ Process versions preserve existing edits when newer looks are introduced; do not
 
 ## Source links
 
-- [Release feature details](https://github.com/storytold/lightcraft/blob/v0.7.1/docs/whats-new.md)
-- [Target release and changes since 0.2.1](https://github.com/storytold/lightcraft/releases/tag/v0.7.1)
-- [Exact CLI parser](https://github.com/storytold/lightcraft/blob/v0.7.1/apps/lightcraft-cli/src/main.rs)
-- [Preset catalogue](https://github.com/storytold/lightcraft/blob/v0.7.1/crates/engine/src/presets.rs)
-- [Export behavior and metadata](https://github.com/storytold/lightcraft/blob/v0.7.1/crates/engine/src/export.rs)
-- [Camera-look estimates and profiles](https://github.com/storytold/lightcraft/blob/v0.7.1/docs/camera-preview-colour.md)
-- [AI-mask requirements and commands](https://github.com/storytold/lightcraft/blob/v0.7.1/docs/ai-masks.md)
-- [MCP guide](https://github.com/storytold/lightcraft/blob/v0.7.1/docs/mcp.md)
-- [Control and headless snapshots](https://github.com/storytold/lightcraft/blob/v0.7.1/docs/control-protocol.md)
-- [Codec capabilities](https://github.com/storytold/lightcraft/blob/v0.7.1/crates/codecs/src/lib.rs)
-- [Windows packaging](https://github.com/storytold/lightcraft/blob/v0.7.1/packaging/windows/package.ps1)
+- [Release feature details](https://github.com/storytold/lightcraft/blob/v0.8.0/docs/whats-new.md)
+- [Target release and changes since 0.2.1](https://github.com/storytold/lightcraft/releases/tag/v0.8.0)
+- [Exact CLI parser](https://github.com/storytold/lightcraft/blob/v0.8.0/apps/lightcraft-cli/src/main.rs)
+- [Preset catalogue](https://github.com/storytold/lightcraft/blob/v0.8.0/crates/engine/src/presets.rs)
+- [Export behavior and metadata](https://github.com/storytold/lightcraft/blob/v0.8.0/crates/engine/src/export.rs)
+- [Camera-look estimates and profiles](https://github.com/storytold/lightcraft/blob/v0.8.0/docs/camera-preview-colour.md)
+- [AI-mask requirements and commands](https://github.com/storytold/lightcraft/blob/v0.8.0/docs/ai-masks.md)
+- [MCP guide](https://github.com/storytold/lightcraft/blob/v0.8.0/docs/mcp.md)
+- [Control and headless snapshots](https://github.com/storytold/lightcraft/blob/v0.8.0/docs/control-protocol.md)
+- [Codec capabilities](https://github.com/storytold/lightcraft/blob/v0.8.0/crates/codecs/src/lib.rs)
+- [Windows packaging](https://github.com/storytold/lightcraft/blob/v0.8.0/packaging/windows/package.ps1)

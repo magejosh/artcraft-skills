@@ -1,8 +1,8 @@
-# PhotoCraft 0.8.2: CLI and format reference
+# PhotoCraft 0.9.0: CLI and format reference
 
 ## Evidence and use
 
-Checked against official tag v0.8.2, commit `d43db3e153c76aefce9b32cef9099e458eaf17a8`, including the parser, command documentation, format capabilities and packaging source. These are source/documentation findings, not a claim that these examples or Windows GUI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
+Checked against official tag v0.9.0, commit `c699e3cda69f4852b43c0b191ab0091aaeff9d6a`, including the parser, command documentation, format capabilities and packaging source. These are source/documentation findings, not a claim that these examples or Windows GUI paths were execution-tested. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `photocraft-cli` and `photocraft` names below are grammar shorthand. Resolve each executable as described in SKILL.md; replace synthetic relative filenames with authorized inputs and distinct outputs. No runtime helper scripts, models, or executables are bundled with this skill.
 
@@ -11,6 +11,7 @@ For JSON arguments, confirm native argument passing: Windows PowerShell 5.1 may 
 ## Supported command examples
 
 ```text
+photocraft-cli convert input.pcraft frame.dpx --dpx-bits 10
 photocraft-cli --version
 photocraft-cli --help
 photocraft-cli commands --json --filter actions.
@@ -67,9 +68,11 @@ Over desktop control, use root-scoped `app.open`/`app.save`, not `file.open/save
 - Metadata behavior is surface-specific. Exact source sets CLI conversion/save defaults to full document XMP; Export As starts at `metadata=none`. Layered PSD/PSB/.pcraft preserve full XMP. Do not treat CLI conversion as sanitization or invent a `--metadata` flag. A choice about XMP is not evidence that all EXIF/location data is removed. Inspect actual metadata before sharing.
 - Windows portable packaging includes the CLI/GUI and `portable.txt`; the marker redirects state to adjacent PhotoCraftData, with an application-data fallback if unwritable. Preserve that state. The C runtime is statically linked; Rust/SDK/WiX requirements in the packaging script concern building, not portable use.
 
-## Changes and verification for 0.8.2
+## Changes and verification for 0.9.0
 
-FITS read/write and KRA composite-only import are available. Batch action playback skips recorded view and save steps; run reports recorded-action failures. Inspect nested results and partial effects, and keep the original layered document when importing a flattened KRA composite. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+convert, run and batch accept --dpx-bits 8|10|12|16; the default is 8 for an 8-bit document and 16 otherwise. batch --actions accepts Photoshop .atn sets; use --action NAME for a multi-action set, inspect unsupported-step warnings and stop on failures. Krita .kra/.krz are now batch inputs but remain composite-only imports. Windows pen handling fixes do not establish actual tablet/pressure behavior on the host.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -77,16 +80,16 @@ Automation accepts absolute paths beneath its authorized read/write roots while 
 
 ## Source links
 
-- [KRA composite-only import](https://github.com/storytold/photocraft/blob/v0.8.2/crates/io/src/kra.rs)
-- [OpenRaster import/export and limitations](https://github.com/storytold/photocraft/blob/v0.8.2/crates/io/src/ora.rs)
-- [Codec capability declarations](https://github.com/storytold/photocraft/blob/v0.8.2/crates/codecs/src/format.rs)
-- [Target release and changelog](https://github.com/storytold/photocraft/releases/tag/v0.8.2)
-- [Exact CLI parser](https://github.com/storytold/photocraft/blob/v0.8.2/apps/photocraft-cli/src/lib.rs)
-- [CLI guide](https://github.com/storytold/photocraft/blob/v0.8.2/book/src/automation/cli.md)
-- [MCP guide](https://github.com/storytold/photocraft/blob/v0.8.2/book/src/automation/mcp.md)
-- [Control, actions and type methods](https://github.com/storytold/photocraft/blob/v0.8.2/docs/control-protocol.md)
-- [Automation restrictions](https://github.com/storytold/photocraft/blob/v0.8.2/crates/automation/src/workspace.rs)
-- [Raster formats and layered TIFF](https://github.com/storytold/photocraft/blob/v0.8.2/book/src/formats/raster-formats.md)
-- [Export defaults](https://github.com/storytold/photocraft/blob/v0.8.2/crates/io/src/lib.rs)
-- [Export As metadata default](https://github.com/storytold/photocraft/blob/v0.8.2/crates/ui-egui/src/export_dialog.rs)
-- [Windows packaging](https://github.com/storytold/photocraft/blob/v0.8.2/packaging/windows/package.ps1)
+- [KRA composite-only import](https://github.com/storytold/photocraft/blob/v0.9.0/crates/io/src/kra.rs)
+- [OpenRaster import/export and limitations](https://github.com/storytold/photocraft/blob/v0.9.0/crates/io/src/ora.rs)
+- [Codec capability declarations](https://github.com/storytold/photocraft/blob/v0.9.0/crates/codecs/src/format.rs)
+- [Target release and changelog](https://github.com/storytold/photocraft/releases/tag/v0.9.0)
+- [Exact CLI parser](https://github.com/storytold/photocraft/blob/v0.9.0/apps/photocraft-cli/src/lib.rs)
+- [CLI guide](https://github.com/storytold/photocraft/blob/v0.9.0/book/src/automation/cli.md)
+- [MCP guide](https://github.com/storytold/photocraft/blob/v0.9.0/book/src/automation/mcp.md)
+- [Control, actions and type methods](https://github.com/storytold/photocraft/blob/v0.9.0/docs/control-protocol.md)
+- [Automation restrictions](https://github.com/storytold/photocraft/blob/v0.9.0/crates/automation/src/workspace.rs)
+- [Raster formats and layered TIFF](https://github.com/storytold/photocraft/blob/v0.9.0/book/src/formats/raster-formats.md)
+- [Export defaults](https://github.com/storytold/photocraft/blob/v0.9.0/crates/io/src/lib.rs)
+- [Export As metadata default](https://github.com/storytold/photocraft/blob/v0.9.0/crates/ui-egui/src/export_dialog.rs)
+- [Windows packaging](https://github.com/storytold/photocraft/blob/v0.9.0/packaging/windows/package.ps1)

@@ -9,7 +9,7 @@ Edit layered images and automate approved batches in PhotoCraft.
 
 ## Target version and setup
 
-Written for PhotoCraft 0.8.2. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/photocraft.
+Written for PhotoCraft 0.9.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/photocraft.
 
 - Discover the CLI from `photocraft-cli` on PATH, or set `PHOTOCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version with `--version` and inspect top-level `--help`; both are supported at this target version. Compare with release/package metadata. Do not assume every subcommand accepts `--help`.
@@ -60,8 +60,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Apply sharpening and a curves adjustment to a copied PSD, retain an editable master, and inspect a PNG export.”
 
-## Changes in 0.8.2
+## Changes in 0.9.0
 
-FITS read/write and KRA composite-only import are available. Batch action playback skips recorded view and save steps; run reports recorded-action failures. Inspect nested results and partial effects, and keep the original layered document when importing a flattened KRA composite. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+convert, run and batch accept --dpx-bits 8|10|12|16; the default is 8 for an 8-bit document and 16 otherwise. batch --actions accepts Photoshop .atn sets; use --action NAME for a multi-action set, inspect unsupported-step warnings and stop on failures. Krita .kra/.krz are now batch inputs but remain composite-only imports. Windows pen handling fixes do not establish actual tablet/pressure behavior on the host.
 
-Target app version: PhotoCraft 0.8.2. If the installed or globally available PhotoCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/photocraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: PhotoCraft 0.9.0. If the installed or globally available PhotoCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/photocraft before relying on these commands.

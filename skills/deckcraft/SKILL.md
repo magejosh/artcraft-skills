@@ -9,7 +9,7 @@ Build and render presentation decks with DeckCraft's shared command engine and G
 
 ## Target version and setup
 
-Written for DeckCraft 0.6.1. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/deckcraft.
+Written for DeckCraft 0.7.0. Use the application already authorized for the current task; these templates neither install an app nor assume an operating system or installation directory. Read [the version-pinned command reference](references/cli-and-formats.md) before constructing commands. Upstream: https://github.com/storytold/deckcraft.
 
 - Discover the CLI from `deckcraft-cli` on PATH, or set `DECKCRAFT_CLI` to its verified full executable path. On Windows, resolve the `.exe`; on other systems, use the available matching platform build. Resolve the GUI independently when it is needed.
 - Confirm the application's actual version using its supported version/help output or release/package metadata. Do not assume every CLI supports `--version` or subcommand `--help`.
@@ -59,8 +59,10 @@ Distinguish source-build dependencies from packaged-runtime requirements. Check 
 
 “Add a title-only slide to a sample deck, save an editable copy, and render all slides for visual review.”
 
-## Changes in 0.6.1
+## Changes in 0.7.0
 
-Render accepts --edit to include editor placeholder prompts and outlines. Use the ordinary render for presentation output; an editor preview does not represent the slide-show appearance. The 0.6.1 release notes concern packaging/signing, not a claim of newly tested slide behavior. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+The CLI adds render-transition FILE --slide N --t T[,T...] [--width PX] OUT.png. N is zero-based, transitioning from N-1 (black before slide 0); progress values must be in 0..1. Multiple values create separate suffixed PNGs. Use these frames to inspect transition geometry, then review actual playback for timing. Shape effects, gradients, grouped text and chart rendering have changed; compare the exported slides with the intended presentation.
 
-Target app version: DeckCraft 0.6.1. If the installed or globally available DeckCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/deckcraft before relying on these commands.
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
+
+Target app version: DeckCraft 0.7.0. If the installed or globally available DeckCraft version is newer, check that application’s official repository documentation at https://github.com/storytold/deckcraft before relying on these commands.

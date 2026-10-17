@@ -1,8 +1,8 @@
-# DeckCraft 0.6.1: CLI and format reference
+# DeckCraft 0.7.0: CLI and format reference
 
 ## Evidence and use
 
-Examples and command notes were checked against upstream tag v0.6.1, commit `688c7ef592c901ca4541c25e210c1b302e4dc066`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
+Examples and command notes were checked against upstream tag v0.7.0, commit `d78e657e4cb1e490ceb5445785c052d9cf5ad963`. These are source/documentation findings, not a guarantee of behavior on a particular machine. Recheck after upgrading and prefer matching-version documentation over main.
 
 Bare `deckcraft-cli` and `deckcraft` names below are grammar shorthand. Resolve the CLI/GUI as described in SKILL.md, substitute authorized paths for the synthetic examples, and preserve source files.
 
@@ -11,6 +11,7 @@ For JSON-bearing arguments, confirm native argument passing: Windows PowerShell 
 ## Supported command examples
 
 ```text
+deckcraft-cli render-transition deck.pptx --slide 1 --t 0,0.5,1 --width 800 transition.png
 deckcraft-cli render --sample --all --scale 1 out/
 deckcraft-cli commands format.
 deckcraft-cli run --sample --cmd 'slide.new={"layout":"titleOnly","title":"Hello"}' --save hello.deckcraft
@@ -38,9 +39,11 @@ MCP is headless by default; --connect accepts PORT or HOST:PORT. For raw control
 
 Use GUI when it materially helps. Launch the exact GUI executable, inspect its current document, use visible controls/automation IDs that exist, and save explicitly. GUI fallback does not authorize interfering with an unrelated session.
 
-## Changes and verification for 0.6.1
+## Changes and verification for 0.7.0
 
-Render accepts --edit to include editor placeholder prompts and outlines. Use the ordinary render for presentation output; an editor preview does not represent the slide-show appearance. The 0.6.1 release notes concern packaging/signing, not a claim of newly tested slide behavior. These are source/documentation findings; no new CLI or GUI workflow was executed for this refresh.
+The CLI adds render-transition FILE --slide N --t T[,T...] [--width PX] OUT.png. N is zero-based, transitioning from N-1 (black before slide 0); progress values must be in 0..1. Multiple values create separate suffixed PNGs. Use these frames to inspect transition geometry, then review actual playback for timing. Shape effects, gradients, grouped text and chart rendering have changed; compare the exported slides with the intended presentation.
+
+These are matching-tag source/documentation findings. The installed CLI version was checked; these editing/export workflows were not executed for this refresh.
 
 ## Previously documented behavior and verification
 
@@ -50,12 +53,12 @@ This release also morphs changed shape outlines, corrects old/new slide transiti
 
 ## Source links
 
-- [Editor-view rendering](https://github.com/storytold/deckcraft/blob/v0.6.1/crates/render/src/lib.rs)
-- [Target-version release](https://github.com/storytold/deckcraft/releases/tag/v0.6.1)
-- [apps/deckcraft-cli/src/main.rs](https://github.com/storytold/deckcraft/blob/v0.6.1/apps/deckcraft-cli/src/main.rs)
-- [crates/engine/src/cmd/file.rs](https://github.com/storytold/deckcraft/blob/v0.6.1/crates/engine/src/cmd/file.rs)
-- [docs/mcp.md](https://github.com/storytold/deckcraft/blob/v0.6.1/docs/mcp.md)
-- [docs/control-protocol.md](https://github.com/storytold/deckcraft/blob/v0.6.1/docs/control-protocol.md)
-- [packaging/windows/package.ps1](https://github.com/storytold/deckcraft/blob/v0.6.1/packaging/windows/package.ps1)
+- [Editor-view rendering](https://github.com/storytold/deckcraft/blob/v0.7.0/crates/render/src/lib.rs)
+- [Target-version release](https://github.com/storytold/deckcraft/releases/tag/v0.7.0)
+- [apps/deckcraft-cli/src/main.rs](https://github.com/storytold/deckcraft/blob/v0.7.0/apps/deckcraft-cli/src/main.rs)
+- [crates/engine/src/cmd/file.rs](https://github.com/storytold/deckcraft/blob/v0.7.0/crates/engine/src/cmd/file.rs)
+- [docs/mcp.md](https://github.com/storytold/deckcraft/blob/v0.7.0/docs/mcp.md)
+- [docs/control-protocol.md](https://github.com/storytold/deckcraft/blob/v0.7.0/docs/control-protocol.md)
+- [packaging/windows/package.ps1](https://github.com/storytold/deckcraft/blob/v0.7.0/packaging/windows/package.ps1)
 
 No runtime helper scripts or executables are bundled with this skill.
